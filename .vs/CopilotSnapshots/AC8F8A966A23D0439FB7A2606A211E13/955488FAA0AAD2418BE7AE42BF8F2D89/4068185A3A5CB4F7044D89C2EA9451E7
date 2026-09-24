@@ -1,0 +1,240 @@
+﻿import { JanusClient, JanusResponse } from '@services/janus';
+
+export interface WebRTCConfig {
+  iceServers: RTCIceServer[];
+}
+
+export interface VideoRoomOptions {
+  roomId: string | number;
+  displayName: string;
+  audio?: boolean;
+  video?: boolean;
+}
+
+export interface RemoteFeed {
+  id: number;
+  display?: string;
+  stream?: MediaStream;
+}
+
+export class WebRTCManager {
+  private janusClient: JanusClient;
+  private peerConnection: RTCPeerConnection | null = null;
+  private publisherHandleId: number | null = null;
+  private localStream: MediaStream | null = null;
+  private config: WebRTCConfig;
+
+  private onLocalStreamCallback?: (stream: MediaStream) => void;
+  private onRemoteStreamCallback?: (stream: MediaStream, feedId: number) => void;
+  private onRemoteFeedCallback?: (feeds: RemoteFeed[]) => void;
+
+  constructor(janusUrl: string, config: WebRTCConfig) {
+    this.janusClient = new JanusClient(janusUrl);
+    this.config = config;
+
+    // Set up Janus event handlers
+    this.janusClient.setEventHandlers({
+      onMessage: (message) => this.handleJanusMessage(message),
+      onError: (error) => console.error('[WebRTC] Janus error:', error),
+    });
+  }
+
+  // Initialize connection to Janus
+  async initialize(): Promise<void> {
+    await this.janusClient.connect();
+    await this.janusClient.createSession();
+  }
+
+  // Join a video room as publisher
+  async joinRoom(options: VideoRoomOptions): Promise<void> {
+    // Attach to VideoRoom plugin
+    this.publisherHandleId = await this.janusClient.attach('janus.plugin.videoroom');
+
+    // Get local media
+    this.localStream = await this.getUserMedia({
+      audio: options.audio !== false,
+      video: options.video !== false,
+    });
+
+    if (this.onLocalStreamCallback) {
+      this.onLocalStreamCallback(this.localStream);
+    }
+
+    // Create peer connection
+    this.peerConnection = new RTCPeerConnection(this.config);
+
+    // Add local tracks to peer connection
+    this.localStream.getTracks().forEach((track) => {
+      this.peerConnection!.addTrack(track, this.localStream!);
+    });
+
+    // Handle ICE candidates
+    this.peerConnection.onicecandidate = (event) => {
+      if (event.candidate) {
+        this.janusClient.trickle(this.publisherHandleId!, event.candidate);
+      } else {
+        // All candidates sent
+        this.janusClient.trickle(this.publisherHandleId!, null);
+      }
+    };
+
+    // Handle remote streams (from other participants)
+    this.peerConnection.ontrack = (event) => {
+      console.log('[WebRTC] Received remote track:', event.track.kind);
+      if (event.streams && event.streams[0]) {
+        this.onRemoteStreamCallback?.(event.streams[0], 0);
+      }
+    };
+
+    // Create offer
+    const offer = await this.peerConnection.createOffer({
+      offerToReceiveAudio: true,
+      offerToReceiveVideo: true,
+    });
+
+    await this.peerConnection.setLocalDescription(offer);
+
+    // Join room
+    const joinRequest = {
+      request: 'join',
+      room: options.roomId,
+      ptype: 'publisher',
+      display: options.displayName,
+    };
+
+    await this.janusClient.sendPluginMessage(
+      this.publisherHandleId,
+      joinRequest,
+      offer
+    );
+  }
+
+  // Leave the room
+  async leaveRoom(): Promise<void> {
+    if (this.publisherHandleId) {
+      await this.janusClient.sendPluginMessage(this.publisherHandleId, {
+        request: 'leave',
+      });
+    }
+
+    this.cleanup();
+  }
+
+  // Disconnect from Janus
+  disconnect(): void {
+    this.cleanup();
+    this.janusClient.disconnect();
+  }
+
+  // Mute/unmute audio
+  toggleAudio(enabled: boolean): void {
+    if (this.localStream) {
+      this.localStream.getAudioTracks().forEach((track) => {
+        track.enabled = enabled;
+      });
+    }
+  }
+
+  // Mute/unmute video
+  toggleVideo(enabled: boolean): void {
+    if (this.localStream) {
+      this.localStream.getVideoTracks().forEach((track) => {
+        track.enabled = enabled;
+      });
+    }
+  }
+
+  // Set callback for local stream
+  onLocalStream(callback: (stream: MediaStream) => void): void {
+    this.onLocalStreamCallback = callback;
+  }
+
+  // Set callback for remote stream
+  onRemoteStream(callback: (stream: MediaStream, feedId: number) => void): void {
+    this.onRemoteStreamCallback = callback;
+  }
+
+  // Set callback for remote feed list
+  onRemoteFeeds(callback: (feeds: RemoteFeed[]) => void): void {
+    this.onRemoteFeedCallback = callback;
+  }
+
+  // Private: Handle Janus messages
+  private async handleJanusMessage(message: JanusResponse): Promise<void> {
+    if (message.janus === 'event') {
+      const pluginData = message.plugindata?.data;
+
+      if (pluginData?.videoroom === 'joined') {
+        console.log('[WebRTC] Joined room successfully');
+
+        // Handle existing publishers
+        if (pluginData.publishers && Array.isArray(pluginData.publishers)) {
+          const feeds: RemoteFeed[] = pluginData.publishers.map((p: any) => ({
+            id: p.id,
+            display: p.display,
+          }));
+          this.onRemoteFeedCallback?.(feeds);
+        }
+      } else if (pluginData?.videoroom === 'event') {
+        // New publisher joined or publisher left
+        if (pluginData.publishers && Array.isArray(pluginData.publishers)) {
+          const feeds: RemoteFeed[] = pluginData.publishers.map((p: any) => ({
+            id: p.id,
+            display: p.display,
+          }));
+          this.onRemoteFeedCallback?.(feeds);
+        }
+      }
+
+      // Handle JSEP (answer from Janus)
+      if (message.jsep) {
+        if (this.peerConnection) {
+          await this.peerConnection.setRemoteDescription(
+            new RTCSessionDescription(message.jsep)
+          );
+        }
+      }
+    } else if (message.janus === 'webrtcup') {
+      console.log('[WebRTC] Connection established');
+    } else if (message.janus === 'media') {
+      console.log('[WebRTC] Media flowing');
+    }
+  }
+
+  // Private: Get user media
+  private async getUserMedia(constraints: MediaStreamConstraints): Promise<MediaStream> {
+    try {
+      return await navigator.mediaDevices.getUserMedia(constraints);
+    } catch (error) {
+      console.error('[WebRTC] Failed to get user media:', error);
+      throw new Error('Failed to access camera/microphone');
+    }
+  }
+
+  // Private: Cleanup resources
+  private cleanup(): void {
+    if (this.localStream) {
+      this.localStream.getTracks().forEach((track) => track.stop());
+      this.localStream = null;
+    }
+
+    if (this.peerConnection) {
+      this.peerConnection.close();
+      this.peerConnection = null;
+    }
+
+    this.publisherHandleId = null;
+    this.onLocalStreamCallback = undefined;
+    this.onRemoteStreamCallback = undefined;
+    this.onRemoteFeedCallback = undefined;
+  }
+
+  // Getters
+  getLocalStream(): MediaStream | null {
+    return this.localStream;
+  }
+
+  isConnected(): boolean {
+    return this.janusClient.isConnected();
+  }
+}

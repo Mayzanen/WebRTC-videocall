@@ -1,0 +1,41 @@
+﻿general: {
+	configs_folder = "/opt/janus/etc/janus"
+	plugins_folder = "/opt/janus/lib/janus/plugins"
+	transports_folder = "/opt/janus/lib/janus/transports"
+	events_folder = "/opt/janus/lib/janus/events"
+
+	debug_level = 4
+	debug_timestamps = true
+	debug_colors = false
+
+	session_timeout = 60
+	reclaim_session_timeout = 0
+
+	stun_server = "coturn"
+	stun_port = 3478
+}
+
+certificates: {
+	cert_pem = "/opt/janus/certs/server.crt"
+	cert_key = "/opt/janus/certs/server.key"
+}
+
+nat: {
+	ice_lite = false
+	ice_tcp = false
+	rtp_port_range = "20000-20200"
+
+	turn_server = "coturn"
+	turn_port = 3478
+	turn_type = "udp"
+	turn_user = "videouser"
+	turn_pwd = "videopass"
+}
+
+media: {
+	ipv6 = false
+	max_nack_queue = 1000
+	dtls_timeout = 500
+	dtls_mtu = 1200
+}
+

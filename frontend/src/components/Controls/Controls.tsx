@@ -1,0 +1,50 @@
+import './Controls.css';
+
+interface ControlsProps {
+  audioEnabled: boolean;
+  videoEnabled: boolean;
+  onToggleAudio: () => void;
+  onToggleVideo: () => void;
+  onHangup: () => void;
+}
+
+export function Controls({
+  audioEnabled,
+  videoEnabled,
+  onToggleAudio,
+  onToggleVideo,
+  onHangup,
+}: ControlsProps) {
+  return (
+    <div className="controls-container">
+      <button
+        className={`control-button ${audioEnabled ? 'active' : 'inactive'}`}
+        onClick={onToggleAudio}
+        aria-label={audioEnabled ? 'Mute microphone' : 'Unmute microphone'}
+        aria-pressed={!audioEnabled}
+        title={audioEnabled ? 'Mute' : 'Unmute'}
+      >
+        {audioEnabled ? '🎤' : '🔇'}
+      </button>
+
+      <button
+        className={`control-button ${videoEnabled ? 'active' : 'inactive'}`}
+        onClick={onToggleVideo}
+        aria-label={videoEnabled ? 'Turn off camera' : 'Turn on camera'}
+        aria-pressed={!videoEnabled}
+        title={videoEnabled ? 'Stop Video' : 'Start Video'}
+      >
+        {videoEnabled ? '📹' : '📷'}
+      </button>
+
+      <button
+        className="control-button hangup"
+        onClick={onHangup}
+        aria-label="End call"
+        title="Hang Up"
+      >
+        📞
+      </button>
+    </div>
+  );
+}

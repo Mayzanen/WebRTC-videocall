@@ -1,0 +1,3 @@
+general: {
+	string_ids = true
+}

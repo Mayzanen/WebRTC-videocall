@@ -1,0 +1,158 @@
+import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+
+/**
+ * These tests exercise the in-call Controls UI (mute/camera/hangup buttons).
+ * They require a real Janus/TURN/NGINX stack to be reachable, since the Call
+ * page only renders the controls after a real WebRTC/Janus session is
+ * established (otherwise it shows the error screen instead). Run against the
+ * docker-compose stack, e.g. (PowerShell):
+ *
+ *   docker compose up -d
+ *   $ip = (docker inspect videortc-nginx | ConvertFrom-Json)[0].NetworkSettings.Networks.'videortc-network'.IPAddress
+ *   $env:BASE_URL = 'https://localhost'
+ *   $env:NGINX_HOST_IP = $ip
+ *   npx playwright test tests/call.spec.ts
+ *
+ * NGINX_HOST_IP is required because the app's Janus WebSocket URL is baked in
+ * as wss://localhost/janus; playwright.config.ts uses it to add a Chromium
+ * --host-resolver-rules flag that maps "localhost" to the NGINX container so
+ * the in-browser WebSocket connects successfully.
+ *
+ * A synthetic camera/mic is supplied via launchOptions in playwright.config.ts
+ * (--use-fake-device-for-media-stream), so no real hardware is required.
+ *
+ * The axe test below asserts on WCAG 2.0/2.1 A/AA violations for the
+ * controls bar and fails the suite if any are found — it is not currently
+ * catching visual-only complaints (e.g. spacing, icon style), since axe-core
+ * only flags automatically detectable accessibility issues, not subjective
+ * visual design. See Controls.tsx / Controls.css for the current markup.
+ */
+
+function callUrl(room: string, name: string): string {
+  return `/call?room=${encodeURIComponent(room)}&name=${encodeURIComponent(name)}`;
+}
+
+test.describe('Call page controls', () => {
+  test('renders mute, camera and hangup buttons once connected', async ({ page }) => {
+    await page.goto(callUrl('controls-smoke-room', 'Tester'));
+
+    await expect(page.getByRole('button', { name: /Mute microphone|Unmute microphone/ })).toBeVisible({
+      timeout: 15_000,
+    });
+    await expect(page.getByRole('button', { name: /Turn off camera|Turn on camera/ })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'End call' })).toBeVisible();
+  });
+
+  test('toggling mute and camera updates pressed state and icon', async ({ page }) => {
+    await page.goto(callUrl('controls-toggle-room', 'Tester'));
+
+    const muteButton = page.getByRole('button', { name: /Mute microphone|Unmute microphone/ });
+    await expect(muteButton).toBeVisible({ timeout: 15_000 });
+
+    await expect(muteButton).toHaveAttribute('aria-pressed', 'false');
+    await muteButton.click();
+    await expect(muteButton).toHaveAttribute('aria-pressed', 'true');
+
+    const cameraButton = page.getByRole('button', { name: /Turn off camera|Turn on camera/ });
+    await expect(cameraButton).toHaveAttribute('aria-pressed', 'false');
+    await cameraButton.click();
+    await expect(cameraButton).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  test('controls bar has no detectable axe violations', async ({ page }) => {
+    await page.goto(callUrl('controls-axe-room', 'Tester'));
+
+    await expect(page.getByRole('button', { name: 'End call' })).toBeVisible({ timeout: 15_000 });
+
+    const results = await new AxeBuilder({ page })
+      .include('.controls-container')
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .analyze();
+
+    // Attach full results to the HTML report for easier debugging on failure.
+    await test.info().attach('controls-axe-results.json', {
+      body: JSON.stringify(results.violations, null, 2),
+      contentType: 'application/json',
+    });
+
+    expect(results.violations, formatViolations(results.violations)).toEqual([]);
+  });
+
+  /**
+   * KNOWN LIMITATION OF AUTOMATED TESTING (documented for thesis, not fixed here):
+   *
+   * The controls bar passes the axe-core scan above with zero violations, yet
+   * the buttons are visually hard to tell apart against their dark background
+   * (emoji icons 🎤/🔇, 📹/📷, 📞 read as low-contrast, hard-to-identify glyphs
+   * in the actual UI).
+   *
+   * The specific technical reason axe misses this: emoji glyphs are rendered
+   * by the font/OS emoji renderer using their own built-in colors, not the
+   * CSS `color` property set on `.control-button` (see Controls.css). axe-core's
+   * `color-contrast` rule only compares the *CSS* foreground color against the
+   * background color — it has no way to inspect the actual pixel colors baked
+   * into an emoji glyph. So even though a human perceives poor contrast
+   * between the icon and its circular background, axe's contrast check never
+   * evaluates that pair at all; it silently passes.
+   *
+   * This is a concrete, reproducible example (for the thesis) of a blind spot
+   * in automated accessibility testing: `color-contrast` assumes text-like
+   * content colored via CSS, and does not extend to emoji/image-based icons.
+   * Catching this class of issue requires manual/visual review (e.g. axe
+   * DevTools used interactively, or a human usability pass), not just an
+   * automated CI check. The icon styling itself is intentionally left unfixed
+   * for now (see conversation) and will be addressed in a later iteration.
+   */
+  test('documents that axe does not evaluate emoji icon-vs-background contrast (known gap, not fixed)', async ({
+    page,
+  }) => {
+    await page.goto(callUrl('controls-known-gap-room', 'Tester'));
+
+    const muteButton = page.getByRole('button', { name: /Mute microphone|Unmute microphone/ });
+    const cameraButton = page.getByRole('button', { name: /Turn off camera|Turn on camera/ });
+    const hangupButton = page.getByRole('button', { name: 'End call' });
+
+    await expect(muteButton).toBeVisible({ timeout: 15_000 });
+    await expect(cameraButton).toBeVisible();
+    await expect(hangupButton).toBeVisible();
+
+    // Each button is programmatically labeled (accessible name via aria-label),
+    // which is why axe does not flag it — this passes regardless of how
+    // recognizable/high-contrast the emoji glyph itself is to a sighted user.
+    await expect(muteButton).toHaveAccessibleName(/Mute microphone|Unmute microphone/);
+    await expect(cameraButton).toHaveAccessibleName(/Turn off camera|Turn on camera/);
+    await expect(hangupButton).toHaveAccessibleName('End call');
+
+    // Restrict the scan to just the `color-contrast` rule to make the point
+    // precisely: this rule alone reports 0 issues for these buttons, because
+    // it only ever compares the CSS `color`/background pair, never the emoji
+    // glyph's own rendered pixel color against the button background.
+    const contrastResults = await new AxeBuilder({ page })
+      .include('.controls-container')
+      .withRules(['color-contrast'])
+      .analyze();
+
+    expect(
+      contrastResults.violations,
+      'Expected 0 color-contrast violations here — this documents that axe ' +
+        'cannot detect the low icon-vs-background contrast a human sees, ' +
+        'because emoji glyph color is not controlled by CSS `color`.'
+    ).toEqual([]);
+  });
+});
+
+function formatViolations(
+  violations: { id: string; impact?: string | null; help: string; nodes: { target: string[] }[] }[]
+): string {
+  if (violations.length === 0) return 'No violations';
+
+  return violations
+    .map(
+      (v) =>
+        `${v.id} (${v.impact}): ${v.help} — ${v.nodes.length} node(s): ${v.nodes
+          .map((n) => n.target.join(' '))
+          .join(', ')}`
+    )
+    .join('\n');
+}

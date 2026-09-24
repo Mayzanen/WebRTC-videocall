@@ -1,0 +1,66 @@
+.controls-container {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.control-button {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.control-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.control-button:active {
+  transform: scale(0.95);
+}
+
+.control-button.active {
+  background-color: #4a5568;
+  color: white;
+}
+
+.control-button.inactive {
+  background-color: #e53e3e;
+  color: white;
+}
+
+.control-button.hangup {
+  background-color: #e53e3e;
+  color: white;
+}
+
+.control-button.hangup:hover {
+  background-color: #c53030;
+}
+
+/* Focus styles for accessibility */
+.control-button:focus {
+  outline: 3px solid #4299e1;
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .controls-container {
+    gap: 12px;
+  }
+
+  .control-button {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+}

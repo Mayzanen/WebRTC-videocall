@@ -1,0 +1,15 @@
+general: {
+	json = "indented"
+
+	# Plain WebSocket (SSL terminated by NGINX)
+	ws = true
+	ws_port = 8089
+	ws_ip = "0.0.0.0"
+
+	# Secure WebSocket disabled (NGINX handles TLS)
+	wss = false
+	wss_port = 8989
+
+	ws_logging = "err,warn"
+	ws_acl = ""
+}

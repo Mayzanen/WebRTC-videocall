@@ -1,0 +1,36 @@
+﻿import { defineConfig, devices } from '@playwright/test';
+
+export default defineConfig({
+  testDir: './tests',
+  fullyParallel: true,
+  reporter: 'html',
+  use: {
+    baseURL: process.env.BASE_URL ?? 'http://localhost:5173',
+    trace: 'on-first-retry',
+    ignoreHTTPSErrors: true,
+  },
+  webServer: process.env.BASE_URL
+    ? undefined
+    : {
+        command: 'npm run dev',
+        url: 'http://localhost:5173',
+        reuseExistingServer: !process.env.CI,
+      },
+  projects: [
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        // Allow getUserMedia() to succeed without real hardware by feeding
+        // Chromium a synthetic camera/mic. Needed for the Call page, which
+        // requests media as soon as it mounts.
+        launchOptions: {
+          args: [
+            '--use-fake-device-for-media-stream',
+            '--use-fake-ui-for-media-stream',
+          ],
+        },
+      },
+    },
+  ],
+});

@@ -1,0 +1,309 @@
+﻿import { JanusClient, JanusResponse } from '@services/janus';
+
+export interface WebRTCConfig {
+  iceServers: RTCIceServer[];
+}
+
+export interface VideoRoomOptions {
+  roomId: string | number;
+  displayName: string;
+  audio?: boolean;
+  video?: boolean;
+}
+
+export interface RemoteFeed {
+  id: number;
+  display: string;
+  stream: MediaStream | null;
+}
+
+// Tracks one remote publisher: its own Janus handle + RTCPeerConnection
+interface SubscriberSession {
+  handleId: number;
+  pc: RTCPeerConnection;
+  stream: MediaStream;
+}
+
+export class WebRTCManager {
+  private janusClient: JanusClient;
+  private config: WebRTCConfig;
+
+  // Publisher side
+  private publisherHandleId: number | null = null;
+  private publisherPc: RTCPeerConnection | null = null;
+  private localStream: MediaStream | null = null;
+  private roomId: string | number | null = null;
+
+  // Subscriber side: one entry per remote publisher
+  private subscribers: Map<number, SubscriberSession> = new Map();
+
+  // Callbacks
+  private onLocalStreamCb?: (stream: MediaStream) => void;
+  private onRemoteStreamCb?: (feedId: number, stream: MediaStream, display: string) => void;
+  private onRemoveFeedCb?: (feedId: number) => void;
+
+  constructor(janusUrl: string, config: WebRTCConfig) {
+    this.janusClient = new JanusClient(janusUrl);
+    this.config = config;
+
+    this.janusClient.setEventHandlers({
+      onMessage: (msg) => this.handleJanusMessage(msg),
+      onError: (err) => console.error(`[WebRTC] Janus error:`, err),
+    });
+  }
+
+  // ─── Public API ────────────────────────────────────────────────────────────
+
+  async initialize(): Promise<void> {
+    await this.janusClient.connect();
+    await this.janusClient.createSession();
+  }
+
+  async joinRoom(options: VideoRoomOptions): Promise<void> {
+    this.roomId = options.roomId;
+
+    // 1. Attach publisher handle
+    this.publisherHandleId = await this.janusClient.attach('janus.plugin.videoroom');
+
+    // Ensure the room exists (rooms are not pre-provisioned; create on demand)
+    await this.ensureRoomExists(this.publisherHandleId, options.roomId);
+
+    // 2. Get local media
+    this.localStream = await this.getUserMedia({
+      audio: options.audio !== false,
+      video: options.video !== false,
+    });
+    this.onLocalStreamCb?.(this.localStream);
+
+    // 3. Create publisher PeerConnection (send-only)
+    this.publisherPc = this.createPeerConnection(this.publisherHandleId);
+
+    this.localStream.getTracks().forEach((track) => {
+      this.publisherPc!.addTrack(track, this.localStream!);
+    });
+
+    // 4. Create offer and send join+offer to Janus
+    const offer = await this.publisherPc.createOffer({
+      offerToReceiveAudio: false,
+      offerToReceiveVideo: false,
+    });
+    await this.publisherPc.setLocalDescription(offer);
+
+    await this.janusClient.sendPluginMessage(
+      this.publisherHandleId,
+      { request: 'join', room: options.roomId, ptype: 'publisher', display: options.displayName },
+      offer
+    );
+  }
+
+  async leaveRoom(): Promise<void> {
+    if (this.publisherHandleId) {
+      await this.janusClient.sendPluginMessage(this.publisherHandleId, { request: 'leave' });
+    }
+    this.cleanup();
+  }
+
+  disconnect(): void {
+    this.cleanup();
+    this.janusClient.disconnect();
+  }
+
+  toggleAudio(enabled: boolean): void {
+    this.localStream?.getAudioTracks().forEach((t) => (t.enabled = enabled));
+  }
+
+  toggleVideo(enabled: boolean): void {
+    this.localStream?.getVideoTracks().forEach((t) => (t.enabled = enabled));
+  }
+
+  onLocalStream(cb: (stream: MediaStream) => void): void {
+    this.onLocalStreamCb = cb;
+  }
+
+  onRemoteStream(cb: (feedId: number, stream: MediaStream, display: string) => void): void {
+    this.onRemoteStreamCb = cb;
+  }
+
+  onRemoveFeed(cb: (feedId: number) => void): void {
+    this.onRemoveFeedCb = cb;
+  }
+
+  getLocalStream(): MediaStream | null {
+    return this.localStream;
+  }
+
+  isConnected(): boolean {
+    return this.janusClient.isConnected();
+  }
+
+  // ─── Janus message handler ─────────────────────────────────────────────────
+
+  private async handleJanusMessage(message: JanusResponse): Promise<void> {
+    const handleId = message.handle_id as number | undefined;
+    const pluginData = message.plugindata?.data;
+
+    // ── Publisher handle events ──
+    if (handleId === this.publisherHandleId) {
+      if (message.jsep) {
+        // Janus answered our publish offer
+        await this.publisherPc!.setRemoteDescription(new RTCSessionDescription(message.jsep));
+        console.log('[WebRTC] Publisher SDP exchange complete');
+      }
+
+      if (pluginData?.videoroom === 'joined') {
+        console.log('[WebRTC] Joined room, existing publishers:', pluginData.publishers);
+        const publishers = (pluginData.publishers as Array<{ id: number; display: string }>) ?? [];
+        for (const pub of publishers) {
+          await this.subscribeToFeed(pub.id, pub.display);
+        }
+      }
+
+      if (pluginData?.videoroom === 'event') {
+        // New publisher(s) joined
+        const newPublishers = (pluginData.publishers as Array<{ id: number; display: string }>) ?? [];
+        for (const pub of newPublishers) {
+          if (!this.subscribers.has(pub.id)) {
+            await this.subscribeToFeed(pub.id, pub.display);
+          }
+        }
+
+        // Publisher(s) left
+        const unpublished = pluginData.unpublished as number | 'ok' | undefined;
+        if (unpublished && unpublished !== 'ok') {
+          await this.removeSubscriber(unpublished);
+        }
+
+        const leaving = pluginData.leaving as number | 'ok' | undefined;
+        if (leaving && leaving !== 'ok') {
+          await this.removeSubscriber(leaving);
+        }
+      }
+
+      return;
+    }
+
+    // ── Subscriber handle events ──
+    for (const [feedId, sub] of this.subscribers) {
+      if (sub.handleId !== handleId) continue;
+
+      if (message.jsep) {
+        // Janus sent an offer for this remote feed — answer it
+        await sub.pc.setRemoteDescription(new RTCSessionDescription(message.jsep));
+        const answer = await sub.pc.createAnswer();
+        await sub.pc.setLocalDescription(answer);
+
+        await this.janusClient.sendPluginMessage(
+          sub.handleId,
+          { request: 'start', room: this.roomId },
+          answer
+        );
+        console.log(`[WebRTC] Subscriber SDP exchange complete for feed ${feedId}`);
+      }
+      break;
+    }
+  }
+
+  // ─── Subscribe to a remote publisher ──────────────────────────────────────
+
+  private async subscribeToFeed(feedId: number, display: string): Promise<void> {
+    console.log(`[WebRTC] Subscribing to feed ${feedId} (${display})`);
+
+    const handleId = await this.janusClient.attach('janus.plugin.videoroom');
+    const stream = new MediaStream();
+    const pc = this.createPeerConnection(handleId);
+
+    pc.ontrack = (event) => {
+      console.log(`[WebRTC] Track received from feed ${feedId}:`, event.track.kind);
+      stream.addTrack(event.track);
+      this.onRemoteStreamCb?.(feedId, stream, display);
+    };
+
+    this.subscribers.set(feedId, { handleId, pc, stream });
+
+    // Ask Janus to start forwarding this feed to us
+    await this.janusClient.sendPluginMessage(handleId, {
+      request: 'join',
+      room: this.roomId,
+      ptype: 'subscriber',
+      feed: feedId,
+    });
+  }
+
+  // ─── Remove subscriber when publisher leaves ───────────────────────────────
+
+  private async removeSubscriber(feedId: number): Promise<void> {
+    const sub = this.subscribers.get(feedId);
+    if (!sub) return;
+
+    console.log(`[WebRTC] Removing subscriber for feed ${feedId}`);
+    sub.pc.close();
+    sub.stream.getTracks().forEach((t) => t.stop());
+    this.subscribers.delete(feedId);
+    this.onRemoveFeedCb?.(feedId);
+  }
+
+  // ─── Ensure the room exists before joining ─────────────────────────────────
+
+  private async ensureRoomExists(handleId: number, roomId: string | number): Promise<void> {
+    try {
+      const response = await this.janusClient.sendPluginMessage(handleId, {
+        request: 'create',
+        room: roomId,
+        publishers: 8,
+      });
+
+      console.log('[WebRTC] create room response:', JSON.stringify(response));
+
+      const error = response.plugindata?.data?.error_code as number | undefined;
+      // 427 = JANUS_VIDEOROOM_ERROR_ROOM_EXISTS -> room already there, safe to ignore
+      if (error && error !== 427) {
+        console.warn('[WebRTC] Unexpected error creating room:', response.plugindata?.data);
+      }
+    } catch (err) {
+      console.warn('[WebRTC] Failed to ensure room exists:', err);
+    }
+  }
+
+  // ─── Helpers ──────────────────────────────────────────────────────────────
+
+  private createPeerConnection(handleId: number): RTCPeerConnection {
+    const pc = new RTCPeerConnection(this.config);
+
+    pc.onicecandidate = (event) => {
+      this.janusClient.trickle(handleId, event.candidate ?? null);
+    };
+
+    pc.onconnectionstatechange = () => {
+      console.log(`[WebRTC] PC state (handle ${handleId}):`, pc.connectionState);
+    };
+
+    return pc;
+  }
+
+  private async getUserMedia(constraints: MediaStreamConstraints): Promise<MediaStream> {
+    try {
+      return await navigator.mediaDevices.getUserMedia(constraints);
+    } catch {
+      throw new Error('Failed to access camera/microphone');
+    }
+  }
+
+  private cleanup(): void {
+    this.localStream?.getTracks().forEach((t) => t.stop());
+    this.localStream = null;
+
+    this.publisherPc?.close();
+    this.publisherPc = null;
+    this.publisherHandleId = null;
+
+    for (const [feedId] of this.subscribers) {
+      this.removeSubscriber(feedId);
+    }
+    this.subscribers.clear();
+
+    this.roomId = null;
+    this.onLocalStreamCb = undefined;
+    this.onRemoteStreamCb = undefined;
+    this.onRemoveFeedCb = undefined;
+  }
+}

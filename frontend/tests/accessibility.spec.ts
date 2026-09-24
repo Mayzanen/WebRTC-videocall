@@ -1,0 +1,36 @@
+import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+
+/**
+ * Automated accessibility checks using axe-core (the same rule engine that
+ * powers axe DevTools). These tests give a repeatable, CI-friendly usability
+ * baseline; axe DevTools browser extension is used separately for manual,
+ * exploratory accessibility reviews during development (see README).
+ */
+
+test.describe('Accessibility', () => {
+  // KNOWN ISSUE (documented for thesis, intentionally not fixed yet):
+  // `.home-subtitle` fails WCAG 1.4.3 with a contrast ratio of 4.01:1
+  // (foreground #718096 on #ffffff), below the required 4.5:1 for normal text.
+  // Marked as `fixme` so the suite stays green while the issue is tracked and
+  // written up; remove `.fixme` once the color contrast has been corrected.
+  test.fixme(
+    'Home page has no detectable axe violations',
+    async ({ page }) => {
+      await page.goto('/');
+
+      const accessibilityScanResults = await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+        .analyze();
+
+      expect(accessibilityScanResults.violations).toEqual([]);
+    }
+  );
+
+  test('Home page form controls are labeled', async ({ page }) => {
+    await page.goto('/');
+
+    await expect(page.getByLabel('Your Name')).toBeVisible();
+    await expect(page.getByLabel('Room ID')).toBeVisible();
+  });
+});

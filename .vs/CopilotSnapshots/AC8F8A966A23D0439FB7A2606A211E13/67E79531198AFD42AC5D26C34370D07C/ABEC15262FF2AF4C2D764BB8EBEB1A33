@@ -1,0 +1,42 @@
+﻿import { test, expect } from '@playwright/test';
+
+test.describe('Home page', () => {
+  test('displays the join form with name and room fields', async ({ page }) => {
+    await page.goto('/');
+
+    await expect(page.getByRole('heading', { name: 'VideoRTC' })).toBeVisible();
+    await expect(page.getByLabel('Your Name')).toBeVisible();
+    await expect(page.getByLabel('Room ID')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Join Call' })).toBeVisible();
+  });
+
+  test('generates a random room ID when clicking Generate', async ({ page }) => {
+    await page.goto('/');
+
+    const roomInput = page.getByLabel('Room ID');
+    await expect(roomInput).toHaveValue('');
+
+    await page.getByRole('button', { name: 'Generate' }).click();
+
+    await expect(roomInput).not.toHaveValue('');
+  });
+
+  test('navigates to the call page after filling the form and joining', async ({ page }) => {
+    await page.goto('/');
+
+    await page.getByLabel('Your Name').fill('Test User');
+    await page.getByLabel('Room ID').fill('test-room-123');
+    await page.getByRole('button', { name: 'Join Call' }).click();
+
+    await expect(page).toHaveURL(/\/call\?room=test-room-123&name=Test\+User/);
+  });
+
+  test('does not navigate when required fields are empty', async ({ page }) => {
+    await page.goto('/');
+
+    await page.getByRole('button', { name: 'Join Call' }).click();
+
+    // Native HTML5 "required" validation should block navigation
+    await expect(page).toHaveURL('/');
+  });
+});

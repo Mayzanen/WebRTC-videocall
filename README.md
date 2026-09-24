@@ -1,0 +1,443 @@
+# VideoRTC - WebRTC Video Call Application
+
+Browser-based multi-participant video-call application built with **React**,
+**TypeScript**, **Janus Gateway**, and **WebRTC**. Janus VideoRoom acts as an
+SFU: each browser publishes one local stream to Janus and receives remote
+participant streams from Janus. This is not a peer-to-peer mesh application.
+
+## 🚀 Features
+
+- 📹 Multi-participant real-time video calling through the Janus VideoRoom SFU
+- 🎤 Audio/Video controls
+- 🔒 Secure HTTPS connections
+- 🐳 Docker-based deployment
+- 🎨 Modern, responsive UI
+- ♿ Accessible controls
+
+## 🏗️ Architecture
+
+### Tech Stack
+
+- **Frontend**: React 18 + TypeScript + Vite
+- **WebRTC Gateway**: Janus Gateway (VideoRoom plugin)
+- **TURN/STUN**: Coturn server for NAT traversal
+- **Reverse Proxy**: NGINX with SSL termination
+- **Containerization**: Docker + Docker Compose
+
+### Project Structure
+
+```
+videortc/
+├── frontend/                 # React frontend application
+│   ├── src/
+│   │   ├── components/      # React components
+│   │   ├── pages/           # Page components
+│   │   ├── services/        # Janus & WebRTC services
+│   │   ├── App.tsx          # Main app component
+│   │   └── main.tsx         # Entry point
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── vite.config.ts
+│
+├── infrastructure/          # Configuration files
+│   ├── janus/              # Janus Gateway config
+│   ├── coturn/             # TURN/STUN server config
+│   ├── nginx/              # NGINX reverse proxy config
+│   └── ssl/                # SSL certificates
+│
+├── docker/                  # Dockerfiles
+│   ├── frontend.Dockerfile
+│   ├── janus.Dockerfile
+│   └── nginx.Dockerfile
+│
+├── docker-compose.yml       # Docker orchestration
+└── README.md
+```
+
+## 📋 Prerequisites
+
+- **Docker** 20.10+
+- **Docker Compose** 2.0+
+- **OpenSSL** (for certificate generation)
+
+## 🔧 Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone <repository-url>
+cd videortc
+```
+
+### 2. Generate SSL Certificates
+
+SSL certificates are required for WebRTC (HTTPS/WSS connections).
+
+**Linux/Mac/WSL:**
+```bash
+cd infrastructure/ssl
+chmod +x generate-certs.sh
+./generate-certs.sh
+cd ../..
+```
+
+**Windows (PowerShell):**
+```powershell
+cd infrastructure\ssl
+.\generate-certs.ps1
+cd ..\..
+```
+
+### 3. Build and Start Services
+
+```bash
+docker compose up -d --build
+```
+
+This will start:
+- **Frontend** on port 5173, also proxied through NGINX
+- **Janus Gateway** on ports 8088, 8089, 8188, and 20000-20200/UDP
+- **Coturn** on ports 3478 and 5349 (TCP/UDP), with 10000-10200/UDP relay ports
+- **NGINX** on ports 80 (HTTP redirect) and 443 (HTTPS)
+
+### 4. Access the Application
+
+Open your browser and navigate to:
+
+```
+https://videocall.local/
+```
+
+⚠️ **Note**: You'll see a security warning because we're using self-signed certificates. This is normal for development.
+
+The generated certificate is valid for `videocall.local`, `localhost`,
+`127.0.0.1`, and the current deployment IP. For the controlled two-machine
+test, map `videocall.local` to `91.157.161.57` in the hosts file on both
+machines. Ensure the certificate, `VITE_JANUS_WS_URL`, `VITE_TURN_SERVER`, and
+Coturn's `external-ip` match the deployed host.
+
+**How to proceed:**
+- **Firefox**: Click "Advanced" → "Accept the Risk and Continue"
+- **Chrome**: Click "Advanced" → "Proceed to localhost (unsafe)"
+- **Safari**: Click "Show Details" → "visit this website"
+
+## 🎮 Usage
+
+### Starting a Video Call
+
+1. **Enter Your Name**: Type your display name
+2. **Create/Join Room**: 
+   - Click "Generate" to create a new room, or
+   - Enter an existing Room ID
+3. **Click "Join Call"**: Grant camera/microphone permissions when prompted
+4. **Share Room ID**: Give the Room ID to someone else to join
+
+### During a Call
+
+- **🎤 Toggle Audio**: Mute/unmute your microphone
+- **📹 Toggle Video**: Turn camera on/off
+- **📞 Hang Up**: End the call and return to home
+
+## 🐳 Docker Services
+
+### View Logs
+
+```bash
+# All services
+docker compose logs -f
+
+# Specific service
+docker compose logs -f frontend
+docker compose logs -f janus
+docker compose logs -f nginx
+docker compose logs -f coturn
+```
+
+### Restart Services
+
+```bash
+# All services
+docker compose restart
+
+# Specific service
+docker compose restart frontend
+```
+
+### Stop Services
+
+```bash
+docker compose down
+```
+
+### Rebuild After Changes
+
+```bash
+docker compose up -d --build
+```
+
+## 🔍 Troubleshooting
+
+### Camera/Microphone Not Working
+
+1. **Check browser permissions**: Make sure you've granted access
+2. **Use HTTPS**: WebRTC requires secure connections
+3. **Check browser console**: Look for error messages
+
+### Connection Issues
+
+1. **Check Janus logs**:
+   ```bash
+   docker compose logs janus
+   ```
+
+2. **Verify Coturn is running**:
+   ```bash
+   docker ps | grep coturn
+   ```
+
+3. **Test STUN server** (in browser console):
+   ```javascript
+   const pc = new RTCPeerConnection({
+	 iceServers: [{ urls: 'stun:localhost:3478' }]
+   });
+   ```
+
+### WebSocket Connection Failed
+
+1. **Check NGINX logs**:
+   ```bash
+   docker compose logs nginx
+   ```
+
+2. **Verify WebSocket endpoint**: Should be `wss://localhost/janus`
+
+3. **Check NGINX config**: Ensure WebSocket proxy is configured correctly
+
+### Docker Build Issues
+
+1. **Clear Docker cache**:
+   ```bash
+   docker compose down
+   docker system prune -a
+   docker compose up -d --build
+   ```
+
+2. **Check disk space**: Janus image is large (~2GB)
+
+## 🔐 Security Notes
+
+### Development
+
+- Self-signed certificates are used
+- Static TURN credentials (`videouser:videopass`)
+- No authentication or authorization
+
+### Production Recommendations
+
+⚠️ **DO NOT use this setup in production without:**
+
+1. **Real SSL Certificates**: Use Let's Encrypt or commercial CA
+2. **TURN Authentication**: Implement dynamic credentials with REST API
+3. **User Authentication**: Add login/signup system
+4. **Rate Limiting**: Protect against abuse
+5. **Monitoring**: Set up logging and alerting
+6. **Network Security**: Configure firewall rules
+7. **HTTPS Only**: Remove HTTP redirect option
+
+## 📚 API Documentation
+
+### Environment Variables
+
+Frontend (`.env` or Docker Compose):
+```env
+VITE_JANUS_WS_URL=wss://localhost/janus
+VITE_TURN_SERVER=turn:localhost:3478
+VITE_TURN_USERNAME=videouser
+VITE_TURN_CREDENTIAL=videopass
+```
+
+`VITE_*` values are exposed to the browser. The included static TURN
+credentials are intended only for controlled development/testing.
+
+### Janus Configuration
+
+Located in `infrastructure/janus/janus.jcfg`:
+- WebSocket transport on port 8089
+- VideoRoom plugin enabled
+- ICE/STUN/TURN configuration
+
+### NGINX Configuration
+
+Located in `infrastructure/nginx/nginx.conf`:
+- HTTPS on port 443
+- WebSocket proxy to Janus
+- Security headers
+- Rate limiting
+
+## 🧪 Testing
+
+### Manual Testing
+
+1. Open two browser windows/tabs
+2. Create a room in one window
+3. Join the same room in another window
+4. Test audio/video controls
+
+### Network Testing
+
+Test from different networks (e.g., mobile hotspot) to verify TURN server functionality.
+
+### End-to-End & Accessibility Testing (Playwright)
+
+The frontend has a small Playwright suite covering smoke/navigation tests
+(`tests/home.spec.ts`), Call page controls tests (`tests/call.spec.ts`), and
+automated accessibility checks (`tests/accessibility.spec.ts`).
+
+**Running the Home page tests (no Docker stack required):**
+
+```bash
+cd frontend
+npm ci
+npx playwright install --with-deps chromium   # one-time browser install
+npm run test
+```
+
+`playwright.config.ts` starts the Vite dev server automatically (`npm run dev`)
+and points the tests at `http://localhost:5173`.
+
+Use `npm run test:ui` for the interactive Playwright UI runner.
+
+**Running the Call page controls tests (requires the Docker Compose stack):**
+
+`tests/call.spec.ts` exercises the real in-call Controls UI (mute/camera/hangup),
+so it needs a live Janus/TURN/NGINX stack — the Call page only renders those
+buttons after a real WebRTC/Janus session is established. Configure
+`VITE_JANUS_WS_URL` for the test host, then use `BASE_URL` and, where required,
+`NGINX_HOST_IP` to map the browser's `localhost` lookup to NGINX (PowerShell
+example):
+
+```powershell
+docker compose up -d
+$ip = (docker inspect videortc-nginx | ConvertFrom-Json)[0].NetworkSettings.Networks.'videortc-network'.IPAddress
+$env:BASE_URL = 'https://localhost'
+$env:NGINX_HOST_IP = $ip
+npx playwright test tests/call.spec.ts
+```
+
+> **Note:** on Windows/Alpine-based containers, the Playwright npm package and
+> browser binaries require a glibc environment. If running tests inside Docker,
+> use the official `mcr.microsoft.com/playwright` image (matching the
+> `@playwright/test` version in `package.json`) rather than the Alpine-based
+> `frontend` service container.
+
+Accessibility is measured with two complementary tools:
+
+- **Automated checks (`@axe-core/playwright`)** — the same axe-core rule engine that
+  powers axe DevTools, wired into `tests/accessibility.spec.ts` (Home page) and
+  `tests/call.spec.ts` (in-call Controls bar) so it can run headlessly and in CI,
+  scanning against WCAG 2.0/2.1 A and AA rules.
+  - **Known issue:** the `Home page has no detectable axe violations` test is
+    currently marked `test.fixme(...)` (skipped) because it detects a real,
+    unresolved WCAG 1.4.3 color-contrast violation on `.home-subtitle`
+    (contrast ratio 4.01:1, foreground `#718096` on `#ffffff`, below the
+    required 4.5:1 for normal text). This is intentionally left unfixed and
+    documented rather than silently patched; remove `.fixme` once the
+    contrast issue has been corrected.
+  - The Call page `controls bar has no detectable axe violations` test asserts
+    for real (it is not skipped) and currently passes: axe-core does not flag
+    the Controls bar, even though its visual styling (icon/emoji buttons) is
+    considered unpolished and is tracked separately as a design improvement,
+    not an accessibility regression.
+  - **Documented gap:** `tests/call.spec.ts` also includes a test that
+    explicitly demonstrates this limitation. The mute/camera/hangup buttons
+    use emoji glyphs (🎤/🔇, 📹/📷, 📞) that read as low-contrast and hard to
+    tell apart from their circular background in the actual UI. axe's
+    `color-contrast` rule reports zero violations for these buttons anyway,
+    because emoji glyphs are rendered by the OS/font emoji renderer with
+    their own built-in colors — they are not affected by the CSS `color`
+    property on `.control-button` (see `Controls.css`), which is the only
+    thing axe's contrast check compares against the background. In other
+    words, axe never evaluates the actual glyph-vs-background contrast a
+    person sees; it only checks CSS-driven text color. This is a concrete,
+    reproducible example (for the thesis) of a blind spot in automated
+    accessibility tooling — catching it requires manual/visual review, not
+    just CI checks. The icon styling is intentionally left unfixed for now
+    and will be addressed in a later iteration.
+- **Manual checks (axe DevTools browser extension)** — install the
+  [axe DevTools extension](https://www.deque.com/axe/devtools/) for Chrome/Firefox
+  and run a scan on the Home and Call pages during development. This catches
+  issues that require human judgement (e.g. focus order, color contrast in
+  context, screen reader announcements) that are harder to fully automate,
+  especially on the media-heavy Call page.
+
+## 📦 Building for Production
+
+### Frontend
+
+```bash
+cd frontend
+npm ci
+npm run build
+```
+
+Output in `frontend/dist/`
+
+### Docker Images
+
+```bash
+# Build all images
+docker compose build
+
+# Tag and push to registry
+docker tag videortc-frontend:latest your-registry/videortc-frontend:latest
+docker push your-registry/videortc-frontend:latest
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📝 License
+
+This project is for educational purposes. See LICENSE file for details.
+
+## 🆘 Support
+
+For issues and questions:
+1. Check the troubleshooting section
+2. Review Docker logs
+3. Open an issue on GitHub
+
+## 🎯 Roadmap
+
+MVP (Current):
+- [x] Multi-participant video calling through the Janus VideoRoom SFU
+- [x] Audio/video controls
+- [x] Docker deployment
+- [x] Self-signed SSL
+
+Future Enhancements:
+- [ ] Multi-user rooms (3+ participants)
+- [ ] Screen sharing
+- [ ] Chat functionality
+- [ ] Recording
+- [ ] User authentication
+- [ ] Room management UI
+- [ ] Mobile app (React Native)
+- [x] E2E/accessibility testing with Playwright + axe-core (automated) and axe DevTools (manual)
+- [ ] Further accessibility improvements based on axe findings (e.g. Call page contrast/focus order)
+
+## 📖 Resources
+
+- [Janus Gateway Documentation](https://janus.conf.meetecho.com/docs/)
+- [WebRTC MDN Guide](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API)
+- [Coturn Documentation](https://github.com/coturn/coturn)
+- [React Router Documentation](https://reactrouter.com/)
+
+---
+
+**Made with ❤️ for learning WebRTC**

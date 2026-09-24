@@ -1,0 +1,167 @@
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { LocalVideo } from '@components/LocalVideo';
+import { RemoteVideo } from '@components/RemoteVideo';
+import { Controls } from '@components/Controls';
+import { WebRTCManager, type FeedId } from '@services/webrtc';
+import './Call.css';
+
+interface RemoteFeedState {
+  stream: MediaStream;
+  display: string;
+}
+
+export function Call() {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const roomId = searchParams.get('room');
+  const displayName = searchParams.get('name');
+
+  const webrtcRef = useRef<WebRTCManager | null>(null);
+
+  const [localStream, setLocalStream] = useState<MediaStream | null>(null);
+  const [remoteFeeds, setRemoteFeeds] = useState<Map<FeedId, RemoteFeedState>>(new Map());
+  const [audioEnabled, setAudioEnabled] = useState(true);
+  const [videoEnabled, setVideoEnabled] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [status, setStatus] = useState<string>('Connecting...');
+
+  useEffect(() => {
+    if (!roomId || !displayName) {
+      navigate('/');
+      return;
+    }
+
+    const janusUrl = import.meta.env.VITE_JANUS_WS_URL || 'wss://localhost/janus';
+    const turnServer = import.meta.env.VITE_TURN_SERVER || 'turn:localhost:3478';
+    const turnUsername = import.meta.env.VITE_TURN_USERNAME || 'videouser';
+    const turnCredential = import.meta.env.VITE_TURN_CREDENTIAL || 'videopass';
+    const turnUrls = turnServer.includes('?transport=')
+      ? [turnServer]
+      : [`${turnServer}?transport=udp`, `${turnServer}?transport=tcp`];
+
+    const webrtc = new WebRTCManager(janusUrl, {
+        iceServers: [
+            { urls: 'stun:stun.l.google.com:19302' },
+            {
+                urls: turnUrls,
+                username: turnUsername,
+                credential: turnCredential,
+            },
+        ],
+    });
+
+    webrtcRef.current = webrtc;
+    let mounted = true;
+
+    webrtc.onLocalStream((stream) => {
+      if (mounted) { setLocalStream(stream); setStatus('Connected'); }
+    });
+
+    webrtc.onRemoteStream((feedId, stream, display) => {
+      if (mounted) {
+        setRemoteFeeds((prev) => new Map(prev).set(feedId, { stream, display }));
+      }
+    });
+
+    webrtc.onRemoveFeed((feedId) => {
+      if (mounted) {
+        setRemoteFeeds((prev) => {
+          const next = new Map(prev);
+          next.delete(feedId);
+          return next;
+        });
+      }
+    });
+
+    const initializeCall = async () => {
+      try {
+        setStatus('Initializing...');
+        await webrtc.initialize();
+        if (!mounted) return;
+
+        setStatus('Joining room...');
+        await webrtc.joinRoom({ roomId, displayName, audio: true, video: true });
+      } catch (err) {
+        console.error('[Call] Error:', err);
+        if (mounted) {
+          setError(err instanceof Error ? err.message : 'Failed to join call');
+          setStatus('Error');
+        }
+      }
+    };
+
+    initializeCall();
+
+    return () => {
+      mounted = false;
+      webrtcRef.current = null;
+      webrtc.disconnect();
+    };
+  }, [roomId, displayName, navigate]);
+
+  const handleToggleAudio = () => {
+    const newState = !audioEnabled;
+    setAudioEnabled(newState);
+    webrtcRef.current?.toggleAudio(newState);
+  };
+
+  const handleToggleVideo = () => {
+    const newState = !videoEnabled;
+    setVideoEnabled(newState);
+    webrtcRef.current?.toggleVideo(newState);
+  };
+
+  const handleHangup = async () => {
+    try {
+      await webrtcRef.current?.leaveRoom();
+    } finally {
+      navigate('/');
+    }
+  };
+
+  if (error) {
+    return (
+      <div className="call-container">
+        <div className="error-container">
+          <h2>❌ Error</h2>
+          <p>{error}</p>
+          <button onClick={() => navigate('/')} className="back-button">
+            Back to Home
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="call-container">
+      <header className="call-header">
+        <h2>Room: {roomId}</h2>
+        <span className="status">{status}</span>
+      </header>
+
+      <div className="video-grid">
+        {remoteFeeds.size === 0 ? (
+          <RemoteVideo stream={null} displayName="" />
+        ) : (
+          Array.from(remoteFeeds.entries()).map(([feedId, feed]) => (
+            <RemoteVideo key={feedId} stream={feed.stream} displayName={feed.display} />
+          ))
+        )}
+        <div className="local-video-wrapper">
+          <LocalVideo stream={localStream} displayName={displayName ?? 'You'} />
+        </div>
+      </div>
+
+      <Controls
+        audioEnabled={audioEnabled}
+        videoEnabled={videoEnabled}
+        onToggleAudio={handleToggleAudio}
+        onToggleVideo={handleToggleVideo}
+        onHangup={handleHangup}
+      />
+    </div>
+  );
+}

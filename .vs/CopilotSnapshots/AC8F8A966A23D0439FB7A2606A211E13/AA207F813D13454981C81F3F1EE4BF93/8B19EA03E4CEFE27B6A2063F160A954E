@@ -1,0 +1,2 @@
+﻿export { WebRTCManager } from './WebRTCManager';
+export type { WebRTCConfig, VideoRoomOptions, RemoteFeed } from './WebRTCManager';

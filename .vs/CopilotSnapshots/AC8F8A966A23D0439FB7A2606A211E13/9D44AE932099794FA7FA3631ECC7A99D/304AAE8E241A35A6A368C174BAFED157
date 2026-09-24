@@ -1,0 +1,140 @@
+﻿general: {
+	# Global settings
+	configs_folder = "/opt/janus/etc/janus"
+	plugins_folder = "/opt/janus/lib/janus/plugins"
+	transports_folder = "/opt/janus/lib/janus/transports"
+	events_folder = "/opt/janus/lib/janus/events"
+	loggers_folder = "/opt/janus/lib/janus/loggers"
+
+	# Logging
+	debug_level = 4
+	debug_timestamps = true
+	debug_colors = false
+	debug_locks = false
+
+	# API and Admin
+	api_secret = "janusoverlord"
+	admin_secret = "janusoverlord"
+
+	# Session settings
+	session_timeout = 60
+	reclaim_session_timeout = 0
+
+	# Network settings
+	interface = "0.0.0.0"
+
+	# STUN server (Coturn)
+	stun_server = "coturn"
+	stun_port = 3478
+
+	# NAT 1:1 mapping (for Docker)
+	nat_1_1_mapping = ""
+}
+
+certificates: {
+	# SSL/TLS certificates for secure WebSocket
+	cert_pem = "/opt/janus/certs/server.crt"
+	cert_key = "/opt/janus/certs/server.key"
+}
+
+nat: {
+	# ICE settings
+	ice_lite = false
+	ice_tcp = false
+
+	# Port range for RTP/RTCP
+	rtp_port_range = "20000-20200"
+
+	# TURN server configuration (Coturn)
+	turn_server = "coturn"
+	turn_port = 3478
+	turn_type = "udp"
+
+	# TURN REST API (optional, not configured yet)
+	turn_rest_api_key = ""
+	turn_rest_api_method = "GET"
+}
+
+media: {
+	# Media settings
+	ipv6 = false
+	max_nack_queue = 1000
+	rtp_port_range = "10000-10200"
+
+	# Video settings
+	video_port_range = "20000-20200"
+
+	# DTLS settings
+	dtls_timeout = 500
+	dtls_mtu = 1200
+}
+
+# WebSocket transport configuration
+transports: {
+	websockets: {
+		ws = true
+		ws_port = 8089
+		ws_interface = "0.0.0.0"
+
+		# Secure WebSocket
+		wss = false
+		wss_port = 8989
+
+		# WebSocket options
+		ws_logging = "info"
+		ws_acl = ""
+	}
+
+	http: {
+		http = true
+		port = 8088
+		interface = "0.0.0.0"
+
+		# HTTPS
+		https = false
+		secure_port = 8089
+
+		# CORS
+		cors_allowed_origins = "*"
+	}
+}
+
+# Plugin configuration
+plugins: {
+	videoroom: {
+		# Enable VideoRoom plugin
+		room_max = 100
+		publishers_max = 10
+
+		# String room IDs support
+		string_ids = true
+
+		# Lock all rooms
+		lock_rtp_forward = true
+
+		# Admin key
+		admin_key = "supersecret"
+	}
+
+	videocall: {
+		# Enable VideoCall plugin (for 1-on-1 calls)
+		max_sessions = 100
+	}
+
+	echotest: {
+		# Enable EchoTest plugin (for testing)
+	}
+}
+
+# Event handlers (optional - for monitoring/logging)
+events: {
+	broadcast = true
+}
+
+# Logging
+loggers: {
+	# File logging
+	file: {
+		path = "/var/log/janus"
+	}
+}

@@ -1,0 +1,805 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Call\\Call.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\pages\\Call\\Call.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\services\\webrtc\\WebRTCManager.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\services\\webrtc\\WebRTCManager.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\janus\\janus.jcfg||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:infrastructure\\janus\\janus.jcfg||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\RemoteVideo\\RemoteVideo.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\components\\RemoteVideo\\RemoteVideo.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\docker-compose.yml||{06C066C6-04A2-4E5D-8202-439FD4234EF1}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:docker-compose.yml||{06C066C6-04A2-4E5D-8202-439FD4234EF1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\services\\janus\\JanusClient.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\services\\janus\\JanusClient.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\tests\\accessibility.spec.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\tests\\accessibility.spec.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\.dockerignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:.dockerignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\ssl\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:infrastructure\\ssl\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\ssl\\generate-certs.sh||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:infrastructure\\ssl\\generate-certs.sh||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\ssl\\generate-certs.ps1||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:infrastructure\\ssl\\generate-certs.ps1||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\docker\\janus.Dockerfile||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:docker\\janus.Dockerfile||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\coturn\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:infrastructure\\coturn\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\coturn\\turnserver.conf||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:infrastructure\\coturn\\turnserver.conf||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\docker\\nginx.Dockerfile||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:docker\\nginx.Dockerfile||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\nginx\\nginx.conf||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:infrastructure\\nginx\\nginx.conf||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\nginx\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:infrastructure\\nginx\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\tsconfig.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\tsconfig.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\.gitkeep||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\.gitkeep||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\docker\\frontend.Dockerfile||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:docker\\frontend.Dockerfile||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\tsconfig.node.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\tsconfig.node.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\vite.config.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\vite.config.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\package.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\package.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\services\\janus\\types.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\services\\janus\\types.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\services\\janus\\index.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\services\\janus\\index.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\services\\webrtc\\index.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\services\\webrtc\\index.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\LocalVideo\\LocalVideo.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\components\\LocalVideo\\LocalVideo.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\LocalVideo\\index.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\components\\LocalVideo\\index.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\RemoteVideo\\index.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\components\\RemoteVideo\\index.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\RemoteVideo\\RemoteVideo.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\components\\RemoteVideo\\RemoteVideo.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\Controls\\index.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\components\\Controls\\index.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\LocalVideo\\LocalVideo.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\components\\LocalVideo\\LocalVideo.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\Controls\\Controls.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\components\\Controls\\Controls.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\Controls\\Controls.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\components\\Controls\\Controls.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Home\\index.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\pages\\Home\\index.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Home\\Home.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\pages\\Home\\Home.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Home\\Home.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\pages\\Home\\Home.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\vite-env.d.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\vite-env.d.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Call\\index.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\pages\\Call\\index.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Call\\Call.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\pages\\Call\\Call.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\App.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\App.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\App.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\App.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\main.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\src\\main.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\janus\\janus.transport.websockets.jcfg||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:infrastructure\\janus\\janus.transport.websockets.jcfg||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\playwright.config.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\playwright.config.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\janus\\janus.plugin.videoroom.jcfg||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:infrastructure\\janus\\janus.plugin.videoroom.jcfg||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 546,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "janus.plugin.videoroom.jcfg",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\janus\\janus.plugin.videoroom.jcfg",
+              "RelativeDocumentMoniker": "infrastructure\\janus\\janus.plugin.videoroom.jcfg",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\janus\\janus.plugin.videoroom.jcfg",
+              "RelativeToolTip": "infrastructure\\janus\\janus.plugin.videoroom.jcfg",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-09-16T13:20:43.98Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "WebRTCManager.ts",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\services\\webrtc\\WebRTCManager.ts",
+              "RelativeDocumentMoniker": "frontend\\src\\services\\webrtc\\WebRTCManager.ts",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\services\\webrtc\\WebRTCManager.ts",
+              "RelativeToolTip": "frontend\\src\\services\\webrtc\\WebRTCManager.ts",
+              "ViewState": "AgIAAJIAAAAAAAAAAAAIwBgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:43:26.524Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Call.tsx",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Call\\Call.tsx",
+              "RelativeDocumentMoniker": "frontend\\src\\pages\\Call\\Call.tsx",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Call\\Call.tsx",
+              "RelativeToolTip": "frontend\\src\\pages\\Call\\Call.tsx",
+              "ViewState": "AgIAADYAAAAAAAAAAAAQwEUAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:44:53.605Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "RemoteVideo.tsx",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\RemoteVideo\\RemoteVideo.tsx",
+              "RelativeDocumentMoniker": "frontend\\src\\components\\RemoteVideo\\RemoteVideo.tsx",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\RemoteVideo\\RemoteVideo.tsx",
+              "RelativeToolTip": "frontend\\src\\components\\RemoteVideo\\RemoteVideo.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:43:59.971Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": ".dockerignore",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\.dockerignore",
+              "RelativeDocumentMoniker": ".dockerignore",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\.dockerignore",
+              "RelativeToolTip": ".dockerignore",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAiwAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-11T20:39:40.453Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": ".gitignore",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\.gitignore",
+              "RelativeDocumentMoniker": ".gitignore",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\.gitignore",
+              "RelativeToolTip": ".gitignore",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-11T20:39:41.222Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "janus.jcfg",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\janus\\janus.jcfg",
+              "RelativeDocumentMoniker": "infrastructure\\janus\\janus.jcfg",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\janus\\janus.jcfg",
+              "RelativeToolTip": "infrastructure\\janus\\janus.jcfg",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-11T20:40:48.132Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "docker-compose.yml",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\docker-compose.yml",
+              "RelativeDocumentMoniker": "docker-compose.yml",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\docker-compose.yml",
+              "RelativeToolTip": "docker-compose.yml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
+              "WhenOpened": "2026-06-11T20:39:40.967Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "JanusClient.ts",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\services\\janus\\JanusClient.ts",
+              "RelativeDocumentMoniker": "frontend\\src\\services\\janus\\JanusClient.ts",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\services\\janus\\JanusClient.ts",
+              "RelativeToolTip": "frontend\\src\\services\\janus\\JanusClient.ts",
+              "ViewState": "AgIAAI4AAAAAAAAAAAAtwK4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:42:54.529Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "janus.transport.websockets.jcfg",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\janus\\janus.transport.websockets.jcfg",
+              "RelativeDocumentMoniker": "infrastructure\\janus\\janus.transport.websockets.jcfg",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\janus\\janus.transport.websockets.jcfg",
+              "RelativeToolTip": "infrastructure\\janus\\janus.transport.websockets.jcfg",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-17T18:16:55.772Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "accessibility.spec.ts",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\tests\\accessibility.spec.ts",
+              "RelativeDocumentMoniker": "frontend\\tests\\accessibility.spec.ts",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\tests\\accessibility.spec.ts",
+              "RelativeToolTip": "frontend\\tests\\accessibility.spec.ts",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-09-08T17:55:11.923Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "README.md",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\ssl\\README.md",
+              "RelativeDocumentMoniker": "infrastructure\\ssl\\README.md",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\ssl\\README.md",
+              "RelativeToolTip": "infrastructure\\ssl\\README.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-06-11T20:40:12.744Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "playwright.config.ts",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\playwright.config.ts",
+              "RelativeDocumentMoniker": "frontend\\playwright.config.ts",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\playwright.config.ts",
+              "RelativeToolTip": "frontend\\playwright.config.ts",
+              "ViewState": "AgIAAB4AAAAAAAAAAMBdwCsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-09-08T17:55:06.548Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "generate-certs.sh",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\ssl\\generate-certs.sh",
+              "RelativeDocumentMoniker": "infrastructure\\ssl\\generate-certs.sh",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\ssl\\generate-certs.sh",
+              "RelativeToolTip": "infrastructure\\ssl\\generate-certs.sh",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC8AAAAAAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|",
+              "WhenOpened": "2026-06-11T20:40:12.877Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "generate-certs.ps1",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\ssl\\generate-certs.ps1",
+              "RelativeDocumentMoniker": "infrastructure\\ssl\\generate-certs.ps1",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\ssl\\generate-certs.ps1",
+              "RelativeToolTip": "infrastructure\\ssl\\generate-certs.ps1",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-11T20:40:12.929Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "janus.Dockerfile",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\docker\\janus.Dockerfile",
+              "RelativeDocumentMoniker": "docker\\janus.Dockerfile",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\docker\\janus.Dockerfile",
+              "RelativeToolTip": "docker\\janus.Dockerfile",
+              "ViewState": "AgIAAEcAAAAAAAAAAABBwGYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-11T20:40:47.895Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "README.md",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\coturn\\README.md",
+              "RelativeDocumentMoniker": "infrastructure\\coturn\\README.md",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\coturn\\README.md",
+              "RelativeToolTip": "infrastructure\\coturn\\README.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-06-11T20:41:14.212Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "README.md",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\README.md",
+              "RelativeDocumentMoniker": "README.md",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\README.md",
+              "RelativeToolTip": "README.md",
+              "ViewState": "AgIAAGcBAAAAAAAAAABRwLkBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-06-11T20:45:40.541Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "main.tsx",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\main.tsx",
+              "RelativeDocumentMoniker": "frontend\\src\\main.tsx",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\main.tsx",
+              "RelativeToolTip": "frontend\\src\\main.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:44:54.124Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "App.css",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\App.css",
+              "RelativeDocumentMoniker": "frontend\\src\\App.css",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\App.css",
+              "RelativeToolTip": "frontend\\src\\App.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-06-11T20:44:54.07Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "App.tsx",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\App.tsx",
+              "RelativeDocumentMoniker": "frontend\\src\\App.tsx",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\App.tsx",
+              "RelativeToolTip": "frontend\\src\\App.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:44:54.006Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "Call.css",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Call\\Call.css",
+              "RelativeDocumentMoniker": "frontend\\src\\pages\\Call\\Call.css",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Call\\Call.css",
+              "RelativeToolTip": "frontend\\src\\pages\\Call\\Call.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-06-11T20:44:53.952Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "index.ts",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Call\\index.ts",
+              "RelativeDocumentMoniker": "frontend\\src\\pages\\Call\\index.ts",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Call\\index.ts",
+              "RelativeToolTip": "frontend\\src\\pages\\Call\\index.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:44:53.885Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "vite-env.d.ts",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\vite-env.d.ts",
+              "RelativeDocumentMoniker": "frontend\\src\\vite-env.d.ts",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\vite-env.d.ts",
+              "RelativeToolTip": "frontend\\src\\vite-env.d.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:44:53.823Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "Home.css",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Home\\Home.css",
+              "RelativeDocumentMoniker": "frontend\\src\\pages\\Home\\Home.css",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Home\\Home.css",
+              "RelativeToolTip": "frontend\\src\\pages\\Home\\Home.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-06-11T20:44:53.771Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "Home.tsx",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Home\\Home.tsx",
+              "RelativeDocumentMoniker": "frontend\\src\\pages\\Home\\Home.tsx",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Home\\Home.tsx",
+              "RelativeToolTip": "frontend\\src\\pages\\Home\\Home.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:44:53.672Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "index.ts",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Home\\index.ts",
+              "RelativeDocumentMoniker": "frontend\\src\\pages\\Home\\index.ts",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\pages\\Home\\index.ts",
+              "RelativeToolTip": "frontend\\src\\pages\\Home\\index.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:44:53.532Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "Controls.tsx",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\Controls\\Controls.tsx",
+              "RelativeDocumentMoniker": "frontend\\src\\components\\Controls\\Controls.tsx",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\Controls\\Controls.tsx",
+              "RelativeToolTip": "frontend\\src\\components\\Controls\\Controls.tsx",
+              "ViewState": "AgIAABYAAAAAAAAAAIBJwDIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:44:00.156Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "Controls.css",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\Controls\\Controls.css",
+              "RelativeDocumentMoniker": "frontend\\src\\components\\Controls\\Controls.css",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\Controls\\Controls.css",
+              "RelativeToolTip": "frontend\\src\\components\\Controls\\Controls.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-06-11T20:44:00.103Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "LocalVideo.tsx",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\LocalVideo\\LocalVideo.tsx",
+              "RelativeDocumentMoniker": "frontend\\src\\components\\LocalVideo\\LocalVideo.tsx",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\LocalVideo\\LocalVideo.tsx",
+              "RelativeToolTip": "frontend\\src\\components\\LocalVideo\\LocalVideo.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:44:00.039Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "index.ts",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\Controls\\index.ts",
+              "RelativeDocumentMoniker": "frontend\\src\\components\\Controls\\index.ts",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\Controls\\index.ts",
+              "RelativeToolTip": "frontend\\src\\components\\Controls\\index.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:43:59.91Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "RemoteVideo.css",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\RemoteVideo\\RemoteVideo.css",
+              "RelativeDocumentMoniker": "frontend\\src\\components\\RemoteVideo\\RemoteVideo.css",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\RemoteVideo\\RemoteVideo.css",
+              "RelativeToolTip": "frontend\\src\\components\\RemoteVideo\\RemoteVideo.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-06-11T20:43:59.852Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "index.ts",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\RemoteVideo\\index.ts",
+              "RelativeDocumentMoniker": "frontend\\src\\components\\RemoteVideo\\index.ts",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\RemoteVideo\\index.ts",
+              "RelativeToolTip": "frontend\\src\\components\\RemoteVideo\\index.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:43:59.783Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "index.ts",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\LocalVideo\\index.ts",
+              "RelativeDocumentMoniker": "frontend\\src\\components\\LocalVideo\\index.ts",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\LocalVideo\\index.ts",
+              "RelativeToolTip": "frontend\\src\\components\\LocalVideo\\index.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:43:59.718Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "LocalVideo.css",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\LocalVideo\\LocalVideo.css",
+              "RelativeDocumentMoniker": "frontend\\src\\components\\LocalVideo\\LocalVideo.css",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\components\\LocalVideo\\LocalVideo.css",
+              "RelativeToolTip": "frontend\\src\\components\\LocalVideo\\LocalVideo.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-06-11T20:43:59.43Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "index.ts",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\services\\webrtc\\index.ts",
+              "RelativeDocumentMoniker": "frontend\\src\\services\\webrtc\\index.ts",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\services\\webrtc\\index.ts",
+              "RelativeToolTip": "frontend\\src\\services\\webrtc\\index.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:43:26.454Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "index.ts",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\services\\janus\\index.ts",
+              "RelativeDocumentMoniker": "frontend\\src\\services\\janus\\index.ts",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\services\\janus\\index.ts",
+              "RelativeToolTip": "frontend\\src\\services\\janus\\index.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:42:54.592Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "types.ts",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\services\\janus\\types.ts",
+              "RelativeDocumentMoniker": "frontend\\src\\services\\janus\\types.ts",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\src\\services\\janus\\types.ts",
+              "RelativeToolTip": "frontend\\src\\services\\janus\\types.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:42:54.441Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "package.json",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\package.json",
+              "RelativeDocumentMoniker": "frontend\\package.json",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\package.json",
+              "RelativeToolTip": "frontend\\package.json",
+              "ViewState": "AgIAABQAAAAAAAAAAABBwCIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-06-11T20:42:19.262Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "vite.config.ts",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\vite.config.ts",
+              "RelativeDocumentMoniker": "frontend\\vite.config.ts",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\vite.config.ts",
+              "RelativeToolTip": "frontend\\vite.config.ts",
+              "ViewState": "AgIAAAwAAAAAAAAAACBjwCQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-06-11T20:42:18.249Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "tsconfig.node.json",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\tsconfig.node.json",
+              "RelativeDocumentMoniker": "frontend\\tsconfig.node.json",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\tsconfig.node.json",
+              "RelativeToolTip": "frontend\\tsconfig.node.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-06-11T20:42:18.078Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "frontend.Dockerfile",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\docker\\frontend.Dockerfile",
+              "RelativeDocumentMoniker": "docker\\frontend.Dockerfile",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\docker\\frontend.Dockerfile",
+              "RelativeToolTip": "docker\\frontend.Dockerfile",
+              "ViewState": "AgIAAAoAAAAAAAAAAABBwBIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-11T20:42:18.014Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\index.html",
+              "RelativeDocumentMoniker": "frontend\\index.html",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\index.html",
+              "RelativeToolTip": "frontend\\index.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-06-11T20:42:17.534Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": ".gitkeep",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\.gitkeep",
+              "RelativeDocumentMoniker": "frontend\\.gitkeep",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\.gitkeep",
+              "RelativeToolTip": "frontend\\.gitkeep",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-11T20:42:17.318Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "tsconfig.json",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\tsconfig.json",
+              "RelativeDocumentMoniker": "frontend\\tsconfig.json",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\frontend\\tsconfig.json",
+              "RelativeToolTip": "frontend\\tsconfig.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-06-11T20:42:16.829Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "README.md",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\nginx\\README.md",
+              "RelativeDocumentMoniker": "infrastructure\\nginx\\README.md",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\nginx\\README.md",
+              "RelativeToolTip": "infrastructure\\nginx\\README.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-06-11T20:41:50.661Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "nginx.conf",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\nginx\\nginx.conf",
+              "RelativeDocumentMoniker": "infrastructure\\nginx\\nginx.conf",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\nginx\\nginx.conf",
+              "RelativeToolTip": "infrastructure\\nginx\\nginx.conf",
+              "ViewState": "AgIAAFkAAAAAAAAAAABBwIUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-11T20:41:50.529Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "nginx.Dockerfile",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\docker\\nginx.Dockerfile",
+              "RelativeDocumentMoniker": "docker\\nginx.Dockerfile",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\docker\\nginx.Dockerfile",
+              "RelativeToolTip": "docker\\nginx.Dockerfile",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-11T20:41:50.472Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "turnserver.conf",
+              "DocumentMoniker": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\coturn\\turnserver.conf",
+              "RelativeDocumentMoniker": "infrastructure\\coturn\\turnserver.conf",
+              "ToolTip": "C:\\Users\\Matti\\source\\repos\\webrtc-videocall\\infrastructure\\coturn\\turnserver.conf",
+              "RelativeToolTip": "infrastructure\\coturn\\turnserver.conf",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-11T20:41:14.26Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
