@@ -1,36 +1,51 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-/**
- * Automated accessibility checks using axe-core (the same rule engine that
- * powers axe DevTools). These tests give a repeatable, CI-friendly usability
- * baseline; axe DevTools browser extension is used separately for manual,
- * exploratory accessibility reviews during development (see README).
- */
-
 test.describe('Accessibility', () => {
-  // KNOWN ISSUE (documented for thesis, intentionally not fixed yet):
-  // `.home-subtitle` fails WCAG 1.4.3 with a contrast ratio of 4.01:1
-  // (foreground #718096 on #ffffff), below the required 4.5:1 for normal text.
-  // Marked as `fixme` so the suite stays green while the issue is tracked and
-  // written up; remove `.fixme` once the color contrast has been corrected.
-  test.fixme(
-    'Home page has no detectable axe violations',
-    async ({ page }) => {
-      await page.goto('/');
+  test('reports only the known subtitle contrast issue on the home page', async ({ page }) => {
+    await page.goto('/');
 
-      const accessibilityScanResults = await new AxeBuilder({ page })
-        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-        .analyze();
+    const { violations } = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .analyze();
 
-      expect(accessibilityScanResults.violations).toEqual([]);
-    }
-  );
+    expect(violations).toHaveLength(1);
+    expect(violations[0]).toMatchObject({ id: 'color-contrast' });
+    expect(violations[0].nodes).toEqual(
+      expect.arrayContaining([expect.objectContaining({ html: expect.stringContaining('home-subtitle') })])
+    );
+  });
 
-  test('Home page form controls are labeled', async ({ page }) => {
+  test('labels the home page form controls', async ({ page }) => {
     await page.goto('/');
 
     await expect(page.getByLabel('Your Name')).toBeVisible();
     await expect(page.getByLabel('Room ID')).toBeVisible();
+  });
+
+  test('has a logical heading and instruction structure', async ({ page }) => {
+    await page.goto('/');
+
+    await expect(page.getByRole('heading', { level: 1, name: 'VideoRTC' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 3, name: 'How it works:' })).toBeVisible();
+    await expect(page.getByRole('list')).toBeVisible();
+  });
+
+  test('can be operated with the keyboard', async ({ page }) => {
+    await page.goto('/');
+
+    await page.keyboard.press('Tab');
+    await expect(page.getByLabel('Your Name')).toBeFocused();
+    await page.keyboard.type('Test User');
+    await page.keyboard.press('Tab');
+    await expect(page.getByLabel('Room ID')).toBeFocused();
+    await page.keyboard.type('keyboard-room');
+    await page.keyboard.press('Tab');
+    await expect(page.getByRole('button', { name: 'Generate' })).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(page.getByRole('button', { name: 'Join Call' })).toBeFocused();
+    await page.keyboard.press('Enter');
+
+    await expect(page).toHaveURL(/\/call\?room=keyboard-room&name=Test(\+|%20)User/);
   });
 });
