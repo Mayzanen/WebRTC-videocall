@@ -1,0 +1,393 @@
+#
+# bibliography.yaml
+#
+# A bibliography file written in the Hayagriva bibliography format:
+#
+#   https://github.com/typst/hayagriva
+#
+# The format is a subset of YAML. Any compilation dissertation articles
+# should also be added here, with the additional keys "license" (string)
+# "tauthesis-publication" (boolean) and "author-contribution" (multiline string).
+#
+
+webrtc-definition:
+  type: Web
+  title: "WebRTC: Real-Time Communication in Browsers"
+  author: World Wide Web Consortium
+  url:
+    value: https://www.w3.org/TR/2025/REC-webrtc-20250313/
+    date: 2026-08-02
+
+mediacapture-streams:
+  type: Web
+  title: "Media Capture and Streams"
+  author: World Wide Web Consortium
+  url:
+    value: https://www.w3.org/TR/2025/CRD-mediacapture-streams-20251009/
+    date: 2026-08-02
+    
+rfc7667:
+  type: Report
+  title: "RTP Topologies"
+  author:
+    - Westerlund, Magnus
+    - Wenger, Stephan
+  organization: Internet Engineering Task Force
+  publisher: RFC Editor
+  serial-number: RFC 7667
+  date: 2015-11
+  doi: 10.17487/RFC7667
+  url: https://www.rfc-editor.org/info/rfc7667
+
+rfc8825:
+  type: Report
+  title: "Overview: Real-Time Protocols for Browser-Based Applications"
+  author:
+    - Alvestrand, Harald
+  organization: Internet Engineering Task Force
+  publisher: RFC Editor
+  serial-number: RFC 8825
+  date: 2021-01
+  doi: 10.17487/RFC8825
+  url: https://www.rfc-editor.org/info/rfc8825
+
+grozev2015:
+  type: Article
+  title: "Last N: Relevance-based Selectivity for Forwarding Video in Multimedia Conferences"
+  author:
+    - Grozev, Boris
+    - Marinov, Lyubomir
+    - Singh, Varun
+    - Ivov, Emil
+  parent:
+    title: "Proceedings of the 25th ACM Workshop on Network and Operating Systems Support for Digital Audio and Video"
+    serial-number: NOSSDAV '15
+  publisher: Association for Computing Machinery
+  date: 2015
+  page-range: 19-24
+  doi: 10.1145/2736084.2736094
+
+janus-documentation:
+  type: Web
+  title: "Janus - General purpose WebRTC server"
+  author: Meetecho
+  url:
+    value: https://janus.conf.meetecho.com/docs/
+    date: 2026-08-24
+
+janus-core:
+  type: Web
+  title: "Core"
+  author: Meetecho
+  url:
+    value: https://janus.conf.meetecho.com/docs/group__core.html
+    date: 2026-08-24
+
+janus-plugin-api:
+  type: Web
+  title: "Plugin API"
+  author: Meetecho
+  url:
+    value: https://janus.conf.meetecho.com/docs/group__pluginapi.html
+    date: 2026-08-24
+
+janus-api:
+  type: Web
+  title: "RESTful, WebSockets, RabbitMQ, MQTT, Nanomsg and UnixSockets API"
+  author: Meetecho
+  url:
+    value: https://janus.conf.meetecho.com/docs/rest.html
+    date: 2026-08-24
+
+janus-videoroom:
+  type: Web
+  title: "VideoRoom plugin documentation"
+  author: Meetecho
+  url:
+    value: https://janus.conf.meetecho.com/docs/videoroom.html
+    date: 2026-08-24
+
+rfc8445:
+  type: Report
+  title: "Interactive Connectivity Establishment (ICE): A Protocol for Network Address Translator (NAT) Traversal"
+  author:
+    - Keranen, Ari
+    - Holmberg, Christer
+    - Rosenberg, Jonathan
+  organization: Internet Engineering Task Force
+  publisher: RFC Editor
+  serial-number: "RFC 8445"
+  date: 2018-07
+  doi: 10.17487/RFC8445
+  url:
+    value: https://www.rfc-editor.org/rfc/rfc8445
+    date: 2026-08-26
+
+rfc8489:
+  type: Report
+  title: "Session Traversal Utilities for NAT (STUN)"
+  author:
+    - Petit-Huguenin, Marc
+    - Salgueiro, Gonzalo
+    - Rosenberg, Jonathan
+    - Wing, Dan
+    - Mahy, Rohan
+    - Matthews, Philip
+  organization: Internet Engineering Task Force
+  publisher: RFC Editor
+  serial-number: "RFC 8489"
+  date: 2020-02
+  doi: 10.17487/RFC8489
+  url:
+    value: https://www.rfc-editor.org/rfc/rfc8489
+    date: 2026-08-26
+
+rfc8656:
+  type: Report
+  title: "Traversal Using Relays around NAT (TURN): Relay Extensions to Session Traversal Utilities for NAT (STUN)"
+  author:
+    - Reddy, Tirumaleswar
+    - Johnston, Alan
+    - Matthews, Peter
+    - Rosenberg, Jonathan
+  organization: Internet Engineering Task Force
+  publisher: RFC Editor
+  serial-number: "RFC 8656"
+  date: 2020-02
+  doi: 10.17487/RFC8656
+  url:
+    value: https://www.rfc-editor.org/rfc/rfc8656
+    date: 2026-08-26
+
+rfc8835:
+  type: Report
+  title: "Transports for WebRTC"
+  author:
+    - Alvestrand, Harald
+  organization: Internet Engineering Task Force
+  publisher: RFC Editor
+  serial-number: "RFC 8835"
+  date: 2021-01
+  doi: 10.17487/RFC8835
+  url:
+    value: https://www.rfc-editor.org/rfc/rfc8835
+    date: 2026-08-26
+
+wcag21:
+  type: web
+  title: "Web Content Accessibility Guidelines (WCAG) 2.1"
+  author:
+    - Caldwell, Ben
+    - Cooper, Michael
+    - Reid, Loretta Guarino
+    - Vanderheiden, Gregg
+  date: 2018-06-05
+  url:
+    value: https://www.w3.org/TR/2025/REC-WCAG21-20250506/
+    date: 2026-08-27
+
+w3c-accessibility:
+  type: Web
+  title: "Introduction to Web Accessibility"
+  author: "World Wide Web Consortium"
+  url:
+    value: https://www.w3.org/WAI/fundamentals/accessibility-intro/
+    date: 2026-08-27
+
+saavutettavuusdirektiivi:
+  type: Web
+  title: "Directive (EU) 2016/2102 of the European Parliament and of the Council of 26 October 2016 on the accessibility of the websites and mobile applications of public sector bodies"
+  author: "European Parliament and Council of the European Union"
+  url:
+    value: https://eur-lex.europa.eu/eli/dir/2016/2102/oj
+    date: 2026-08-27
+
+digipalvelulaki:
+  type: Web
+  title: "Laki digitaalisten palvelujen tarjoamisesta 306/2019"
+  author: "Finlex"
+  url:
+    value: https://finlex.fi/fi/lainsaadanto/2019/306
+    date: 2026-08-27
+
+wcag-overview:
+  type: Web
+  title: "Web Content Accessibility Guidelines (WCAG) Overview"
+  author: "World Wide Web Consortium"
+  url:
+    value: https://www.w3.org/WAI/standards-guidelines/wcag/
+    date: 2026-08-30
+
+iso29148:
+  type: Book
+  title: "Systems and software engineering — Life cycle processes — Requirements engineering"
+  author:
+    - "International Organization for Standardization"
+    - "International Electrotechnical Commission"
+    - "Institute of Electrical and Electronics Engineers"
+  publisher: "ISO"
+  date: 2018-11
+  serial-number: "ISO/IEC/IEEE 29148:2018"
+
+react-components:
+  type: Web
+  title: "Describing the UI"
+  author: "React"
+  url:
+    value: "https://react.dev/learn/describing-the-ui"
+    date: 2026-09-08
+
+typescript:
+  type: Web
+  title: "The TypeScript Handbook"
+  author: "TypeScript"
+  url:
+    value: "https://www.typescriptlang.org/docs/handbook/intro"
+    date: 2026-09-08
+
+vite:
+  type: Web
+  title: "Getting Started"
+  author: "Vite"
+  url:
+    value: "https://vite.dev/guide/"
+    date: 2026-09-08
+
+webrtc:
+  type: Web
+  title: "WebRTC 1.0: Real-Time Communication Between Browsers"
+  author: "W3C"
+  url:
+    value: "https://www.w3.org/TR/webrtc/"
+    date: 2026-09-08
+
+coturn:
+  type: Web
+  title: "coturn TURN server"
+  author: "coturn"
+  url:
+    value: "https://github.com/coturn/coturn"
+    date: 2026-09-08
+
+docker-compose:
+  type: Web
+  title: "Docker Compose"
+  author: "Docker"
+  url:
+    value: "https://docs.docker.com/compose/"
+    date: 2026-09-08
+
+nginx-reverse-proxy:
+  type: Web
+  title: "NGINX Reverse Proxy"
+  author: "NGINX"
+  url:
+    value: "https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/"
+    date: 2026-09-08
+
+playwright:
+  type: Web
+  title: "Playwright"
+  author: "Microsoft"
+  url:
+    value: "https://playwright.dev/docs/intro"
+    date: 2026-09-08
+
+playwright-accessibility:
+  type: Web
+  title: "Accessibility Testing"
+  author: "Microsoft"
+  url:
+    value: "https://playwright.dev/docs/accessibility-testing"
+    date: 2026-09-08
+
+axe-devtools:
+  type: Web
+  title: "Axe DevTools"
+  author: "Deque Systems"
+  url:
+    value: "https://www.deque.com/axe/devtools/"
+    date: 2026-09-08
+
+janus-websockets:
+  type: Web
+  title: "RESTful, WebSockets, RabbitMQ, MQTT, Nanomsg and UnixSockets API"
+  author: "Meetecho"
+  url:
+    value: "https://janus.conf.meetecho.com/docs/rest.html"
+    date: 2026-09-24
+
+wcag-name-role-value:
+  type: Web
+  title: "Understanding Success Criterion 4.1.2: Name, Role, Value"
+  author: "W3C Web Accessibility Initiative"
+  url:
+    value: "https://www.w3.org/WAI/WCAG21/Understanding/name-role-value"
+    date: 2026-09-24
+
+hevner2004:
+  type: article
+  title: "Design Science in Information Systems Research"
+  author:
+    - Hevner, Alan R.
+    - March, Salvatore T.
+    - Park, Jinsoo
+    - Ram, Sudha
+  date: 2004
+  parent:
+    type: periodical
+    title: MIS Quarterly
+    volume: 28
+    issue: 1
+  page-range: 75-105
+  doi: 10.2307/25148625
+
+rfc9429:
+  type: report
+  title: "JavaScript Session Establishment Protocol (JSEP)"
+  author:
+    - Uberti, Justin
+    - Jennings, Cullen
+    - Rescorla, Eric
+  date: 2023-08
+  publisher: Internet Engineering Task Force
+  serial-number: "RFC 9429"
+  doi: 10.17487/RFC9429
+  url: https://www.rfc-editor.org/rfc/rfc9429
+
+rfc8838:
+  type: report
+  title: "Trickle ICE: Incremental Provisioning of Candidates for the Interactive Connectivity Establishment (ICE) Protocol"
+  author:
+    - Ivov, Emil
+    - Uberti, Justin
+    - Saint-Andre, Peter
+  date: 2021-01
+  publisher: Internet Engineering Task Force
+  serial-number: "RFC 8838"
+  doi: 10.17487/RFC8838
+  url: https://www.rfc-editor.org/rfc/rfc8838
+
+rfc6455:
+  type: report
+  title: "The WebSocket Protocol"
+  author:
+    - Fette, Ian
+    - Melnikov, Alexey
+  date: 2011-12
+  publisher: Internet Engineering Task Force
+  serial-number: "RFC 6455"
+  doi: 10.17487/RFC6455
+  url: https://www.rfc-editor.org/rfc/rfc6455
+
+rfc2663:
+  type: report
+  title: "IP Network Address Translator (NAT) Terminology and Considerations"
+  author:
+    - Srisuresh, Pyda
+    - Holdrege, Matt
+  date: 1999-08
+  publisher: Internet Engineering Task Force
+  serial-number: "RFC 2663"
+  doi: 10.17487/RFC2663
+  url: https://www.rfc-editor.org/rfc/rfc2663

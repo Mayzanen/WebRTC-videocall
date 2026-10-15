@@ -11,8 +11,7 @@ participant streams from Janus. This is not a peer-to-peer mesh application.
 - 🎤 Audio/Video controls
 - 🔒 Secure HTTPS connections
 - 🐳 Docker-based deployment
-- 🎨 Modern, responsive UI
-- ♿ Accessible controls
+- ♿ Keyboard-accessible controls with SVG icons and accessible names
 
 ## 🏗️ Architecture
 
@@ -51,6 +50,7 @@ videortc/
 │   └── nginx.Dockerfile
 │
 ├── docker-compose.yml       # Docker orchestration
+├── thesis/                   # Diploma thesis source (Typst)
 └── README.md
 ```
 
@@ -88,7 +88,21 @@ cd infrastructure\ssl
 cd ..\..
 ```
 
-### 3. Build and Start Services
+### 3. Configure the Development Host Name
+
+The Compose environment uses `videocall.local` for the browser-facing Janus
+and TURN endpoints. For a local single-machine setup, map the name to the
+machine running NGINX in the hosts file (with administrator privileges):
+
+```text
+127.0.0.1 videocall.local
+```
+
+When moving the stack to another host, update the certificate subject
+alternative names, the frontend connection settings and Coturn's deployment
+address configuration together.
+
+### 4. Build and Start Services
 
 ```bash
 docker compose up -d --build
@@ -100,7 +114,7 @@ This will start:
 - **Coturn** on ports 3478 and 5349 (TCP/UDP), with 10000-10200/UDP relay ports
 - **NGINX** on ports 80 (HTTP redirect) and 443 (HTTPS)
 
-### 4. Access the Application
+### 5. Access the Application
 
 Open your browser and navigate to:
 
@@ -110,15 +124,9 @@ https://videocall.local/
 
 ⚠️ **Note**: You'll see a security warning because we're using self-signed certificates. This is normal for development.
 
-The generated certificate is valid for `videocall.local`, `localhost`,
-`127.0.0.1`, and the current deployment IP. For the controlled two-machine
-test, map `videocall.local` to `91.157.161.57` in the hosts file on both
-machines. Ensure the certificate, `VITE_JANUS_WS_URL`, `VITE_TURN_SERVER`, and
-Coturn's `external-ip` match the deployed host.
-
 **How to proceed:**
 - **Firefox**: Click "Advanced" → "Accept the Risk and Continue"
-- **Chrome**: Click "Advanced" → "Proceed to localhost (unsafe)"
+- **Chrome**: Click "Advanced" → "Proceed to videocall.local (unsafe)"
 - **Safari**: Click "Show Details" → "visit this website"
 
 ## 🎮 Usage
@@ -134,9 +142,9 @@ Coturn's `external-ip` match the deployed host.
 
 ### During a Call
 
-- **🎤 Toggle Audio**: Mute/unmute your microphone
-- **📹 Toggle Video**: Turn camera on/off
-- **📞 Hang Up**: End the call and return to home
+- **Toggle Audio**: Mute/unmute your microphone
+- **Toggle Video**: Turn camera on/off
+- **End Call**: Leave the room and return to home
 
 ## 🐳 Docker Services
 
@@ -192,7 +200,7 @@ docker compose up -d --build
 
 2. **Verify Coturn is running**:
    ```bash
-   docker ps | grep coturn
+   docker compose ps coturn
    ```
 
 3. **Test STUN server** (in browser console):
@@ -215,21 +223,20 @@ docker compose up -d --build
 
 ### Docker Build Issues
 
-1. **Clear Docker cache**:
+1. **Rebuild the affected services**:
    ```bash
-   docker compose down
-   docker system prune -a
    docker compose up -d --build
    ```
 
-2. **Check disk space**: Janus image is large (~2GB)
+2. **Check disk space** and inspect the relevant service logs before removing
+   Docker images, volumes or caches.
 
 ## 🔐 Security Notes
 
 ### Development
 
 - Self-signed certificates are used
-- Static TURN credentials (`videouser:videopass`)
+- Static TURN credentials are used for controlled development and testing
 - No authentication or authorization
 
 ### Production Recommendations
@@ -250,14 +257,17 @@ docker compose up -d --build
 
 Frontend (`.env` or Docker Compose):
 ```env
-VITE_JANUS_WS_URL=wss://localhost/janus
-VITE_TURN_SERVER=turn:localhost:3478
-VITE_TURN_USERNAME=videouser
-VITE_TURN_CREDENTIAL=videopass
+VITE_JANUS_WS_URL=wss://<host>/janus
+VITE_TURN_SERVER=turn:<host>:3478
+VITE_TURN_USERNAME=<development-turn-user>
+VITE_TURN_CREDENTIAL=<development-turn-credential>
 ```
 
-`VITE_*` values are exposed to the browser. The included static TURN
-credentials are intended only for controlled development/testing.
+Docker Compose supplies `videocall.local` development values. When the Vite
+server is run directly without these variables, the client defaults to local
+endpoints. `VITE_*` values are exposed to the browser, so they must not contain
+production secrets. The included static TURN credentials are intended only for
+controlled development and testing.
 
 ### Janus Configuration
 
@@ -276,103 +286,53 @@ Located in `infrastructure/nginx/nginx.conf`:
 
 ## 🧪 Testing
 
-### Manual Testing
+The Playwright suite covers the home-page form and validation
+(`tests/home.spec.ts`), automated accessibility checks
+(`tests/accessibility.spec.ts`), and the in-call controls (`tests/call.spec.ts`).
 
-1. Open two browser windows/tabs
-2. Create a room in one window
-3. Join the same room in another window
-4. Test audio/video controls
-
-### Network Testing
-
-Test from different networks (e.g., mobile hotspot) to verify TURN server functionality.
-
-### End-to-End & Accessibility Testing (Playwright)
-
-The frontend has a small Playwright suite covering smoke/navigation tests
-(`tests/home.spec.ts`), Call page controls tests (`tests/call.spec.ts`), and
-automated accessibility checks (`tests/accessibility.spec.ts`).
-
-**Running the Home page tests (no Docker stack required):**
+Install the frontend dependencies and the Chromium browser once:
 
 ```bash
 cd frontend
 npm ci
-npx playwright install --with-deps chromium   # one-time browser install
-npm run test
+npx playwright install chromium
 ```
 
-`playwright.config.ts` starts the Vite dev server automatically (`npm run dev`)
-and points the tests at `http://localhost:5173`.
+The home-page and accessibility tests start a local Vite server automatically;
+they do not require the Docker stack:
 
-Use `npm run test:ui` for the interactive Playwright UI runner.
+```bash
+npx playwright test tests/home.spec.ts tests/accessibility.spec.ts
+```
 
-**Running the Call page controls tests (requires the Docker Compose stack):**
-
-`tests/call.spec.ts` exercises the real in-call Controls UI (mute/camera/hangup),
-so it needs a live Janus/TURN/NGINX stack — the Call page only renders those
-buttons after a real WebRTC/Janus session is established. Configure
-`VITE_JANUS_WS_URL` for the test host, then use `BASE_URL` and, where required,
-`NGINX_HOST_IP` to map the browser's `localhost` lookup to NGINX (PowerShell
-example):
+The Call-page controls tests establish a real WebRTC and Janus session, so
+they require the Docker Compose stack to be running and reachable through
+`videocall.local`:
 
 ```powershell
 docker compose up -d
-$ip = (docker inspect videortc-nginx | ConvertFrom-Json)[0].NetworkSettings.Networks.'videortc-network'.IPAddress
-$env:BASE_URL = 'https://localhost'
-$env:NGINX_HOST_IP = $ip
+cd frontend
+$env:BASE_URL = 'https://videocall.local'
 npx playwright test tests/call.spec.ts
 ```
 
-> **Note:** on Windows/Alpine-based containers, the Playwright npm package and
-> browser binaries require a glibc environment. If running tests inside Docker,
-> use the official `mcr.microsoft.com/playwright` image (matching the
-> `@playwright/test` version in `package.json`) rather than the Alpine-based
-> `frontend` service container.
+With the stack running, execute all tests with `npx playwright test`; use
+`npm run test:ui` for Playwright's interactive runner. The automated
+accessibility checks use axe-core against WCAG 2.0/2.1 A and AA rule sets. They
+support the accessibility assessment but do not demonstrate complete WCAG
+conformance, so manual testing with axe DevTools and keyboard use is also
+needed.
 
-Accessibility is measured with two complementary tools:
+### Manual testing
 
-- **Automated checks (`@axe-core/playwright`)** — the same axe-core rule engine that
-  powers axe DevTools, wired into `tests/accessibility.spec.ts` (Home page) and
-  `tests/call.spec.ts` (in-call Controls bar) so it can run headlessly and in CI,
-  scanning against WCAG 2.0/2.1 A and AA rules.
-  - **Known issue:** the `Home page has no detectable axe violations` test is
-    currently marked `test.fixme(...)` (skipped) because it detects a real,
-    unresolved WCAG 1.4.3 color-contrast violation on `.home-subtitle`
-    (contrast ratio 4.01:1, foreground `#718096` on `#ffffff`, below the
-    required 4.5:1 for normal text). This is intentionally left unfixed and
-    documented rather than silently patched; remove `.fixme` once the
-    contrast issue has been corrected.
-  - The Call page `controls bar has no detectable axe violations` test asserts
-    for real (it is not skipped) and currently passes: axe-core does not flag
-    the Controls bar, even though its visual styling (icon/emoji buttons) is
-    considered unpolished and is tracked separately as a design improvement,
-    not an accessibility regression.
-  - **Documented gap:** `tests/call.spec.ts` also includes a test that
-    explicitly demonstrates this limitation. The mute/camera/hangup buttons
-    use emoji glyphs (🎤/🔇, 📹/📷, 📞) that read as low-contrast and hard to
-    tell apart from their circular background in the actual UI. axe's
-    `color-contrast` rule reports zero violations for these buttons anyway,
-    because emoji glyphs are rendered by the OS/font emoji renderer with
-    their own built-in colors — they are not affected by the CSS `color`
-    property on `.control-button` (see `Controls.css`), which is the only
-    thing axe's contrast check compares against the background. In other
-    words, axe never evaluates the actual glyph-vs-background contrast a
-    person sees; it only checks CSS-driven text color. This is a concrete,
-    reproducible example (for the thesis) of a blind spot in automated
-    accessibility tooling — catching it requires manual/visual review, not
-    just CI checks. The icon styling is intentionally left unfixed for now
-    and will be addressed in a later iteration.
-- **Manual checks (axe DevTools browser extension)** — install the
-  [axe DevTools extension](https://www.deque.com/axe/devtools/) for Chrome/Firefox
-  and run a scan on the Home and Call pages during development. This catches
-  issues that require human judgement (e.g. focus order, color contrast in
-  context, screen reader announcements) that are harder to fully automate,
-  especially on the media-heavy Call page.
+1. Open two browser windows or devices.
+2. Create a room in one browser and join it from the other.
+3. Verify local and remote media, audio/video controls, leaving and rejoining.
+4. Test with participants on different networks when TURN relay behaviour must
+   be verified. Do not force relay transport in normal use: ICE selects the
+   available path.
 
-## 📦 Building for Production
-
-### Frontend
+## 📦 Frontend build
 
 ```bash
 cd frontend
@@ -382,16 +342,9 @@ npm run build
 
 Output in `frontend/dist/`
 
-### Docker Images
-
-```bash
-# Build all images
-docker compose build
-
-# Tag and push to registry
-docker tag videortc-frontend:latest your-registry/videortc-frontend:latest
-docker push your-registry/videortc-frontend:latest
-```
+The Compose frontend service intentionally runs Vite's development server for
+development and demonstration. Serving `frontend/dist/` as a static production
+frontend is a separate deployment task.
 
 ## 🤝 Contributing
 
@@ -403,7 +356,7 @@ docker push your-registry/videortc-frontend:latest
 
 ## 📝 License
 
-This project is for educational purposes. See LICENSE file for details.
+No license file is currently included in the repository.
 
 ## 🆘 Support
 
@@ -421,15 +374,16 @@ MVP (Current):
 - [x] Self-signed SSL
 
 Future Enhancements:
-- [ ] Multi-user rooms (3+ participants)
+- [x] Multi-participant rooms through the Janus VideoRoom SFU
 - [ ] Screen sharing
 - [ ] Chat functionality
 - [ ] Recording
 - [ ] User authentication
 - [ ] Room management UI
-- [ ] Mobile app (React Native)
+- [ ] Automatic recovery after a longer network interruption
+- [ ] Load, performance, mobile-device and broader browser testing
 - [x] E2E/accessibility testing with Playwright + axe-core (automated) and axe DevTools (manual)
-- [ ] Further accessibility improvements based on axe findings (e.g. Call page contrast/focus order)
+- [ ] Accessibility evaluation with assistive technologies and user testing
 
 ## 📖 Resources
 
