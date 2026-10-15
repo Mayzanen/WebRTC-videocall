@@ -2,18 +2,14 @@ import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 test.describe('Accessibility', () => {
-  test('reports only the known subtitle contrast issue on the home page', async ({ page }) => {
+  test('finds no detectable axe violations on the home page', async ({ page }) => {
     await page.goto('/');
 
     const { violations } = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
       .analyze();
 
-    expect(violations).toHaveLength(1);
-    expect(violations[0]).toMatchObject({ id: 'color-contrast' });
-    expect(violations[0].nodes).toEqual(
-      expect.arrayContaining([expect.objectContaining({ html: expect.stringContaining('home-subtitle') })])
-    );
+    expect(violations).toEqual([]);
   });
 
   test('labels the home page form controls', async ({ page }) => {

@@ -50,9 +50,7 @@ test.describe('Call page controls', () => {
     expect(results.violations, formatViolations(results.violations)).toEqual([]);
   });
 
-  test('does not report color contrast for operating-system-rendered symbols', async ({
-    page,
-  }) => {
+  test('uses CSS-controlled SVG icons with accessible button names', async ({ page }) => {
     await page.goto(callUrl('controls-known-gap-room', 'Tester'));
 
     const muteButton = page.getByRole('button', { name: /Mute microphone|Unmute microphone/ });
@@ -67,12 +65,9 @@ test.describe('Call page controls', () => {
     await expect(cameraButton).toHaveAccessibleName(/Turn off camera|Turn on camera/);
     await expect(hangupButton).toHaveAccessibleName('End call');
 
-    const contrastResults = await new AxeBuilder({ page })
-      .include('.controls-container')
-      .withRules(['color-contrast'])
-      .analyze();
-
-    expect(contrastResults.violations).toEqual([]);
+    await expect(muteButton.locator('svg')).toHaveAttribute('aria-hidden', 'true');
+    await expect(cameraButton.locator('svg')).toHaveAttribute('aria-hidden', 'true');
+    await expect(hangupButton.locator('svg')).toHaveAttribute('aria-hidden', 'true');
   });
 });
 
