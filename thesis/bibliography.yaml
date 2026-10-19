@@ -177,11 +177,11 @@ wcag21:
   type: web
   title: "Web Content Accessibility Guidelines (WCAG) 2.1"
   author:
-    - Caldwell, Ben
+    - Kirkpatrick, Andrew
+    - O Connor, Joshue
+    - Campbell, Alastair
     - Cooper, Michael
-    - Reid, Loretta Guarino
-    - Vanderheiden, Gregg
-  date: 2018-06-05
+  date: 2025-05-06
   url:
     value: https://www.w3.org/TR/2025/REC-WCAG21-20250506/
     date: 2026-08-27
@@ -220,14 +220,13 @@ wcag-overview:
 
 iso29148:
   type: Book
-  title: "Systems and software engineering — Life cycle processes — Requirements engineering"
+  title: "ISO/IEC/IEEE 29148:2018, Systems and software engineering — Life cycle processes — Requirements engineering"
   author:
     - "International Organization for Standardization"
     - "International Electrotechnical Commission"
     - "Institute of Electrical and Electronics Engineers"
   publisher: "ISO"
   date: 2018-11
-  serial-number: "ISO/IEC/IEEE 29148:2018"
 
 react-components:
   type: Web
@@ -251,14 +250,6 @@ vite:
   author: "Vite"
   url:
     value: "https://vite.dev/guide/"
-    date: 2026-09-08
-
-webrtc:
-  type: Web
-  title: "WebRTC 1.0: Real-Time Communication Between Browsers"
-  author: "W3C"
-  url:
-    value: "https://www.w3.org/TR/webrtc/"
     date: 2026-09-08
 
 coturn:
@@ -309,14 +300,6 @@ axe-devtools:
     value: "https://www.deque.com/axe/devtools/"
     date: 2026-09-08
 
-janus-websockets:
-  type: Web
-  title: "RESTful, WebSockets, RabbitMQ, MQTT, Nanomsg and UnixSockets API"
-  author: "Meetecho"
-  url:
-    value: "https://janus.conf.meetecho.com/docs/rest.html"
-    date: 2026-09-24
-
 wcag-name-role-value:
   type: Web
   title: "Understanding Success Criterion 4.1.2: Name, Role, Value"
@@ -349,7 +332,7 @@ rfc9429:
     - Uberti, Justin
     - Jennings, Cullen
     - Rescorla, Eric
-  date: 2023-08
+  date: 2024-04
   publisher: Internet Engineering Task Force
   serial-number: "RFC 9429"
   doi: 10.17487/RFC9429

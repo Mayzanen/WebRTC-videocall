@@ -27,8 +27,8 @@ seuraavia tekoälysovelluksia:
 
 == Tekoälyn käyttötarkoitus
 
-ChatGPT:tä on käytetty lähteiden etsintään ja tekstin tarkistukseen. ChatGPT:tä on tarkistettu otsikoiden järkevyyttä ja jakoa. Codexilta on tarkistettu että diplomityöhön dokumentoitu täsmää käytännön toteutukseen.
+ChatGPT:tä on käytetty lähteiden etsinnän tukena sekä tekstin, otsikoiden ja työn rakenteen tarkastelussa. Codexia on käytetty sen varmistamiseen, että diplomityössä kuvattu toteutus vastaa käytännön toteutusta.
 
 == Osiot, joissa tekoälyä on käytetty
 
-ChatGPT:tä on käytetty työn suunnittelusta alkaen ja käytetty koko kirjoitusprosessin aikana. Codexia on käytetty kappaleissa @suunnittelu-kappale, @toteutus-kappale ja @testaus-kappale
+ChatGPT:tä on käytetty työn suunnittelusta alkaen ja käytetty koko kirjoitusprosessin aikana. Codexia on käytetty luvuissa @suunnittelu-kappale, @toteutus-kappale ja @testaus-kappale.

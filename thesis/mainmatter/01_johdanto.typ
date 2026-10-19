@@ -38,9 +38,10 @@ Työn tavoitteena on suunnitella ja toteuttaa selainpohjainen usean käyttäjän
 
 Työn tutkimusmenetelmänä sovelletaan suunnittelutieteellistä tutkimusta. Suunnittelutieteellisessä tutkimuksessa tutkimusongelmaa lähestytään suunnittelemalla ja toteuttamalla artefakti sekä arvioimalla sen soveltuvuutta määritellyn ongelman ratkaisemiseen. Tietojärjestelmätutkimuksessa artefakti voi olla esimerkiksi toteutettu järjestelmä tai sen osa. @hevner2004
 
-Tässä työssä tutkimuksen artefaktina toimii toteutettava selainpohjainen WebRTC-videopuhelusovellus. Tutkimusprosessi alkaa työn tavoitteiden ja sovellukselle asetettavien vaatimusten määrittelystä. Tämän jälkeen suunnitellaan järjestelmän arkkitehtuuri ja käyttöliittymä sekä toteutetaan sovellus valittujen teknologioiden avulla. Toteutuksen jälkeen järjestelmää testataan ja sen toimintaa arvioidaan suhteessa määriteltyihin toiminnallisiin, ei-toiminnallisiin ja saavutettavuusvaatimuksiin. Työssä sovellettava tutkimusprosessi on esitetty kuvassa @kuva-tutkimusprosessi.
+Tässä työssä tutkimuksen artefaktina toimii toteutettava selainpohjainen WebRTC-videopuhelusovellus. Tutkimusprosessi alkaa työn tavoitteiden ja sovellukselle asetettavien vaatimusten määrittelystä. Tämän jälkeen suunnitellaan järjestelmän arkkitehtuuri ja käyttöliittymä sekä toteutetaan sovellus valittujen teknologioiden avulla. Toteutuksen jälkeen järjestelmää testataan ja sen toimintaa arvioidaan suhteessa määriteltyihin toiminnallisiin, ei-toiminnallisiin ja saavutettavuusvaatimuksiin. @kuva-tutkimusprosessi esittää työssä sovellettavan tutkimusprosessin.
 
 #figure(
+  alt: "Pystysuuntainen tutkimusprosessikaavio. Vaiheet etenevät nuolilla järjestyksessä: ongelman ja tavoitteiden määrittely, vaatimusten määrittely, suunnittelu, toteutus ja arviointi. Vaatimukset kattavat toiminnalliset, ei-toiminnalliset ja saavutettavuusvaatimukset; suunnittelu käsittelee arkkitehtuuria ja käyttöliittymää; toteutus käyttää Reactia, WebRTC:tä, Janusta ja Coturnia; arvioinnissa testataan järjestelmää ja arvioidaan vaatimusten toteutuminen.",
   cetz.canvas({
     import cetz.draw: *
 

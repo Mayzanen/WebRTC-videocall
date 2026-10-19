@@ -8,7 +8,7 @@
   "04_jarjestelman_suunnittelu.typ",
   relationship: "source",
   mime-type: "text/vnd.typst",
-  description: "The Typst source code for the introduction chapter 1 of this thesis.",
+  description: "The Typst source code for the system design chapter 4 of this thesis.",
 )
 
 #import "../preamble.typ": *
@@ -24,13 +24,13 @@ ISO/IEC/IEEE 29148 -standardin mukaan vaatimus on järjestelmään kohdistuvaa t
 
 Tässä työssä vaatimusmäärittelyn tavoitteena on kuvata toteutettavalle videopuhelusovellukselle asetetut keskeiset toiminnalliset, ei-toiminnalliset ja saavutettavuutta koskevat vaatimukset. Vaatimukset on muotoiltu siten, että niiden toteutumista voidaan arvioida toteutuksen yhteydessä. Vaatimukset on jaettu kolmeen kokonaisuuteen niiden luonteen perusteella.
 
-Toiminnalliset vaatimukset kuvaavat sovelluksen käyttäjälle tarjoamat keskeiset toiminnot. Näihin kuuluvat muun muassa videopuheluhuoneen luominen ja siihen liittyminen, osallistujien videoiden näyttäminen sekä kameran ja mikrofonin hallinta. Toiminnalliset vaatimukset on esitetty taulukossa @vaatimukset-toiminnalliset.
+Toiminnalliset vaatimukset kuvaavat sovelluksen käyttäjälle tarjoamat keskeiset toiminnot. Näihin kuuluvat muun muassa videopuheluhuoneen luominen ja siihen liittyminen, osallistujien videoiden näyttäminen sekä kameran ja mikrofonin hallinta. @vaatimukset-toiminnalliset esittää toiminnalliset vaatimukset ja niiden suunnitellut toteutustavat.
 
-Ei-toiminnalliset vaatimukset kuvaavat puolestaan järjestelmän toiminnalle asetettuja teknisiä ominaisuuksia ja reunaehtoja. Näissä huomioidaan esimerkiksi yhteyksien toiminta erilaisissa verkkoympäristöissä, liikenteen suojaaminen, usean osallistujan tukeminen sekä palvelinympäristön toistettava käyttöönotto. Ei-toiminnalliset vaatimukset ja niiden suunnitellut toteutustavat on esitetty taulukossa @vaatimukset-eitoiminnalliset.
+Ei-toiminnalliset vaatimukset kuvaavat puolestaan järjestelmän toiminnalle asetettuja teknisiä ominaisuuksia ja reunaehtoja. Näissä huomioidaan esimerkiksi yhteyksien toiminta erilaisissa verkkoympäristöissä, liikenteen suojaaminen, usean osallistujan tukeminen sekä palvelinympäristön toistettava käyttöönotto. @vaatimukset-eitoiminnalliset esittää ei-toiminnalliset vaatimukset ja niiden suunnitellut toteutustavat.
 
-Saavutettavuusvaatimukset kohdistuvat erityisesti sovelluksen käyttöliittymään ja perustuvat verkkosisällön saavutettavuusohjeisiin (WCAG 2.1). Vaatimuksissa huomioidaan muun muassa näppäimistökäyttö, interaktiivisten elementtien ohjelmallinen saavutettavuus, lomakkeiden saavutettavuus, kontrastit sekä värin käyttö informaation välittämisessä. Saavutettavuusvaatimukset ja niitä vastaavat WCAG 2.1 -onnistumiskriteerit on esitetty taulukossa @vaatimukset-saavutettavuus.
+Saavutettavuusvaatimukset kohdistuvat erityisesti sovelluksen käyttöliittymään ja perustuvat verkkosisällön saavutettavuusohjeisiin (WCAG 2.1). Vaatimuksissa huomioidaan muun muassa näppäimistökäyttö, interaktiivisten elementtien ohjelmallinen saavutettavuus, lomakkeiden saavutettavuus, kontrastit sekä värin käyttö informaation välittämisessä. @vaatimukset-saavutettavuus esittää saavutettavuusvaatimukset ja niitä vastaavat WCAG 2.1 -onnistumiskriteerit.
 
-Käytettävyyttä ei tässä työssä määritellä erillisenä vaatimusjoukkona, vaan toteutetun sovelluksen käytettävyyttä arvioidaan työn myöhemmässä vaiheessa. Näin voidaan tarkastella, kuinka hyvin toteutus vastaa käyttäjien tarpeita ja määriteltyjä toiminnallisia tavoitteita.
+Käytettävyyttä ei tässä työssä arvioida erillisillä käyttäjätesteillä. Arviointi kohdistuu järjestelmälle asetettujen toiminnallisten, ei-toiminnallisten ja saavutettavuusvaatimusten toteutumiseen.
 
 #figure(
   table(
@@ -175,7 +175,7 @@ Janus WebRTC Gateway toimii arkkitehtuurin keskeisenä reaaliaikaisen viestinnä
 
 NAT-läpäisyssä hyödynnetään STUN- ja TURN-palvelua. STUN mahdollistaa selaimelle julkisen verkko-osoitteen selvittämisen ja suoran WebRTC-yhteyden muodostamisen silloin, kun verkkoympäristö sen sallii. Mikäli suoraa yhteyttä ei voida muodostaa, mediavirta voidaan välittää TURN-palvelimen kautta. TURN-palveluna käytetään Coturnia. STUN- ja TURN-palvelun käyttö on siis ehdollista — Coturnia hyödynnetään vain tilanteissa, joissa suora RTP-yhteys Januksen ja selaimen välillä ei onnistu.
 
-NGINX toimii palvelinympäristön edessä liikenteen välittäjänä ja vastaa HTTPS- ja WSS-yhteyksien TLS-terminoinnista. NGINX reitittää saapuvan liikenteen kahteen kohteeseen: frontend-käyttöliittymäpalveluun sekä Januksen WebSocket-rajapintaan, jota käytetään signalointiin. Sovelluksen palvelut suoritetaan kontteina, ja niiden käynnistämisestä sekä keskinäisestä verkottamisesta huolehditaan Docker Composen avulla. Kokonaisarkkitehtuuri on esitetty kuvassa @kokonaisarkkitehtuuri.
+NGINX toimii palvelinympäristön edessä liikenteen välittäjänä ja vastaa HTTPS- ja WSS-yhteyksien TLS-terminoinnista. NGINX reitittää saapuvan liikenteen kahteen kohteeseen: frontend-käyttöliittymäpalveluun sekä Januksen WebSocket-rajapintaan, jota käytetään signalointiin. Sovelluksen palvelut suoritetaan kontteina, ja niiden käynnistämisestä sekä keskinäisestä verkottamisesta huolehditaan Docker Composen avulla. @kokonaisarkkitehtuuri esittää kokonaisarkkitehtuurin.
 
 #figure(
   cetz.canvas({
@@ -320,6 +320,7 @@ NGINX toimii palvelinympäristön edessä liikenteen välittäjänä ja vastaa H
       anchor: "west",
     )
   }),
+  alt: "Kokonaisarkkitehtuuri: selain käyttää NGINXiä HTTPS- ja WSS-yhteyksillä. NGINX reitittää liikenteen frontendille ja Janus WebRTC Gatewaylle. WebRTC-media kulkee selaimen ja Januksen välillä suoraan tai tarvittaessa Coturnin kautta.",
   caption: [Videopuhelusovelluksen kokonaisarkkitehtuuri.],
 ) <kokonaisarkkitehtuuri>
 

@@ -8,7 +8,7 @@
   "03_kaytettavyys.typ",
   relationship: "source",
   mime-type: "text/vnd.typst",
-  description: "The Typst source code for the introduction chapter 1 of this thesis.",
+  description: "The Typst source code for the usability and accessibility chapter 3 of this thesis.",
 )
 
 #import "../preamble.typ": *
@@ -50,4 +50,4 @@ Havaittavuuteen liittyvät muun muassa värin käyttö ja käyttöliittymäeleme
 
 Videopuhelun aikana tapahtuvista tilamuutoksista tulee välittää käyttäjälle riittävä tieto. Esimerkiksi mikrofonin mykistyminen, kameran käynnistyminen tai yhteyden muodostuminen voivat tapahtua ilman, että käyttäjä siirtyy uuteen käyttöliittymän osaan. Tällaiset muutokset tulee välittää tavalla, jonka myös avustavaa teknologiaa käyttävä käyttäjä voi havaita. WCAG 2.1 sisältää tätä varten tilaviestien välittämistä koskevan onnistumiskriteerin 4.1.3 Status Messages. @wcag21
 
-Tässä työssä saavutettavuutta tarkastellaan erityisesti videopuhelusovelluksen käyttöliittymän keskeisten toimintojen näkökulmasta. Tarkastelussa painottuvat WCAG 2.1:n A- ja AA-tasojen onnistumiskriteerit, jotka liittyvät käyttöliittymän havaittavuuteen, näppäimistökäyttöön, kohdistuksen hallintaan, käyttöliittymäelementtien tunnistettavuuteen sekä puhelun aikana tapahtuvien tilamuutosten välittämiseen.
+Tässä työssä teoriaosassa esitellään videopuhelusovelluksen kannalta keskeisiä WCAG 2.1:n A- ja AA-tasojen onnistumiskriteerejä. Varsinainen arviointi rajataan luvussa @suunnittelu-maarittely-kappale määriteltyihin saavutettavuusvaatimuksiin A1–A6. Näin esimerkiksi kohdistuksen havaittavuutta, ei-tekstimuotoisten elementtien kontrastia, sisällön uudelleenjärjestymistä ja tilaviestien välittämistä käsitellään teoreettisina näkökulmina, mutta niitä ei arvioida tässä työssä erillisinä testattavina vaatimuksina.

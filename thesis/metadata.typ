@@ -19,8 +19,8 @@
 #let examiners = (
   tauthesis.examiner(
 		title : "Professor",
-		firstname : "John",
-		lastname : "Doe",
+		firstname : "Timo",
+		lastname : "Poranen",
 	),
 	tauthesis.examiner(
 		title : "Docent",
@@ -125,11 +125,11 @@
  * contain accessibility tags.
 ***/
 
-#let attachPublications = true
+#let attachPublications = false
 
 // A description that ends up in document metadata.
 
-#let description = "A short description of this document."
+#let description = "Diplomityö selainpohjaisen videopuhelusovelluksen suunnittelusta ja toteutuksesta WebRTC-teknologialla."
 
 // Choose your thesis type. The Finnish and English thesis
 // types työnTyyppi and thesisType need to match. The
@@ -149,21 +149,21 @@
 //// Finnish metadata.
 
 #let alaotsikko = "" // or none without the ""
-#let avainsanat = ("avainsana1", "avainsana2", "...")
-#let koulu  = "Tampereen Yliopisto"
-#let otsikko = "Videopuhelun toteuttaminen selainpohjaisesti WebRTC-teknologialla"
+#let avainsanat = ("WebRTC", "videopuhelu", "Janus WebRTC Gateway", "SFU", "NAT-läpäisy", "saavutettavuus", "WCAG 2.1")
+#let koulu  = "Tampereen yliopisto"
+#let otsikko = "Selainpohjaisen videopuhelusovelluksen suunnittelu ja toteutus WebRTC-teknologialla"
 #let sijainti = "Tampereella"
-#let tiedekunta = "Tiedekunta"
-#let tutkintoOhjelma = "Tutkinto-ohjelma"
+#let tiedekunta = "Informaatioteknologian ja viestinnän tiedekunta"
+#let tutkintoOhjelma = "Tietotekniikka"
 
 //// English metadata.
 
-#let faculty = "Faculty"
-#let keywords = ("keyword1", "keyword2", "...")
+#let faculty = "Faculty of Information Technology and Communication Sciences"
+#let keywords = ("WebRTC", "video calling", "Janus WebRTC Gateway", "SFU", "NAT traversal", "accessibility", "WCAG 2.1")
 #let location = "Tampere"
-#let subtitle = "Descriptive Subtitle" // or none without the ""
-#let maintitle = "Thesis Title"
-#let thesisProgramme = "Thesis programme"
+#let subtitle = "" // or none without the ""
+#let maintitle = "Design and Implementation of a Browser-Based Video Calling Application Using WebRTC"
+#let thesisProgramme = "Information Technology"
 #let university = "Tampere University"
 
 // Set the maximum heading levels under which figures and equations are numbered.
@@ -184,7 +184,7 @@
 // make it easier for reviewers to give comments related to
 // specific content lines.
 
-#let showParagraphLineNumbers = false
+#let showParagraphLineNumbers = true
 
 // Choose whether to include certain frontmatter sections.
 
@@ -194,7 +194,7 @@
 
 #let includeListOfTables = true
 
-#let includeListOfListings = true
+#let includeListOfListings = false
 
 // Choose your fonts. Remember that they need to exist on
 // your system for Typst to find them.

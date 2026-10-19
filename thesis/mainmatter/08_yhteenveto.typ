@@ -8,7 +8,7 @@
   "08_yhteenveto.typ",
   relationship: "source",
   mime-type: "text/vnd.typst",
-  description: "The Typst source code for the introduction chapter 1 of this thesis.",
+  description: "The Typst source code for the conclusions chapter 8 of this thesis.",
 )
 
 #import "../preamble.typ": *
@@ -19,7 +19,7 @@ Tässä työssä suunniteltiin ja toteutettiin selainpohjainen usean osallistuja
 
 Toteutetussa järjestelmässä selainasiakas muodostaa signalointiyhteyden suoraan Janus WebRTC Gatewayhin ja Janus VideoRoom -liitännäinen toimii mediavirtojen välityksestä vastaavana SFU:na. NAT-läpäisyä varten käytettiin STUN- ja TURN-palveluita, joista TURN-palvelu toteutettiin Coturnilla. NGINX vastasi HTTPS- ja WSS-yhteyksistä, ja sovelluksen palvelut koottiin Docker Compose -ympäristöön. Käyttöliittymä toteutettiin Reactilla ja TypeScriptillä.
 
-Toiminnallisessa testauksessa kaikki määritellyt toiminnalliset vaatimukset F1–F10 toteutuivat. Sovelluksella voitiin luoda usean osallistujan videohuoneita, välittää ääni- ja videovirtoja eri verkkoyhteyksien välillä sekä hallita mikrofonia ja kameraa puhelun aikana. Myös TURN-releen toiminta varmistettiin erillisessä kontrolloidussa testissä. Ei-toiminnallisista vaatimuksista N1–N4 ja N6 toteutuivat, kun taas signalointiyhteyden ylläpitoa koskeva vaatimus N5 toteutui osittain. Lyhyestä verkkokatkosta ääni- ja videoyhteys palautui ilman käyttäjän toimenpiteitä, mutta pidemmän katkoksen jälkeen Janus-istuntoa ja WebRTC-mediayhteyksiä ei muodostettu automaattisesti uudelleen.
+Toiminnallisessa testauksessa kaikki määritellyt toiminnalliset vaatimukset F1–F10 toteutuivat. Sovelluksella voitiin luoda usean osallistujan videohuoneita, välittää ääni- ja videovirtoja eri verkkoyhteyksien välillä sekä hallita mikrofonia ja kameraa puhelun aikana. Myös TURN-releen toiminta varmistettiin erillisessä kontrolloidussa testissä. Kaikki ei-toiminnalliset vaatimukset N1–N6 toteutuivat. N5-vaatimuksen mukainen keep-alive-toiminto piti signalointi-istunnon aktiivisena normaalin videopuhelun aikana. Pidemmän verkkokatkon jälkeen Janus-istuntoa ja WebRTC-mediayhteyksiä ei kuitenkaan muodostettu automaattisesti uudelleen, mikä tunnistettiin toteutuksen rajoitukseksi ja jatkokehityskohteeksi.
 
 Saavutettavuustestauksessa yhdistettiin automaattisia tarkistuksia ja manuaalista testausta. Testauksessa havaittu tekstin kontrastipuute korjattiin, ja käyttöjärjestelmäkohtaisesti vaihtelevat Unicode-symbolit korvattiin SVG-kuvakkeilla. Lopullisessa testatussa versiossa työssä määritellyt saavutettavuusvaatimukset A1–A6 toteutuivat. Tulokset koskevat kuitenkin rajattua testausympäristöä eivätkä osoita sovelluksen täydellistä WCAG 2.1 -vaatimustenmukaisuutta.
 

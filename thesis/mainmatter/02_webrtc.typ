@@ -8,7 +8,7 @@
   "02_webrtc.typ",
   relationship: "source",
   mime-type: "text/vnd.typst",
-  description: "The Typst source code for the introduction chapter 1 of this thesis.",
+  description: "The Typst source code for the WebRTC technology chapter 2 of this thesis.",
 )
 
 #import "../preamble.typ": *
@@ -62,8 +62,8 @@ verkkoyhteyden muodostamisessa käytettävät ICE-ehdokkaat. WebRTC ei määritt
 signaloinnissa käytettävää protokollaa, vaan sen toteutustapa voidaan valita
 sovelluksen tarpeiden perusteella. @rfc8825
 
-WebRTC käyttää yhteyden parametrien neuvottelussa Session Description Protocol
-(SDP) -muotoisia istuntokuvauksia. Yhteyden muodostaminen perustuu
+WebRTC käyttää yhteyden parametrien neuvottelussa SDP:tä (Session Description
+Protocol), jolla kuvataan istunnon media- ja yhteysasetukset. Yhteyden muodostaminen perustuu
 Offer/Answer-malliin, jossa toinen osapuoli muodostaa yhteystarjouksen (offer)
 ja toinen vastaa siihen (answer). Istuntokuvaukset sisältävät tietoja
 esimerkiksi käytettävistä mediavirroista, koodekeista ja yhteyden muodostamiseen
@@ -97,14 +97,9 @@ keskeiset ominaisuudet.
 
 === Vertaisyhteys
 
-P2P-arkkitehtuurissa jokainen osallistuja muodostaa suoran WebRTC-yhteyden
-toiseen osallistujaan. Ääni- ja videodata siirtyvät suoraan päätelaitteiden
-välillä ilman, että palvelin käsittelee mediasisältöä. Palvelinta tarvitaan
-yleensä signalointiin, jonka avulla osapuolet vaihtavat yhteyden
-muodostamiseen tarvittavat tiedot. Varsinainen media siirtyy kuitenkin
-suoraan päätelaitteiden välillä. @rfc8825
+P2P-arkkitehtuurissa jokainen osallistuja muodostaa WebRTC-yhteyden muihin osallistujiin ilman keskitettyä median käsittelystä vastaavaa palvelinta. Tavallisesti ääni- ja videodata siirtyvät suoraan päätelaitteiden välillä. NAT- tai palomuuriympäristössä media voidaan kuitenkin välittää TURN-palvelimen kautta, mikäli suoraa yhteysreittiä ei saada muodostettua. Signalointiin tarvitaan yleensä erillinen palvelu, jonka avulla osapuolet vaihtavat yhteyden muodostamiseen tarvittavat tiedot. @rfc8825, @rfc8656
 
-P2P soveltuu erityisesti kahden osallistujan välisiin videopuheluihin, sillä
+P2P-arkkitehtuuri soveltuu erityisesti kahden osallistujan välisiin videopuheluihin, sillä
 se minimoi palvelinkuorman ja mahdollistaa pienen viiveen @rfc7667.
 Useamman osallistujan videopuheluissa P2P-arkkitehtuurin heikkoutena on
 yhteyksien määrän nopea kasvu. Jokaisen osallistujan on ylläpidettävä
@@ -139,21 +134,19 @@ Tässä työssä valittiin SFU-arkkitehtuuri, koska se mahdollistaa usean
 osallistujan videopuhelut ilman median uudelleenkoodausta ja säilyttää samalla
 pienen viiveen. Työssä käytettävä Janus Gateway toteuttaa tämän toimintamallin,
 minkä vuoksi se soveltuu hyvin työn toteutusalustaksi. Janus Gatewayn rakennetta
-ja toimintaa käsitellään tarkemmin luvussa @teoria-janus-kappale.
+ja toimintaa käsitellään tarkemmin luvussa @teoria-janus-kappale. @taulukko-videopuheluarkkitehtuurit vertailee P2P-, MCU- ja SFU-arkkitehtuurien keskeisiä ominaisuuksia lähteiden @rfc7667 ja @grozev2015 perusteella.
 
 #figure(
-  table(
+  [
+    #set par(justify: false)
+    #set text(hyphenate: true)
+    #table(
     columns: (2.4fr, 1.5fr, 1.5fr, 1.5fr),
 
     inset: 6pt,
     stroke: 0.5pt,
 
-    align: (
-      left + horizon,
-      center + horizon,
-      center + horizon,
-      center + horizon,
-    ),
+    align: left + horizon,
 
     table.header(
       [*Ominaisuus*],
@@ -191,11 +184,9 @@ ja toimintaa käsitellään tarkemmin luvussa @teoria-janus-kappale.
     [Ei],
     [Kyllä],
     [Ei],
-  ),
-  caption: [
-    P2P-, MCU- ja SFU-arkkitehtuurien yleispiirteinen vertailu lähteiden
-    @rfc7667 ja @grozev2015 perusteella.
+    )
   ],
+  caption: [P2P-, MCU- ja SFU-arkkitehtuurien yleispiirteinen vertailu.]
 ) <taulukko-videopuheluarkkitehtuurit>
 
 == Janus WebRTC Gateway <teoria-janus-kappale>
@@ -315,6 +306,7 @@ onnistu. Näiden mekanismien avulla WebRTC-yhteys voidaan muodostaa erilaisista
 verkkorakenteista ja NAT-asetuksista huolimatta @rfc8445.
 
 #figure(
+  alt: "Kaavio esittää kaksi WebRTC-päätelaitetta, jotka ovat erillisten NAT-laitteiden takana. NAT-laitteiden välillä voidaan muodostaa suora kaksisuuntainen yhteys. Molemmat päätelaitteet käyttävät STUN-palvelinta julkisen osoitteen selvittämiseen. Jos suora yhteys ei onnistu, liikenne voidaan välittää kaksisuuntaisesti TURN-palvelimen kautta; välitetty yhteys on kuvattu katkoviivalla.",
   cetz.canvas({
     import cetz.draw: *
 
@@ -458,3 +450,4 @@ verkkorakenteista ja NAT-asetuksista huolimatta @rfc8445.
     STUN- ja TURN-palveluiden rooli WebRTC-yhteyden NAT-läpäisyssä.
   ],
 ) <kuva-nat-lapaisy>
+  

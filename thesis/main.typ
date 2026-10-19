@@ -89,7 +89,7 @@
 // Poista sanalaskuri
 #import "@preview/wordometer:0.1.5": word-count, total-words
 #show: word-count
-Yhteensä sanoja: #total-words poista lopussa.
+//Yhteensä sanoja: #total-words poista lopussa.
 
 #include "mainmatter/index.typ"
 

@@ -8,7 +8,7 @@
   "07_pohdinta.typ",
   relationship: "source",
   mime-type: "text/vnd.typst",
-  description: "The Typst source code for the introduction chapter 1 of this thesis.",
+  description: "The Typst source code for the discussion chapter 7 of this thesis.",
 )
 
 #import "../preamble.typ": *
@@ -23,15 +23,15 @@ Työn tavoitteena oli suunnitella ja toteuttaa selainpohjainen usean osallistuja
 
 Työn keskeinen tavoite toteutui, sillä työn tuloksena syntyi toimiva usean osallistujan videopuhelusovellus. Käyttäjä voi luoda videohuoneen tai liittyä olemassa olevaan huoneeseen, julkaista kameran ja mikrofonin mediavirrat sekä vastaanottaa muiden osallistujien ääni- ja videovirtoja. Mikrofonia ja kameraa voidaan hallita puhelun aikana, ja osallistujien liittyminen ja poistuminen päivittyvät muiden käyttäjien näkymiin automaattisesti. Toiminnallisessa testauksessa kaikki määritellyt toiminnalliset vaatimukset F1–F10 toteutuivat.
 
-Myös järjestelmälle asetetut keskeiset ei-toiminnalliset tavoitteet toteutuivat pääosin. Janus VideoRoom -liitännäiseen perustuva SFU-arkkitehtuuri mahdollisti useamman kuin kahden osallistujan videohuoneet ilman muutoksia järjestelmän perusarkkitehtuuriin. STUN- ja TURN-palveluiden käyttö mahdollisti WebRTC-yhteyksien muodostamisen eri verkkoyhteyksien välillä, ja erillisessä testissä mediayhteyden todettiin toimivan myös pakotetusti Coturn-palvelimen kautta välitettynä. Sovelluksen selainliikenne toteutettiin HTTPS- ja WSS-yhteyksillä, ja palvelut koottiin Docker Compose -ympäristöön.
+Myös järjestelmälle asetetut keskeiset ei-toiminnalliset tavoitteet toteutuivat. Janus VideoRoom -liitännäiseen perustuva SFU-arkkitehtuuri mahdollisti useamman kuin kahden osallistujan videohuoneet ilman muutoksia järjestelmän perusarkkitehtuuriin. STUN- ja TURN-palveluiden käyttö mahdollisti WebRTC-yhteyksien muodostamisen eri verkkoyhteyksien välillä, ja erillisessä testissä mediayhteyden todettiin toimivan myös pakotetusti Coturn-palvelimen kautta välitettynä. Sovelluksen selainliikenne toteutettiin HTTPS- ja WSS-yhteyksillä, ja palvelut koottiin Docker Compose -ympäristöön.
 
-Signalointiyhteyden ylläpitoa koskeva tavoite toteutui osittain. Janus-istunnon keep-alive-toiminto piti istunnon aktiivisena normaalissa käytössä, ja lyhyen verkkokatkon jälkeen ääni- ja videoyhteys palautui ilman käyttäjän toimenpiteitä. Pidemmän verkkokatkon jälkeen PeerConnection-yhteys kuitenkin päättyi eikä sovellus muodostanut media- ja signalointiyhteyksiä automaattisesti uudelleen. Toteutus sietää siten lyhyitä verkkohäiriöitä, mutta palautuminen pidemmistä yhteyskatkoksista edellyttäisi erillistä uudelleenyhdistämis- ja uudelleenneuvottelulogiikkaa.
+Signalointiyhteyden ylläpitoa koskeva N5-vaatimus toteutui. Janus-istunnon keep-alive-toiminto piti istunnon aktiivisena normaalissa käytössä. Erillisessä verkkokatkotestissä lyhyen katkoksen jälkeen ääni- ja videoyhteys palautui ilman käyttäjän toimenpiteitä. Pidemmän verkkokatkon jälkeen PeerConnection-yhteys kuitenkin päättyi eikä sovellus muodostanut media- ja signalointiyhteyksiä automaattisesti uudelleen. Tämä on toteutuksen erillinen rajoitus, jonka korjaaminen edellyttäisi uudelleenyhdistämis- ja uudelleenneuvottelulogiikkaa.
 
 Saavutettavuudelle asetetut tavoitteet toteutuivat työn rajatussa testauslaajuudessa. Lopullisessa versiossa saavutettavuusvaatimukset A1–A6 toteutuivat testatuissa näkymissä ja käyttötapauksissa. Testauksessa havaittu tekstin kontrastipuute korjattiin, ja puhelun hallintapainikkeiden Unicode-symbolit korvattiin SVG-kuvakkeilla niiden visuaalisen yhdenmukaisuuden ja erottuvuuden parantamiseksi. Sovelluksen keskeisiä toimintoja voitiin käyttää näppäimistöllä, ja käyttöliittymän interaktiivisille elementeille oli määritelty niitä kuvaavat saavutettavat nimet.
 
 Saavutettavuustestauksen tuloksia on kuitenkin tarkasteltava työn rajauksen mukaisesti. Testaus kohdistui työssä määriteltyihin WCAG 2.1 -pohjaisiin vaatimuksiin, eikä tavoitteena ollut osoittaa sovelluksen täydellistä WCAG 2.1 -vaatimustenmukaisuutta. Testaukseen ei myöskään sisältynyt esimerkiksi ruudunlukijalla tehtävää testausta tai varsinaisia käyttäjätestejä.
 
-Kokonaisuutena työn alkuperäinen tavoite voidaan katsoa pääosin saavutetuksi. Työssä toteutettiin selainpohjainen usean osallistujan videopuhelusovellus, joka toimii eri verkkoyhteyksien välillä, hyödyntää Janus-pohjaista SFU-arkkitehtuuria ja täyttää sille asetetut toiminnalliset sekä rajatut saavutettavuusvaatimukset. Selkein osittain toteutunut tavoite liittyi yhteyden automaattiseen palautumiseen pidemmän verkkokatkon jälkeen.
+Kokonaisuutena työn alkuperäinen tavoite voidaan katsoa saavutetuksi. Työssä toteutettiin selainpohjainen usean osallistujan videopuhelusovellus, joka toimii eri verkkoyhteyksien välillä, hyödyntää Janus-pohjaista SFU-arkkitehtuuria ja täyttää sille asetetut toiminnalliset, ei-toiminnalliset sekä rajatut saavutettavuusvaatimukset. Toteutuksen keskeinen tekninen rajoitus liittyi yhteyden automaattiseen palautumiseen pidemmän verkkokatkon jälkeen.
 
 == Toteutuksen vahvuudet ja rajoitukset <pohdinta-vahvuudet-rajoitukset-kappale>
 

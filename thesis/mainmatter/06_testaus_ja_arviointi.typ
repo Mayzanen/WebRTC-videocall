@@ -8,7 +8,7 @@
   "06_testaus_ja_arviointi.typ",
   relationship: "source",
   mime-type: "text/vnd.typst",
-  description: "The Typst source code for the introduction chapter 1 of this thesis.",
+  description: "The Typst source code for the testing and evaluation chapter 6 of this thesis.",
 )
 
 #import "../preamble.typ": *
@@ -23,7 +23,7 @@ Toiminnallisella testauksella varmistettiin, että sovelluksen keskeiset käytt�
 
 Testaus suoritettiin useilla erillisillä tietokoneilla eri verkkoyhteyksien yli. Osallistujat liittyivät samaan videohuoneeseen eri verkkoyhteyksistä, jolloin sovelluksen toimintaa voitiin tarkastella tilanteessa, jossa osallistujat eivät olleet samassa paikallisverkossa. Näin testaus vastasi tavanomaista käyttötilannetta paremmin kuin yhden laitteen tai pelkän paikallisverkon sisällä tehty testaus.
 
-Testauksessa tarkasteltiin erityisesti taulukossa @taulukko-toiminnallinen-testaus esitettyjä toimintoja. Testitapaukset yhdistettiin vaatimusmäärittelyssä esitettyihin toiminnallisiin vaatimuksiin F1–F10.
+@taulukko-toiminnallinen-testaus esittää testauksessa tarkastellut toiminnot. Testitapaukset yhdistettiin vaatimusmäärittelyssä esitettyihin toiminnallisiin vaatimuksiin F1–F10.
 
 #figure(
   table(
@@ -110,11 +110,14 @@ Testauksessa tarkasteltiin erityisesti taulukossa @taulukko-toiminnallinen-testa
 
 Testauksen perusteella sovelluksen keskeiset toiminnot toimivat odotetusti. Käyttäjä pystyi luomaan videohuoneen ja liittymään siihen näyttönimellä, minkä jälkeen sovellus avasi videoneuvottelunäkymän. Paikallinen video näkyi käyttäjälle ja paikallinen ääni- ja videovirta voitiin julkaista huoneeseen. Käyttäjä pystyi lisäksi vastaanottamaan muiden osallistujien mediavirtoja eri verkkoyhteyksien yli.
 
-Kun uusi osallistuja liittyi huoneeseen, tämän ääni- ja videovirrat tulivat muiden huoneessa olevien osallistujien saataville ilman erillistä sivun päivittämistä tai muuta käyttäjän toimenpidettä. Usean osallistujan testissä jokaiselle etäosallistujalle muodostettiin oma videonäkymä. Vastaavasti osallistujan poistuessa hänen videonäkymänsä poistui muiden osallistujien käyttöliittymästä. Kuvassa @kuva-toiminnallinen-testaus esitetään videopuhelusovelluksen käyttöliittymä toiminnallisen testauksen aikana usean osallistujan videohuoneessa.
+Kun uusi osallistuja liittyi huoneeseen, tämän ääni- ja videovirrat tulivat muiden huoneessa olevien osallistujien saataville ilman erillistä sivun päivittämistä tai muuta käyttäjän toimenpidettä. Usean osallistujan testissä jokaiselle etäosallistujalle muodostettiin oma videonäkymä. Vastaavasti osallistujan poistuessa hänen videonäkymänsä poistui muiden osallistujien käyttöliittymästä. @kuva-toiminnallinen-testaus esittää videopuhelusovelluksen käyttöliittymän toiminnallisen testauksen aikana usean osallistujan videohuoneessa.
 
 #figure(
-  image("/images/KoneA_v1.png"),
+  image("/images/KoneA_v1.png",
+  width: 100%,
+  alt: "Kuvakaappaus käynnissä olevasta videopuhelusta. Näytöllä näkyy huone 126A, muodostettu yhteystila, suuri paikallinen videonäkymä ja oikealla pienempi etäosallistujan videonäkymä. Alareunassa ovat mikrofonin, kameran ja puhelun lopettamisen hallintapainikkeet.",),
   caption: [Videopuhelusovelluksen käyttöliittymä toiminnallisen testauksen aikana.],
+
 ) <kuva-toiminnallinen-testaus>
 
 Äänen ja videon hallintatoiminnot testattiin erikseen. Mikrofonin mykistämisen jälkeen käyttäjän ääni ei välittynyt muille osallistujille, ja mikrofonin uudelleen käyttöönoton jälkeen äänen välitys jatkui. Kameran poistaminen käytöstä lopetti käyttäjän videokuvan välittymisen muille osallistujille, ja videokuva palautui kameran uudelleen käyttöönoton jälkeen. Toiminnot eivät katkaisseet käyttäjän muuta yhteyttä videohuoneeseen, joten mikrofonia ja kameraa voitiin hallita ilman, että käyttäjän tarvitsi liittyä huoneeseen uudelleen.
@@ -127,11 +130,14 @@ Testaus ei sisältänyt kuormitus- tai skaalautuvuustestausta suurilla osallistu
 
 == Ei-toiminnallisten vaatimusten arviointi <testaus-ei-toiminnalliset-kappale>
 
-Ei-toiminnallisten vaatimusten arvioinnissa tarkasteltiin vaatimusmäärittelyssä asetettujen vaatimusten N1–N6 toteutumista. Osa vaatimuksista voitiin todentaa käytännön testauksella ja osa toteutuksen sekä järjestelmän konfiguraation perusteella. Taulukossa @taulukko-ei-toiminnalliset esitetään arviointimenetelmät ja tulokset.
+Ei-toiminnallisten vaatimusten arvioinnissa tarkasteltiin vaatimusmäärittelyssä asetettujen vaatimusten N1–N6 toteutumista. Osa vaatimuksista voitiin todentaa käytännön testauksella ja osa toteutuksen sekä järjestelmän konfiguraation perusteella. @taulukko-ei-toiminnalliset esittää arviointimenetelmät ja tulokset.
 
 #figure(
-  table(
-    columns: (0.7fr, 1.4fr, 3.3fr, 3.7fr, 0.9fr),
+  [
+    #set par(justify: false)
+    #set text(size: 9pt, hyphenate: true)
+    #table(
+    columns: (0.7fr, 1.7fr, 3.2fr, 3.5fr, 0.9fr),
     inset: 6pt,
     stroke: 0.5pt,
 
@@ -177,17 +183,18 @@ Ei-toiminnallisten vaatimusten arvioinnissa tarkasteltiin vaatimusmäärittelyss
     [OK],
 
     [N5],
-[Signalointiyhteyden ylläpito],
-[Janus-istunnon keep-alive-toiminto ja sen 30 sekunnin lähetysväli tarkistetaan toteutuksesta. Lisäksi yhteyden toimintaa testataan lyhyen ja pidemmän verkkokatkon jälkeen.],
-[Signalointi-istunto pysyy aktiivisena normaalissa käytössä, ja lyhyen verkkokatkon jälkeen ääni- ja videoyhteys palautuu ilman käyttäjän toimenpidettä.],
-[Osittain],
+    [Signalointiyhteyden ylläpito],
+    [Janus-istunnon keep-alive-toiminto ja sen 30 sekunnin lähetysväli tarkistetaan toteutuksesta sekä signalointi-istunnon pysyminen aktiivisena normaalissa videopuhelussa.],
+    [Signalointi-istunto pysyy aktiivisena normaalissa käytössä.],
+    [OK],
 
-[N6],
-[Virhetilanteiden jäljitettävyys],
-[JanusClient-luokan lokitusta ja muodostettuja lokiviestejä tarkastellaan virhe- ja signalointitilanteissa.],
-[Samaan tapahtumaketjuun liittyviä lokiviestejä voidaan yhdistää korrelaatiotunnisteen avulla.],
-[OK],
-  ),
+    [N6],
+    [Virhetilanteiden jäljitettävyys],
+    [JanusClient-luokan lokitusta ja muodostettuja lokiviestejä tarkastellaan virhe- ja signalointitilanteissa.],
+    [Samaan tapahtumaketjuun liittyviä lokiviestejä voidaan yhdistää korrelaatiotunnisteen avulla.],
+    [OK],
+    )
+  ],
 
   caption: [
     Videopuhelusovelluksen ei-toiminnallisten vaatimusten arviointi.
@@ -206,11 +213,11 @@ Signalointiyhteyden ylläpitoa varten Janus-istunnolle toteutettiin 30 sekunnin 
 
 Yhteyden palautumista testattiin myös katkaisemalla internetyhteys tilapäisesti. Lyhyen verkkokatkon jälkeen ääni- ja videoyhteys palautui toimivaksi ilman, että käyttäjän tarvitsi liittyä huoneeseen uudelleen. Tämä osoittaa, että selain ja WebRTC-yhteys sietävät lyhyitä verkkohäiriöitä käytetyssä testiympäristössä.
 
-Pidempään kestävän verkkokatkon jälkeen PeerConnection-yhteys päättyi DTLS-virheeseen. Tämän jälkeen sovellus ei muodostanut uutta Janus-istuntoa eikä neuvotellut mediayhteyttä uudelleen internetyhteyden palauduttua. Tämän vuoksi vaatimus arvioitiin osittain toteutuneeksi.
+Pidempään kestävän verkkokatkon jälkeen PeerConnection-yhteys päättyi DTLS-virheeseen. Tämän jälkeen sovellus ei muodostanut uutta Janus-istuntoa eikä neuvotellut mediayhteyttä uudelleen internetyhteyden palauduttua. Havainto ei vaikuta N5-vaatimuksen toteutumiseen, koska vaatimus koskee aktiivisen signalointi-istunnon ylläpitoa normaalin videopuhelun aikana. Se tunnistettiin kuitenkin toteutuksen rajoitukseksi ja jatkokehityskohteeksi.
 
 Virhetilanteiden jäljitettävyyttä koskeva vaatimus N6 toteutettiin lisäämällä JanusClient-luokan lokiviesteihin korrelaatiotunniste. Sen avulla samaan signalointi- tai virhetilanteeseen liittyviä lokimerkintöjä voidaan yhdistää toisiinsa, mikä helpottaa tapahtumaketjun seuraamista sovelluksen lokista.
 
-Arvioinnin perusteella vaatimukset N1–N4 ja N6 toteutuivat käytetyssä testiympäristössä. Vaatimuksen N5 keep-alive-toiminto ja palautuminen lyhyestä verkkokatkosta todettiin toimiviksi. Pidempään kestävän verkkokatkon jälkeen sovellus ei kuitenkaan vielä muodosta WebRTC-media- ja Janus-signalointiyhteyksiä uudelleen automaattisesti, minkä vuoksi vaatimus arvioitiin osittain toteutuneeksi.
+Arvioinnin perusteella vaatimukset N1–N6 toteutuivat käytetyssä testiympäristössä. N5-vaatimuksen mukainen keep-alive-toiminto piti signalointi-istunnon aktiivisena normaalin videopuhelun aikana. Pidemmän verkkokatkon jälkeen yhteyksien automaattista palautumista ei kuitenkaan vielä toteutettu, mikä tunnistettiin erilliseksi tekniseksi rajoitukseksi ja jatkokehityskohteeksi.
 
 == Selainyhteensopivuus <testaus-selainyhteensopivuus-kappale>
 
@@ -220,10 +227,12 @@ Molemmissa selaimissa videohuoneeseen liittyminen, paikallisen ääni- ja videov
 
 Chrome- ja Firefox-selainten välillä ei havaittu testauksen aikana sellaisia eroja, jotka olisivat vaikuttaneet sovelluksen keskeisten toimintojen käyttöön. Eri Windows-versioilla havaittiin kuitenkin visuaalisia eroja käyttöliittymässä käytettyjen Unicode-symbolien esitystavassa. Testatut käyttöjärjestelmät olivat Windows 11 Pro 25H2 (OS Build 26200.9457) ja Windows 10 Pro 22H2 (koontiversio 19045.6466). Erot eivät estäneet sovelluksen toimintojen käyttöä, mutta erityisesti puhelun lopettamiseen käytetyn symbolin havaittiin erottuvan joissakin ympäristöissä heikosti. Havaintoa ja sen perusteella tehtyä muutosta käsitellään tarkemmin saavutettavuustestauksen yhteydessä.
 
-Kuvassa @kuva-symboli-vertailu esitetään käyttöliittymässä käytetyt symbolit rinnakkain Windows 11- ja Windows 10 -ympäristöissä.
+@kuva-symboli-vertailu esittää käyttöliittymässä käytetyt symbolit rinnakkain Windows 11- ja Windows 10 -ympäristöissä.
 
 #figure(
-  image("/images/symboli-vertailu.png", width: 100%),
+  image("/images/symboli-vertailu.png",
+  width: 100%,
+  alt: "Rinnakkainen vertailu mikrofonin, videokameran ja puhelun lopettamisen Unicode-symboleista kahdessa Windows-ympäristössä. Symbolien värit ja yksityiskohdat eroavat ympäristöjen välillä, erityisesti punaisessa lopetuspainikkeessa käytettävä puhelinkuvake."),
   caption: [
     Käyttöliittymän Unicode-symbolien esitystapa Windows 11 Pro 25H2- ja Windows 10 Pro 22H2 -ympäristöissä.
   ],
@@ -237,10 +246,13 @@ Saavutettavuustestauksen tavoitteena oli arvioida, täyttääkö toteutettu vide
 
 Testauksessa yhdistettiin automaattinen ja manuaalinen arviointi. Automaattiset tarkistukset toteutettiin Playwright-testikehyksellä @playwright ja axe-core-tarkistuksella @playwright-accessibility, joka käyttää samaa sääntömoottoria kuin axe DevTools @axe-devtools. Lisäksi käyttöliittymää tarkasteltiin manuaalisesti axe DevTools -työkalulla sekä näppäimistöä käyttäen. Automaattiset testit suoritettiin Chromium-selaimella.
 
-Taulukossa @taulukko-saavutettavuustestaus esitetään vaatimusmäärittelyn saavutettavuusvaatimukset, niiden testimenetelmät ja lopulliset testitulokset.
+@taulukko-saavutettavuustestaus esittää vaatimusmäärittelyn saavutettavuusvaatimukset, niiden testimenetelmät ja lopulliset testitulokset.
 
 #figure(
-  table(
+  [
+    #set par(justify: false)
+    #set text(hyphenate: true)
+    #table(
     columns: (0.8fr, 2.5fr, 3.2fr, 3.5fr, 0.9fr),
     inset: 6pt,
     stroke: 0.5pt,
@@ -297,7 +309,8 @@ Taulukossa @taulukko-saavutettavuustestaus esitetään vaatimusmäärittelyn saa
     [Käyttöliittymä tarkastetaan manuaalisesti äänen, videon ja muiden tilojen osalta.],
     [Käyttäjälle olennainen tieto ei välity ainoastaan värin avulla.],
     [OK],
-  ),
+    )
+  ],
 
   caption: [
     Videopuhelusovelluksen saavutettavuustestauksen testitapaukset ja lopulliset tulokset.
@@ -316,10 +329,13 @@ Manuaalisessa tarkastelussa havaittiin lisäksi, että puhelun hallintapainikkei
 
 === Testauksessa havaitut puutteet ja korjaukset <testaus-saavutettavuus-korjaukset-kappale>
 
-Saavutettavuustestauksessa havaittu etusivun alaotsikon kontrastipuute korjattiin muuttamalla tekstin väri arvosta `#718096` arvoon `#64748b`. Muutoksen seurauksena tekstin ja valkoisen taustan välinen kontrastisuhde parani arvosta 4,01:1 arvoon 4,76:1. Korjattu kontrastisuhde ylittää WCAG 2.1 -ohjeistuksen normaalikokoiselle tekstille asettaman vähimmäisvaatimuksen 4,5:1. Korjauksen jälkeen automaattinen saavutettavuustarkistus suoritettiin uudelleen, eikä alaotsikon kontrastista enää raportoitu puutetta. Korjattu etusivu on esitetty kuvassa @kuva-etusivu-kontrastikorjauksen-jalkeen.
+Saavutettavuustestauksessa havaittu etusivun alaotsikon kontrastipuute korjattiin muuttamalla tekstin väri arvosta `#718096` arvoon `#64748b`. Muutoksen seurauksena tekstin ja valkoisen taustan välinen kontrastisuhde parani arvosta 4,01:1 arvoon 4,76:1. Korjattu kontrastisuhde ylittää WCAG 2.1 -ohjeistuksen normaalikokoiselle tekstille asettaman vähimmäisvaatimuksen 4,5:1. Korjauksen jälkeen automaattinen saavutettavuustarkistus suoritettiin uudelleen, eikä alaotsikon kontrastista enää raportoitu puutetta. @kuva-etusivu-kontrastikorjauksen-jalkeen esittää korjatun etusivun.
 
 #figure(
-  image("/images/etusivu_v2.png"),
+  image("/images/etusivu_v2.png",
+  width: 100%,
+  alt: "Videopuhelusovelluksen aloitusnäkymä. Keskellä on VideoRTC-otsikko, tummennettu alaotsikko Simple WebRTC Video Calls, nimelle ja huonetunnukselle tarkoitetut syötekentät, Generate- ja Join Call -painikkeet sekä nelivaiheinen käyttöohje.",
+  ),
   caption: [
     Videopuhelusovelluksen etusivu kontrastikorjauksen jälkeen.
   ],
@@ -327,10 +343,13 @@ Saavutettavuustestauksessa havaittu etusivun alaotsikon kontrastipuute korjattii
 
 Manuaalisessa tarkastelussa havaittujen symbolien esityserojen vuoksi puhelun hallintapainikkeissa käytetyt Unicode-symbolit korvattiin SVG-kuvakkeilla. Muutoksen tavoitteena oli parantaa käyttöliittymän yhdenmukaisuutta ja symbolien visuaalista erottuvuutta. Unicode-symbolien esitystapa riippui osittain käyttöjärjestelmän ja käytetyn fontin renderöinnistä, minkä vuoksi samat symbolit saattoivat näyttää erilaisilta eri Windows-versioissa. SVG-kuvakkeiden väri ja koko voidaan määritellä CSS-tyyleillä yhdenmukaisesti, mikä vähentää käyttöjärjestelmä- ja fonttikohtaisia esityseroja ja tekee kuvakkeiden ulkoasusta hallittavamman. Muutos paransi erityisesti puhelun lopettamista kuvaavan painikkeen kuvakkeen erottuvuutta.
 
-Kuvassa @kuva-painikkeet-ennen-jalkeen esitetään puhelun hallintapainikkeiden kuvakkeet ennen muutosta ja sen jälkeen. Vasemmalla ovat aiemmin käytetyt Unicode-symbolit ja oikealla niitä korvaavat SVG-kuvakkeet.
+@kuva-painikkeet-ennen-jalkeen esittää puhelun hallintapainikkeiden kuvakkeet ennen muutosta ja sen jälkeen. Vasemmalla ovat aiemmin käytetyt Unicode-symbolit ja oikealla niitä korvaavat SVG-kuvakkeet.
 
 #figure(
-  image("/images/nappula-paivitys-ero.png"),
+  image("/images/nappula-paivitys-ero.png",
+  width: 100%,
+  alt: "Vertailu puhelun hallintapainikkeista ennen ja jälkeen kuvakepäivityksen. Vasemmalla mikrofonin, kameran ja puhelun lopettamisen painikkeissa käytetään värillisiä Unicode-symboleita. Oikealla vastaavissa painikkeissa käytetään yhdenmukaisia SVG-kuvakkeita: valkoisia mikrofonin ja kameran kuvakkeita sekä valkoista puhelinkuvaketta punaisella taustalla.",
+  ),
   caption: [
     Puhelun hallintapainikkeiden Unicode-symbolit ennen muutosta ja SVG-kuvakkeet muutoksen jälkeen.
   ],
@@ -344,7 +363,7 @@ Lopullisen testauksen perusteella saavutettavuusvaatimukset A1–A6 toteutuivat 
 
 Testauksen perusteella toteutettu videopuhelusovellus täytti sille asetetut keskeiset toiminnalliset ja saavutettavuuteen liittyvät vaatimukset testatussa ympäristössä. Toiminnallisessa testauksessa vaatimusmäärittelyn vaatimukset F1–F10 toteutuivat. Käyttäjät pystyivät luomaan videohuoneen ja liittymään siihen näyttönimellä, julkaisemaan paikallisen ääni- ja videovirran, vastaanottamaan muiden osallistujien mediavirtoja sekä hallitsemaan mikrofonia ja kameraa puhelun aikana. Uuden osallistujan mediavirta tuli näkyviin automaattisesti ja poistuneen osallistujan videonäkymä poistui muiden osallistujien käyttöliittymästä.
 
-Ei-toiminnallisista vaatimuksista N1–N4 ja N6 toteutuivat käytetyssä testiympäristössä. Sovellus pystyi muodostamaan mediayhteyksiä eri verkkoyhteyksien välillä, ja erillisessä testissä myös Coturn-palvelimen välittämä mediayhteys todettiin toimivaksi. Selainliikenne toteutettiin suojatuilla yhteyksillä. Januksen SFU-arkkitehtuuri mahdollisti usean osallistujan videohuoneen ilman muutoksia järjestelmän perusrakenteeseen, ja Docker Compose mahdollisti palvelukokonaisuuden käynnistämisen määritellystä ympäristöstä. Lokiviestien korrelaatiotunniste mahdollisti samaan tapahtumaketjuun kuuluvien tapahtumien yhdistämisen. Vaatimuksen N5 mukainen keep-alive-toiminto oli toteutettu, mutta palautumista lyhyestä verkkokatkosta ei testattu erikseen, joten vaatimus voitiin todentaa vain osittain.
+Kaikki ei-toiminnalliset vaatimukset N1–N6 toteutuivat käytetyssä testiympäristössä. Sovellus pystyi muodostamaan mediayhteyksiä eri verkkoyhteyksien välillä, ja erillisessä testissä myös Coturn-palvelimen välittämä mediayhteys todettiin toimivaksi. Selainliikenne toteutettiin suojatuilla yhteyksillä. Januksen SFU-arkkitehtuuri mahdollisti usean osallistujan videohuoneen ilman muutoksia järjestelmän perusrakenteeseen, ja Docker Compose mahdollisti palvelukokonaisuuden käynnistämisen määritellystä ympäristöstä. Lokiviestien korrelaatiotunniste mahdollisti samaan tapahtumaketjuun kuuluvien tapahtumien yhdistämisen. N5-vaatimuksen mukainen keep-alive-toiminto piti signalointi-istunnon aktiivisena normaalin videopuhelun aikana. Pidemmän verkkokatkon jälkeen yhteyksiä ei kuitenkaan muodostettu automaattisesti uudelleen, mikä tunnistettiin toteutuksen rajoitukseksi ja jatkokehityskohteeksi.
 
 Selainyhteensopivuustestauksessa sovelluksen keskeiset toiminnot toimivat samalla tavalla testatuissa Google Chrome- ja Mozilla Firefox -selaimissa. Selainten välillä ei havaittu toiminnallisuuteen vaikuttavia eroja. Windows 10- ja Windows 11 -ympäristöjen välillä havaittiin kuitenkin visuaalisia eroja puhelun hallintapainikkeissa käytetyissä Unicode-symboleissa. Havainto johti symbolien korvaamiseen SVG-kuvakkeilla, minkä jälkeen hallintapainikkeiden ulkoasu oli yhdenmukaisempi eri käyttöjärjestelmäympäristöissä.
 

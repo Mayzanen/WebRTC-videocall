@@ -8,7 +8,7 @@
   "05_jarjestelman_toteutus.typ",
   relationship: "source",
   mime-type: "text/vnd.typst",
-  description: "The Typst source code for the introduction chapter 1 of this thesis.",
+  description: "The Typst source code for the system implementation chapter 5 of this thesis.",
 )
 
 #import "../preamble.typ": *
@@ -37,7 +37,7 @@ Videopuhelun reaaliaikainen ääni- ja videoliikenne toteutettiin selaimen WebRT
 
 Videopuheluun liittyessä sovellus pyytää selaimelta käyttöoikeuden käyttäjän kameraan ja mikrofoniin `navigator.mediaDevices.getUserMedia()`-rajapinnan avulla. Rajapinta palauttaa paikallisen mediavirran, joka sisältää pyydetyt ääni- ja videoraidat. Mediavirtaa käytetään sekä paikallisen videokuvan esittämiseen että ääni- ja videodatan välittämiseen WebRTC-yhteyden kautta @mediacapture-streams.
 
-WebRTC-yhteys muodostetaan `RTCPeerConnection`-rajapinnan avulla @webrtc. Koska sovellus perustuu SFU-arkkitehtuuriin, jokainen osallistuja muodostaa oman lähetysyhteytensä (publisher) Janukselle sekä erillisen vastaanottoyhteyden (subscriber) jokaista huoneessa olevaa muuta osallistujaa kohden. Yhteyden muodostamiseen liittyvässä signaloinnissa välitetään tarvittavat yhteysasetukset ja yhteysehdokkaat Janus-palvelimelle, joka toimii signaloinnin ja mediavälityksen keskipisteenä. Suoraa yhteyttä toisen osallistujan selaimeen ei muodosteta.
+WebRTC-yhteys muodostetaan `RTCPeerConnection`-rajapinnan avulla @webrtc-definition. Koska sovellus perustuu SFU-arkkitehtuuriin, jokainen osallistuja muodostaa oman lähetysyhteytensä (publisher) Janukselle sekä erillisen vastaanottoyhteyden (subscriber) jokaista huoneessa olevaa muuta osallistujaa kohden. Yhteyden muodostamiseen liittyvässä signaloinnissa välitetään tarvittavat yhteysasetukset ja yhteysehdokkaat Janus-palvelimelle, joka toimii signaloinnin ja mediavälityksen keskipisteenä. Suoraa yhteyttä toisen osallistujan selaimeen ei muodosteta.
 
 Yhteysehdokkaiden keräämisessä voidaan hyödyntää STUN-palvelua, jonka avulla selain saa tietoa julkisesta verkko-osoitteestaan. Mikäli suoraa yhteysreittiä Januksen ja selaimen välillä ei voida muodostaa, WebRTC-yhteys voi käyttää TURN-palvelinta mediadatan välittämiseen.
 
@@ -49,7 +49,7 @@ Käyttäjän mikrofonin ja kameran tilaa hallitaan paikallisen mediavirran raito
 
 Sovelluksen reaaliaikainen viestintä toteutettiin hyödyntämällä Janus WebRTC Gatewayn VideoRoom-pluginia. VideoRoom on videoneuvotteluihin tarkoitettu SFU-plugin, joka perustuu publish/subscribe-malliin: osallistuja julkaisee oman mediavirtansa, ja muut huoneen osallistujat voivat tilata sen @janus-videoroom. Janus vastaa osallistujien mediavirtojen välittämisestä SFU-arkkitehtuurin mukaisesti.
 
-Selain muodostaa Janukseen WebSocket-yhteyden, jonka kautta sovellus välittää Januksen istuntojen, plugin-yhteyksien ja videopuheluhuoneen hallintaan liittyviä viestejä. Januksen WebSocket-rajapinnassa samaa yhteyttä käytetään pyyntöjen lähettämiseen ja palvelimelta tulevien ilmoitusten vastaanottamiseen @janus-websockets.
+Selain muodostaa Janukseen WebSocket-yhteyden, jonka kautta sovellus välittää Januksen istuntojen, plugin-yhteyksien ja videopuheluhuoneen hallintaan liittyviä viestejä. Januksen WebSocket-rajapinnassa samaa yhteyttä käytetään pyyntöjen lähettämiseen ja palvelimelta tulevien ilmoitusten vastaanottamiseen @janus-api.
 
 Januksen kanssa tapahtuva viestintä on keskitetty `JanusClient`-palveluluokkaan. Luokka vastaa WebSocket-yhteyden muodostamisesta, Januksen viestien lähettämisestä ja vastaanottamisesta sekä Januksen istunnon ja plugin-yhteyksien hallintaan liittyvästä toiminnallisuudesta. Käyttöliittymä ja muu sovelluslogiikka voivat siten käyttää Januksen toimintoja ilman, että niiden tarvitsee käsitellä suoraan WebSocket-yhteyden tai Januksen viestiprotokollan yksityiskohtia.
 
@@ -57,7 +57,7 @@ Videopuheluun liittyessä sovellus muodostaa Janukseen istunnon ja liittää sii
 
 Uusien osallistujien liittyminen ja olemassa olevien osallistujien poistuminen välitetään sovellukselle Januksen VideoRoom-tapahtumien `publishers`-listan sekä `unpublished`- ja `leaving`-kenttien avulla. Kun huoneeseen liittyy uusi publisher, sovellus käsittelee Januksen ilmoittamat osallistujan tiedot ja muodostaa tarvittavan subscriber-yhteyden. Osallistujan poistuessa vastaava vastaanottoyhteys ja mediavirta poistetaan. Näin videopuhelun käyttöliittymä pysyy ajan tasalla huoneen osallistujista.
 
-Janus-yhteyttä ylläpidetään lähettämällä palvelimelle säännöllisesti keep-alive-viestejä. Lisäksi `JanusClient` tuottaa signalointiin liittyvään lokitukseen correlation ID -tunnisteen, jonka avulla yksittäiseen pyyntöön ja sen käsittelyyn liittyviä lokitapahtumia voidaan seurata. Tämä helpottaa erityisesti signalointiin liittyvien ongelmien jäljittämistä sovelluksen kehityksen ja vianmäärityksen aikana.
+Janus-yhteyttä ylläpidetään lähettämällä palvelimelle 30 sekunnin välein keep-alive-viestejä. Lisäksi `JanusClient` tuottaa signalointiin liittyvään lokitukseen correlation ID -tunnisteen, jonka avulla yksittäiseen pyyntöön ja sen käsittelyyn liittyviä lokitapahtumia voidaan seurata. Tämä helpottaa erityisesti signalointiin liittyvien ongelmien jäljittämistä sovelluksen kehityksen ja vianmäärityksen aikana.
 
 Puhelusta poistuttaessa sovellus lähettää publisher-yhteydelle pyynnön poistua videopuheluhuoneesta ja sulkee paikallisesti sekä publisher- että subscriber-yhteydet. Näkymästä poistuttaessa sovellus lähettää Janus-istunnolle `destroy`-pyynnön ja katkaisee tämän jälkeen WebSocket-yhteyden. Tämän seurauksena myös mahdollisesti avoimeksi jääneet plugin-yhteydet poistuvat palvelinpuolelta. Lopuksi myös WebRTC-yhteyksiin ja paikallisiin mediavirtoihin liittyvät resurssit vapautetaan.
 
