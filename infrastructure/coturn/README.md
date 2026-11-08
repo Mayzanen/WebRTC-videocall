@@ -1,70 +1,53 @@
-# Coturn Configuration
+# Coturn configuration
 
-This directory contains the Coturn TURN/STUN server configuration.
+Coturn provides the TURN fallback used when a browser cannot establish a
+direct media path to Janus. The browser gathers candidates from a public STUN
+server and from Coturn TURN; Janus uses this Coturn instance for its own STUN
+and TURN settings.
 
-## What is Coturn?
+## Local configuration
 
-Coturn is the STUN/TURN service used by browser-to-Janus WebRTC connections.
-It provides relay candidates when direct connectivity to the Janus VideoRoom
-SFU is unavailable.
+`turnserver.conf` is deliberately ignored by Git because it contains the
+deployment's public address and TURN credential. Create it from the tracked
+template:
 
-## Configuration
+```powershell
+Copy-Item turnserver.conf.example turnserver.conf
+```
 
-The `turnserver.conf` file contains:
-- **STUN**: For NAT discovery (port 3478)
-- **TURN**: For relaying media when direct connection fails (ports 10000-10200)
-- **Credentials**: Static development user (`videouser:videopass`)
+Before deploying outside a controlled local environment, set the Docker host's
+public IPv4 address in `external-ip` while retaining the fixed Docker relay
+address `172.18.0.10`. Keep the relay range `10000-10200/UDP` and its Docker
+port publishing intact unless the network deployment is intentionally changed.
+
+If the static development TURN credential is replaced, update the same value
+in all of these locations:
+
+1. The local `turnserver.conf` file.
+2. The local `../janus/janus.jcfg` file.
+3. The `VITE_TURN_USERNAME` and `VITE_TURN_CREDENTIAL` values in
+   `docker-compose.yml`.
+
+The browser receives its TURN credential through ICE configuration. It is not a
+server secret, and a `VITE_*` variable does not protect it. Use an appropriate
+credential mechanism for deployments rather than treating the development
+credential as production authentication.
 
 ## Ports
 
-- `3478` - STUN/TURN UDP
-- `5349` - TURN TLS listener (not used by the current frontend)
-- `10000-10200` - Media relay ports
+- `3478/UDP` and `3478/TCP`: STUN/TURN listener
+- `5349/UDP` and `5349/TCP`: TURN TLS listener
+- `10000-10200/UDP`: TURN media relay
 
-## Current deployment settings
+## Diagnostics
 
-The Compose network assigns Coturn the fixed address `172.18.0.10`. Its
-`external-ip` setting maps that address to the deployment public IP. Both
-values must be updated together when moving the stack to another host.
+Run these commands from the repository root:
 
-`no-tcp-relay` disables TCP relay endpoints; it does not disable TURN over UDP.
-
-## Development Credentials
-
-```javascript
-const iceServers = [
-  { urls: 'stun:localhost:3478' },
-  {
-	urls: 'turn:localhost:3478',
-	username: 'videouser',
-	credential: 'videopass'
-  }
-];
+```powershell
+docker compose ps coturn
+docker compose logs coturn
 ```
 
-## Production Considerations
-
-For production:
-1. Use dynamic credentials with REST API
-2. Set proper external IP
-3. Use TLS (port 5349)
-4. Configure database (Redis/PostgreSQL)
-5. Use strong passwords
-6. Enable rate limiting
-
-## Testing
-
-Test STUN server:
-```bash
-# Using webrtc-tester or browser console
-const pc = new RTCPeerConnection({
-  iceServers: [{ urls: 'stun:localhost:3478' }]
-});
-```
-
-## Monitoring
-
-Check logs:
-```bash
-docker logs videortc-coturn
-```
+ICE candidate gathering, SDP negotiation and media connectivity are separate
+stages. Do not force relay transport or change Coturn settings based only on a
+signalling or WebSocket error.

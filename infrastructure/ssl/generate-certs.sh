@@ -22,7 +22,7 @@ openssl x509 -req -days 365 \
   -in "$CERT_DIR/server.csr" \
   -signkey "$CERT_DIR/server.key" \
   -out "$CERT_DIR/server.crt" \
-  -extfile <(printf "subjectAltName=DNS:videocall.local,DNS:localhost,IP:127.0.0.1,IP:91.157.161.57")
+  -extfile <(printf "subjectAltName=DNS:videocall.local,DNS:localhost,IP:127.0.0.1")
 
 # Create .pem file (some services prefer this format)
 cat "$CERT_DIR/server.crt" "$CERT_DIR/server.key" > "$CERT_DIR/server.pem"

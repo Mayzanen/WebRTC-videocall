@@ -69,8 +69,8 @@ services:
     environment:
       - VITE_JANUS_WS_URL=wss://videocall.local/janus
       - VITE_TURN_SERVER=turn:videocall.local:3478
-      - VITE_TURN_USERNAME=videouser
-      - VITE_TURN_CREDENTIAL=videopass
+      - VITE_TURN_USERNAME=dev-turn-user
+      - VITE_TURN_CREDENTIAL=dev-turn-password
     stdin_open: true
     tty: true
     restart: unless-stopped

@@ -35,8 +35,8 @@ export function Call() {
 
     const janusUrl = import.meta.env.VITE_JANUS_WS_URL || 'wss://localhost/janus';
     const turnServer = import.meta.env.VITE_TURN_SERVER || 'turn:localhost:3478';
-    const turnUsername = import.meta.env.VITE_TURN_USERNAME || 'videouser';
-    const turnCredential = import.meta.env.VITE_TURN_CREDENTIAL || 'videopass';
+    const turnUsername = import.meta.env.VITE_TURN_USERNAME || 'dev-turn-user';
+    const turnCredential = import.meta.env.VITE_TURN_CREDENTIAL || 'dev-turn-password';
     const turnUrls = turnServer.includes('?transport=')
       ? [turnServer]
       : [`${turnServer}?transport=udp`, `${turnServer}?transport=tcp`];

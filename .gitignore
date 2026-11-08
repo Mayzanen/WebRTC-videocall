@@ -8,12 +8,18 @@ pnpm-debug.log*
 # Build outputs
 dist/
 build/
+output/
+tmp/
 *.local
 
 # Environment variables
 .env
-.env.local
-.env.production
+.env.*
+!.env.example
+
+# Local deployment configuration
+infrastructure/coturn/turnserver.conf
+infrastructure/janus/janus.jcfg
 
 # SSL certificates
 infrastructure/ssl/*.pem
@@ -21,8 +27,13 @@ infrastructure/ssl/*.key
 infrastructure/ssl/*.crt
 
 # IDE
+.vs/
 .vscode/
 .idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 *.swp
 *.swo
 *~
@@ -37,4 +48,10 @@ Thumbs.db
 # Test results
 test-results/
 playwright-report/
+blob-report/
 coverage/
+
+# Tool caches
+.cache/
+.vite/
+.eslintcache

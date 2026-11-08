@@ -22,11 +22,11 @@ NGINX serves as a reverse proxy that:
 - WebSocket connection for real-time signaling
 
 ### Janus HTTP API (Optional)
-- `https://localhost/janus-api/` → Janus REST API (janus:8088)
+- `https://videocall.local/janus-api/` → Janus REST API (janus:8088)
 - For non-WebSocket requests
 
 ### Health Check
-- `https://localhost/health` → Health check endpoint
+- `https://videocall.local/health` → Health check endpoint
 
 ## Security Features
 
@@ -80,13 +80,13 @@ docker logs videortc-nginx
 ### Test endpoints
 ```bash
 # Health check
-curl -k https://localhost/health
+curl -k https://videocall.local/health
 
 # Frontend (should return HTML)
-curl -k https://localhost/
+curl -k https://videocall.local/
 
 # Janus API (should return Janus info)
-curl -k https://localhost/janus-api/info
+curl -k https://videocall.local/janus-api/info
 ```
 
 ## Production Considerations

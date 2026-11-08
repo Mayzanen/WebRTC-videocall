@@ -1,0 +1,41 @@
+# Copy this file to turnserver.conf before starting Docker Compose.
+# The copied file is intentionally ignored by Git because it contains
+# deployment-specific addressing and TURN credentials.
+
+# Listening ports
+listening-port=3478
+tls-listening-port=5349
+
+# Listening IP
+listening-ip=0.0.0.0
+
+# Replace the documentation address with the host's public IPv4 address.
+# Keep the fixed Docker relay address unchanged unless the Compose network is
+# deliberately redesigned.
+external-ip=203.0.113.10/172.18.0.10
+relay-ip=172.18.0.10
+
+# Relay ports
+min-port=10000
+max-port=10200
+
+# Realm
+realm=videortc.local
+
+# Static development credential. Replace both parts for every non-development
+# deployment and keep the matching Janus and browser settings in sync.
+user=dev-turn-user:dev-turn-password
+
+# Security
+fingerprint
+lt-cred-mech
+
+# CLI
+no-cli
+
+# Performance
+max-bps=1000000
+bps-capacity=0
+
+# Allow UDP relay
+no-tcp-relay

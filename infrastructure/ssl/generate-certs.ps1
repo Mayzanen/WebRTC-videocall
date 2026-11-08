@@ -54,7 +54,6 @@ subjectAltName = @alt_names
 DNS.1 = videocall.local
 DNS.2 = localhost
 IP.1 = 127.0.0.1
-IP.2 = 91.157.161.57
 "@
 
 $tempConfig = "$CertDir/temp_openssl.cnf"
