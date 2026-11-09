@@ -87,8 +87,13 @@ Copy-Item infrastructure\janus\janus.jcfg.example infrastructure\janus\janus.jcf
 Edit `infrastructure/coturn/turnserver.conf` before using the stack outside a
 controlled local environment:
 
-- Set `external-ip` to the Docker host's public IPv4 address while retaining
-  the `/172.18.0.10` mapping.
+- Replace `203.0.113.10` in the template. It is an address reserved for
+  documentation and cannot be used as a working TURN server address. Set the
+  external side of `external-ip` to the Docker host's actual public IPv4
+  address.
+- For the supplied Compose network, retain the internal `/172.18.0.10`
+  mapping. If the Docker network is deliberately changed, its internal address
+  must match the Coturn `external-ip` mapping and `relay-ip` setting.
 - Replace the static development TURN username and password.
 - Set the same TURN username and password in `infrastructure/janus/janus.jcfg`
   and in the `frontend` environment section of `docker-compose.yml`.
@@ -101,7 +106,8 @@ The browser receives TURN credentials as part of its ICE configuration. Values
 named `VITE_*` are therefore browser-visible and must not be treated as server
 secrets. The included static credential is only a development example; a real
 deployment should use a suitable TURN credential mechanism and separate
-deployment-specific configuration.
+deployment-specific configuration. The template does not provide working TURN
+relay without these environment-specific settings.
 
 ### 3. Generate development certificates
 
@@ -145,39 +151,32 @@ for local development. When prompted, allow camera and microphone access.
 
 ## Testing and checks
 
-Frontend commands are run from `frontend`; Docker commands are run from the
-repository root.
+The following sequence can be run in one PowerShell window. It starts from the
+repository root; the frontend commands use the `build`, `lint` and `test`
+scripts defined in `frontend/package.json`.
 
 ```powershell
 cd frontend
 npm ci
 npm run build
 npm run lint
-```
-
-Install the Playwright browser once before running browser tests:
-
-```powershell
-cd frontend
 npx playwright install chromium
+npm run test -- tests/home.spec.ts tests/accessibility.spec.ts
+cd ..
 ```
 
 The home-page and automated accessibility checks start a local Vite server and
-do not require Docker Compose:
+do not require Docker Compose. They include the automated axe-core checks.
 
-```powershell
-cd frontend
-npx playwright test tests/home.spec.ts tests/accessibility.spec.ts
-```
-
-The call control tests create a real WebRTC and Janus session. Start Docker
-Compose first, then run them through the NGINX endpoint:
+The call control tests create a real WebRTC and Janus session. The preceding
+sequence has returned to the repository root, so start Docker Compose there,
+then return to `frontend` for the test:
 
 ```powershell
 docker compose up -d
 cd frontend
 $env:BASE_URL = 'https://videocall.local'
-npx playwright test tests/call.spec.ts
+npm run test -- tests/call.spec.ts
 ```
 
 The axe-core checks support the accessibility assessment, but do not establish

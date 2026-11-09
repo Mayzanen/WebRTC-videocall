@@ -15,10 +15,14 @@ template:
 Copy-Item turnserver.conf.example turnserver.conf
 ```
 
-Before deploying outside a controlled local environment, set the Docker host's
-public IPv4 address in `external-ip` while retaining the fixed Docker relay
-address `172.18.0.10`. Keep the relay range `10000-10200/UDP` and its Docker
-port publishing intact unless the network deployment is intentionally changed.
+The template's `203.0.113.10` address is reserved for documentation and cannot
+be used as a working TURN server address. Before deploying outside a controlled
+local environment, replace the external side of `external-ip` with the Docker
+host's actual public IPv4 address. For the supplied Compose network, retain
+the fixed Docker relay address `172.18.0.10`; if the Docker network is
+deliberately changed, update the internal side of `external-ip` and `relay-ip`
+to match it. Keep the relay range `10000-10200/UDP` and its Docker port
+publishing intact unless the network deployment is intentionally changed.
 
 If the static development TURN credential is replaced, update the same value
 in all of these locations:
@@ -31,7 +35,9 @@ in all of these locations:
 The browser receives its TURN credential through ICE configuration. It is not a
 server secret, and a `VITE_*` variable does not protect it. Use an appropriate
 credential mechanism for deployments rather than treating the development
-credential as production authentication.
+credential as production authentication. The template cannot provide working
+TURN relay until its address and matching credentials are set for the target
+environment.
 
 ## Ports
 

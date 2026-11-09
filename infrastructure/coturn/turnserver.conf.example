@@ -9,9 +9,10 @@ tls-listening-port=5349
 # Listening IP
 listening-ip=0.0.0.0
 
-# Replace the documentation address with the host's public IPv4 address.
-# Keep the fixed Docker relay address unchanged unless the Compose network is
-# deliberately redesigned.
+# 203.0.113.10 is reserved for documentation and cannot provide TURN relay.
+# Replace it with the Docker host's real public IPv4 address. The internal
+# address must match the Compose network; keep 172.18.0.10 unless that network
+# is deliberately redesigned.
 external-ip=203.0.113.10/172.18.0.10
 relay-ip=172.18.0.10
 
