@@ -374,3 +374,135 @@ rfc2663:
   serial-number: "RFC 2663"
   doi: 10.17487/RFC2663
   url: https://www.rfc-editor.org/rfc/rfc2663
+
+
+mahmoud2025webrtc:
+  type: article
+  title: "A systematic review on WebRTC for potential applications and challenges beyond audio video streaming"
+  author:
+    - "Mahmoud, Haitham"
+    - "Abozariba, Raouf"
+  date: 2025-02
+  parent:
+    type: periodical
+    title: Multimedia Tools and Applications
+    volume: 84
+    issue: 6
+  page-range: 2909-2946
+  serial-number:
+    doi: "10.1007/s11042-024-20448-9"
+
+dao2022streaming:
+  type: article
+  title: "A Contemporary Survey on Live Video Streaming from a Computation-Driven Perspective"
+  author:
+    - "Dao, Nhu-Ngoc"
+    - "Tran, Anh-Tien"
+    - "Tu, Ngo Hoang"
+    - "Thanh, Tran Thien"
+    - "Bao, Vo Nguyen Quoc"
+    - "Cho, Sungrae"
+  date: 2022-11-10
+  page-range: 1-38
+  serial-number:
+    doi: "10.1145/3519552"
+    serial: "202"
+  parent:
+    type: periodical
+    title: ACM Computing Surveys
+    volume: 54
+    issue: "10s"
+    publisher: Association for Computing Machinery
+
+jitsi-architecture:
+  type: web
+  title: "Architecture"
+  author:
+    - "Jitsi"
+  url: 
+    value: "https://jitsi.github.io/handbook/docs/architecture/"
+    date: 2026-11-07
+
+rfc5764:
+  type: Report
+  title: "Datagram Transport Layer Security (DTLS) Extension to Establish Keys for the Secure Real-time Transport Protocol (SRTP)"
+  author:
+    - "McGrew, David"
+    - "Rescorla, Eric"
+  organization: Internet Engineering Task Force
+  publisher: RFC Editor
+  serial-number: "RFC 5764"
+  date: 2010-05
+  doi: "10.17487/RFC5764"
+  url:
+    value: "https://www.rfc-editor.org/rfc/rfc5764"
+    date: 2026-11-07
+
+videocall-source:
+  type: Web
+  title: "WebRTC-videocall"
+  author: "Matti Hämäläinen"
+  url:
+    value: "https://github.com/Mayzanen/WebRTC-videocall"
+    date: 2026-11-08
+
+
+amirante2014janus:
+  type: article
+  title: "Janus: A General Purpose WebRTC Gateway"
+  author:
+    - "Amirante, Alessandro"
+    - "Castaldi, Tobia"
+    - "Miniero, Lorenzo"
+    - "Romano, Simon Pietro"
+  date: 2014-10
+  page-range: 1-8
+  serial-number:
+    doi: "10.1145/2670386.2670389"
+  parent:
+    type: proceedings
+    title: "Proceedings of the Conference on Principles, Systems and Applications of IP Telecommunications"
+    publisher: Association for Computing Machinery
+
+hersh2024accessibility:
+  type: article
+  title: "A comparative study of disabled people's experiences with the video conferencing tools Zoom, MS Teams, Google Meet and Skype"
+  author:
+    - "Hersh, Marion"
+    - "Leporini, Barbara"
+    - "Buzzi, Marina"
+  date: 2024-01-09
+  page-range: 3777-3796
+  serial-number:
+    doi: "10.1080/0144929X.2023.2286533"
+  parent:
+    type: periodical
+    title: "Behaviour & Information Technology"
+    volume: 43
+    issue: 15
+    publisher: Taylor & Francis
+
+skowronek2022qoe:
+  type: article
+  title: "Quality of Experience in Telemeetings and Videoconferencing: A Comprehensive Survey"
+  author:
+    - "Skowronek, Janto"
+    - "Raake, Alexander"
+    - "Berndtsson, Gunilla H."
+    - "Rummukainen, Olli S."
+    - "Usai, Paolino"
+    - "Gunkel, Simon N. B."
+    - "Johanson, Mathias"
+    - "Habets, Emanuel A. P."
+    - "Malfait, Ludovic"
+    - "Lindero, David"
+    - "Toet, Alexander"
+  date: 2022-05-18
+  page-range: 63885-63931
+  serial-number:
+    doi: "10.1109/ACCESS.2022.3176369"
+  parent:
+    type: periodical
+    title: "IEEE Access"
+    volume: 10
+    publisher: IEEE

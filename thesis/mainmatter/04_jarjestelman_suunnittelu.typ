@@ -26,11 +26,14 @@ Tässä työssä vaatimusmäärittelyn tavoitteena on kuvata toteutettavalle vid
 
 Toiminnalliset vaatimukset kuvaavat sovelluksen käyttäjälle tarjoamat keskeiset toiminnot. Näihin kuuluvat muun muassa videopuheluhuoneen luominen ja siihen liittyminen, osallistujien videoiden näyttäminen sekä kameran ja mikrofonin hallinta. @vaatimukset-toiminnalliset esittää toiminnalliset vaatimukset ja niiden suunnitellut toteutustavat.
 
-Ei-toiminnalliset vaatimukset kuvaavat puolestaan järjestelmän toiminnalle asetettuja teknisiä ominaisuuksia ja reunaehtoja. Näissä huomioidaan esimerkiksi yhteyksien toiminta erilaisissa verkkoympäristöissä, liikenteen suojaaminen, usean osallistujan tukeminen sekä palvelinympäristön toistettava käyttöönotto. @vaatimukset-eitoiminnalliset esittää ei-toiminnalliset vaatimukset ja niiden suunnitellut toteutustavat.
+Ei-toiminnalliset vaatimukset kuvaavat puolestaan järjestelmän toiminnalle asetettuja teknisiä ominaisuuksia ja reunaehtoja. Näissä huomioidaan esimerkiksi yhteyksien toiminta erilaisissa verkkoympäristöissä, liikenteen suojaaminen, usean osallistujan tukeminen sekä palvelinympäristön toistettava käyttöönotto.
 
-Saavutettavuusvaatimukset kohdistuvat erityisesti sovelluksen käyttöliittymään ja perustuvat verkkosisällön saavutettavuusohjeisiin (WCAG 2.1). Vaatimuksissa huomioidaan muun muassa näppäimistökäyttö, interaktiivisten elementtien ohjelmallinen saavutettavuus, lomakkeiden saavutettavuus, kontrastit sekä värin käyttö informaation välittämisessä. @vaatimukset-saavutettavuus esittää saavutettavuusvaatimukset ja niitä vastaavat WCAG 2.1 -onnistumiskriteerit.
+Sovelluksen tietoliikenteen suojaamisessa erotetaan toisistaan käyttöliittymä- ja signalointiliikenne sekä WebRTC-mediayhteydet. Käyttöliittymäliikenteessä hyödynnetään Hypertext Transfer Protocol Secure (HTTPS) -yhteyksiä ja signaloinnissa WebSocket Secure (WSS) -yhteyksiä, joiden suojaus perustuu Transport Layer Security (TLS) -protokollaan @rfc6455. WebRTC-mediayhteyksissä käytetään Datagram Transport Layer Security–Secure Real-time Transport Protocol (DTLS-SRTP) -menetelmää, jossa DTLS:n avulla muodostetaan SRTP-mediavirtojen suojaamiseen tarvittavat salausavaimet @rfc5764. @vaatimukset-eitoiminnalliset kokoaa yhteen ei-toiminnalliset vaatimukset ja niiden suunnitellut toteutustavat.
+
+Saavutettavuusvaatimukset kohdistuvat erityisesti sovelluksen käyttöliittymään ja perustuvat WCAG 2.1 -ohjeistukseen. Vaatimuksissa huomioidaan muun muassa näppäimistökäyttö, interaktiivisten elementtien ohjelmallinen saavutettavuus, lomakkeiden saavutettavuus, kontrastit sekä värin käyttö informaation välittämisessä. @vaatimukset-saavutettavuus esittää saavutettavuusvaatimukset ja niitä vastaavat WCAG 2.1 -onnistumiskriteerit.
 
 Käytettävyyttä ei tässä työssä arvioida erillisillä käyttäjätesteillä. Arviointi kohdistuu järjestelmälle asetettujen toiminnallisten, ei-toiminnallisten ja saavutettavuusvaatimusten toteutumiseen.
+
 
 #figure(
   table(
@@ -46,15 +49,15 @@ Käytettävyyttä ei tässä työssä arvioida erillisillä käyttäjätesteill�
 
     [F1],
     [Käyttäjän tulee voida luoda uusi huone tai liittyä olemassa olevaan huoneeseen huonetunnisteen perusteella.],
-    [Home-sivu ja satunnaisen huonetunnisteen generointi.],
+    [Aloitusnäkymän huoneenluonti- ja liittymistoiminnot sekä satunnaisen huonetunnisteen generointi.],
 
     [F2],
     [Käyttäjän tulee voida määrittää näyttönimi ennen puheluun liittymistä.],
-    [Lomake Home-sivulla.],
+    [Näyttönimen syöttökenttä aloitusnäkymässä.],
 
     [F3],
     [Sovelluksen tulee pyytää käyttäjältä lupa kameran ja mikrofonin käyttöön.],
-    [`navigator.mediaDevices.getUserMedia`-rajapinta.],
+    [Selaimen `getUserMedia()`-metodi.],
 
     [F4],
     [Käyttäjän oman videokuvan tulee näkyä erillisenä esikatseluna.],
@@ -62,11 +65,11 @@ Käytettävyyttä ei tässä työssä arvioida erillisillä käyttäjätesteill�
 
     [F5],
     [Muiden osallistujien videokuvien tulee näkyä reaaliaikaisesti.],
-    [`RemoteVideo`-komponentti ja dynaaminen `Map<feedId, { stream, display }>` -rakenne.],
+    [`RemoteVideo`-komponentti ja dynaaminen osallistujakohtainen `Map`-rakenne.],
 
     [F6],
     [Uuden osallistujan liittyessä kesken puhelun hänen videokuvansa tulee ilmestyä automaattisesti muille osallistujille.],
-    [Januksen tapahtumaviestien `publishers`-listan käsittely.],
+    [Januksen osallistujien liittymistä koskevien tapahtumaviestien ja `publishers`-listan käsittely.],
 
     [F7],
     [Osallistujan poistuessa puhelusta hänen videokuvansa tulee poistua automaattisesti muiden osallistujien näkymästä.],
@@ -100,8 +103,8 @@ Käytettävyyttä ei tässä työssä arvioida erillisillä käyttäjätesteill�
     ),
 
     [N1],
-    [Yhteyden tulee toimia NAT:in ja palomuurien takaa.],
-    [Coturn STUN/TURN-palvelin.],
+    [Yhteydenmuodostuksen tulee tukea NAT-läpäisyä ja tarvittaessa TURN-välitystä.],
+    [Julkinen STUN-palvelu, Coturnin TURN-palvelu sekä Januksen Coturn-asetukset.],
 
     [N2],
     [Sovelluksen käyttöliittymä- ja signalointiliikenne selaimen ja palvelinympäristön välillä tulee salata. WebRTC-mediavirran tulee hyödyntää WebRTC:n DTLS-SRTP-suojausta.],
@@ -173,7 +176,7 @@ Selain toimii sovelluksen käyttöliittymänä ja vastaa käyttäjän kameran ja
 
 Janus WebRTC Gateway toimii arkkitehtuurin keskeisenä reaaliaikaisen viestinnän palveluna. Se vastaa WebRTC-yhteyksien hallinnasta ja osallistujien mediavirtojen välittämisestä. Sovelluksessa hyödynnetään Januksen VideoRoom-pluginia, joka mahdollistaa SFU-arkkitehtuurin mukaisen mediavirtojen välityksen. Tällöin osallistujien selaimet lähettävät omat mediavirtansa Janukselle, joka välittää ne edelleen muille huoneen osallistujille.
 
-NAT-läpäisyssä hyödynnetään STUN- ja TURN-palvelua. STUN mahdollistaa selaimelle julkisen verkko-osoitteen selvittämisen ja suoran WebRTC-yhteyden muodostamisen silloin, kun verkkoympäristö sen sallii. Mikäli suoraa yhteyttä ei voida muodostaa, mediavirta voidaan välittää TURN-palvelimen kautta. TURN-palveluna käytetään Coturnia. STUN- ja TURN-palvelun käyttö on siis ehdollista — Coturnia hyödynnetään vain tilanteissa, joissa suora RTP-yhteys Januksen ja selaimen välillä ei onnistu.
+Selainasiakkaan ICE-palvelinmäärityksessä käytetään julkista STUN-palvelua ja Coturnin TURN-palvelua. Janus on konfiguroitu käyttämään Coturnia STUN- ja TURN-palveluna. STUN-palvelun avulla selain voi selvittää NAT-laitteen kautta näkyvän julkisen IP-osoitteensa ja porttinsa, joita ICE voi hyödyntää yhteysehdokkaiden muodostamisessa. ICE pyrkii löytämään toimivan yhteysreitin selaimen ja Januksen välille. Jos suoraa mediayhteyttä ei saada muodostettua, liikenne voidaan välittää Coturnin TURN-palvelimen kautta.
 
 NGINX toimii palvelinympäristön edessä liikenteen välittäjänä ja vastaa HTTPS- ja WSS-yhteyksien TLS-terminoinnista. NGINX reitittää saapuvan liikenteen kahteen kohteeseen: frontend-käyttöliittymäpalveluun sekä Januksen WebSocket-rajapintaan, jota käytetään signalointiin. Sovelluksen palvelut suoritetaan kontteina, ja niiden käynnistämisestä sekä keskinäisestä verkottamisesta huolehditaan Docker Composen avulla. @kokonaisarkkitehtuuri esittää kokonaisarkkitehtuurin.
 
@@ -330,7 +333,7 @@ Käyttöliittymän suunnittelun tavoitteena oli toteuttaa videopuhelusovelluksel
 
 Käyttöliittymä koostuu pääasiassa kahdesta näkymästä. Aloitusnäkymässä käyttäjä voi määrittää näyttönimensä sekä luoda uuden videopuheluhuoneen tai liittyä olemassa olevaan huoneeseen huonetunnisteen avulla. Videopuhelunäkymässä käyttäjälle esitetään oman videokuvan lisäksi muiden osallistujien videokuvat sekä puhelun hallintaan tarvittavat toiminnot.
 
-Käyttöliittymän suunnittelussa huomioitiin myös sovellukselle asetetut saavutettavuustavoitteet. Interaktiiviset toiminnot suunniteltiin toteutettaviksi natiiveilla HTML-elementeillä, jotta niitä voidaan käyttää myös näppäimistöllä. Lisäksi suunnittelussa huomioitiin tekstin ja taustan välinen kontrasti sekä se, ettei toimintojen tilaa ilmaista ainoastaan värin avulla. Saavutettavuuden suunnittelussa hyödynnettiin vaatimusmäärittelyssä esitettyjä WCAG 2.1 -onnistumiskriteereitä. Saavutettavuuden systemaattinen arviointi toteutetaan työn arviointivaiheessa automatisoiduilla axe-pohjaisilla testeillä ja Axe DevTools -tarkastuksella. Ruudunlukijatestauksen kattavuus rajataan erikseen.
+Käyttöliittymän suunnittelussa huomioitiin myös sovellukselle asetetut saavutettavuustavoitteet. Interaktiiviset toiminnot suunniteltiin toteutettaviksi natiiveilla Hypertext Markup Language (HTML) -elementeillä, jotta niitä voidaan käyttää myös näppäimistöllä. Lisäksi suunnittelussa huomioitiin tekstin ja taustan välinen kontrasti sekä se, ettei toimintojen tilaa ilmaista ainoastaan värin avulla. Saavutettavuuden suunnittelussa hyödynnettiin vaatimusmäärittelyssä esitettyjä WCAG 2.1 -onnistumiskriteereitä. Saavutettavuuden systemaattinen arviointi toteutettiin työn testausvaiheessa automatisoiduilla axe-pohjaisilla testeillä ja axe DevTools -tarkastuksella. Ruudunlukijatestaukset rajattiin tämän työn ulkopuolelle.
 
 === Käyttöliittymän rakenne
 
@@ -354,20 +357,22 @@ Käyttöliittymän rakenne suunniteltiin tukemaan sovelluksen SFU-arkkitehtuuria
 
 Saavutettavuus huomioitiin käyttöliittymän suunnittelussa osana käyttöliittymän rakennetta ja komponenttien toteutusta. Keskeisiä suunnitteluperiaatteita olivat näppäimistökäytön mahdollistaminen natiiveilla interaktiivisilla elementeillä, elementtien tarkoituksen ja tilan ohjelmallinen välittäminen sekä käyttöliittymän toiminnallisuuden riippumattomuus pelkästä väristä. Lomakkeissa kenttien yhteydessä käytetään niiden tarkoitusta kuvaavia ohjelmallisesti kytkettyjä nimiä, ja fokusoitaville elementeille suunniteltiin selkeä visuaalinen fokusindikaattori.
 
-Toimintonapit suunniteltiin toteutettaviksi natiiveina painikkeina. Niiden tarkoitus ja tila välitetään ohjelmallisesti esimerkiksi `aria-label`- ja `aria-pressed`-attribuuteilla. Saavutettavuuden vaatimusten toteutuminen arvioidaan työn arviointivaiheessa automatisoiduilla axe-pohjaisilla testeillä ja Axe DevTools -tarkastuksella. Ruudunlukijatestauksen kattavuus rajataan erikseen.
+Toimintonapit suunniteltiin toteutettaviksi natiiveina painikkeina. Niiden tarkoitus ja tila suunniteltiin välitettäviksi ohjelmallisesti esimerkiksi `aria-label`- ja `aria-pressed`-attribuuteilla. Saavutettavuusvaatimusten toteutumista päätettiin arvioida automatisoiduilla axe-pohjaisilla testeillä ja axe DevTools -tarkastuksella. Ruudunlukijatestaukset rajattiin tämän työn ulkopuolelle.
 
 == Teknologiavalinnat <suunnittelu-teknologiavalinnat-kappale>
 
-Sovelluksen teknologiavalinnat tehtiin toteutuksen tavoitteiden ja asetettujen vaatimusten perusteella. Keskeisiä valintaperusteita olivat WebRTC-teknologian hyödyntäminen reaaliaikaisessa viestinnässä, usean osallistujan videopuhelun mahdollistaminen, käyttöliittymän saavutettavuus sekä sovelluksen suoritusympäristön toistettavuus. Teknologioiden valinnassa huomioitiin lisäksi niiden soveltuvuus selainpohjaiseen toteutukseen ja yhteensopivuus keskenään.
+Sovelluksen teknologiavalinnat tehtiin toteutuksen tavoitteiden ja asetettujen vaatimusten perusteella. Keskeisiä valintaperusteita olivat kaksisuuntaisen reaaliaikaisen ääni- ja videoviestinnän mahdollistaminen verkkoselaimessa, usean osallistujan videopuhelun tukeminen, käyttöliittymän saavutettavuus sekä sovelluksen suoritusympäristön toistettavuus. Teknologioiden valinnassa huomioitiin lisäksi niiden soveltuvuus selainpohjaiseen toteutukseen ja yhteensopivuus keskenään.
 
 Käyttöliittymän toteutusteknologiaksi valittiin React, joka mahdollistaa käyttöliittymän jakamisen uudelleenkäytettäviin komponentteihin ja soveltuu hyvin dynaamisen käyttöliittymän toteuttamiseen @react-components. Komponenttirakenteen avulla käyttöliittymän eri osien tilaa ja sisältöä voidaan hallita toisistaan erillään. Reactin lisäksi käyttöliittymän toteutuksessa hyödynnettiin TypeScriptiä, jonka staattinen tyypitys tukee erityisesti WebRTC- ja signalointilogiikan hallintaa @typescript.
 
-Käyttöliittymän kehitys- ja build-työkaluksi valittiin Vite, joka tarjoaa nopean kehityspalvelimen ja tehokkaan tuotantorakennuksen @vite. Se soveltuu hyvin yhteen React- ja TypeScript-pohjaisen kehityksen kanssa ja mahdollistaa nopean iteroinnin kehitysvaiheessa.
+Käyttöliittymän kehitys- ja koontityökaluksi valittiin Vite, joka tarjoaa nopean kehityspalvelimen sekä mahdollisuuden sovelluksen tuotantoversion kokoamiseen @vite. Se soveltuu hyvin yhteen React- ja TypeScript-pohjaisen kehityksen kanssa ja mahdollistaa nopean iteroinnin kehitysvaiheessa.
 
-WebRTC valittiin reaaliaikaisen ääni- ja videoliikenteen toteutusteknologiaksi, koska se mahdollistaa reaaliaikaisen mediaviestinnän suoraan selaimessa ilman erillistä selainlaajennusta. Usean osallistujan videopuhelun toteuttamiseen valittiin Janus WebRTC Gateway ja sen VideoRoom-plugin. VideoRoom perustuu SFU-arkkitehtuuriin, jossa osallistujien mediavirrat välitetään palvelimen kautta muille osallistujille @janus-videoroom. Ratkaisu mahdollistaa usean osallistujan tukemisen ilman, että jokaisen selaimen tarvitsee muodostaa erillistä mediayhteyttä kaikkien muiden osallistujien kanssa.
+WebRTC valittiin reaaliaikaisen ääni- ja videoliikenteen toteutusteknologiaksi, koska se tarjoaa selaimessa valmiit rajapinnat kaksisuuntaiseen, vähäviiveiseen mediaviestintään ilman erillisen asiakassovelluksen asentamista. Tämä vastasi työn tavoitteeseen toteuttaa suoraan verkkoselaimessa käytettävä videopuhelusovellus. @mahmoud2025webrtc
 
-WebRTC-yhteyksien NAT-läpäisyä varten valittiin Coturn, joka tarjoaa STUN- ja TURN-palvelut @coturn. STUN-palvelua voidaan hyödyntää yhteysehdokkaiden muodostamisessa, kun taas TURN mahdollistaa mediavirran välittämisen palvelimen kautta tilanteissa, joissa suoraa yhteyttä ei voida muodostaa. Ratkaisu tukee sovelluksen tavoitetta toimia erilaisissa verkkoympäristöissä ja NAT-ratkaisujen takana.
+WebRTC ei kuitenkaan itsessään tarjoa valmista usean osallistujan videopuhelujärjestelmää. Tässä työssä valitun SFU-arkkitehtuurin toteuttamiseen tarvittiin mediavirtojen välityksestä vastaava palvelin. Tähän valittiin Janus WebRTC Gateway, joka tarjoaa valmiin VideoRoom-liitännäisen sekä WebSocket-rajapinnan selainasiakkaan ja palvelimen väliseen viestintään. VideoRoom välittää osallistujien mediavirrat palvelimen kautta muille osallistujille ilman niiden uudelleenkoodaamista. Ratkaisu mahdollistaa usean osallistujan tukemisen ilman, että jokaisen selaimen tarvitsee muodostaa erillistä mediayhteyttä kaikkien muiden osallistujien kanssa. @janus-videoroom
 
-Sovelluksen palvelinympäristö toteutettiin Docker-konteilla ja niiden hallintaan käytettiin Docker Composea. Kontit mahdollistavat sovelluksen eri palveluiden erottamisen toisistaan ja Docker Compose niiden yhtenäisen käynnistämisen sekä keskinäisen verkottamisen @docker-compose. Käyttöliittymän ja Januksen välisen liikenteen välittämiseen valittiin NGINX, joka toimii palvelinympäristön käänteisenä välityspalvelimena @nginx-reverse-proxy. NGINX:n avulla liikennettä voidaan välittää palvelinympäristön eri palveluille keskitetyn rajapinnan kautta. Lisäksi NGINX huolehtii tässä toteutuksessa HTTPS- ja WSS-yhteyksien TLS-terminoinnista. Näiden teknologioiden muodostama kokonaisuus tukee sovelluksen vaatimusta toistettavasti pystytettävästä palvelinympäristöstä sekä suojatuista käyttöliittymä-, signalointi- ja mediayhteyksistä.
+WebRTC-yhteyksien NAT-läpäisyä varten selaimessa käytettiin julkista STUN-palvelua ja Coturnin TURN-palvelua. Janus konfiguroitiin käyttämään Coturnia STUN- ja TURN-palveluna @coturn. STUN-palvelua voidaan hyödyntää yhteysehdokkaiden muodostamisessa, kun taas TURN mahdollistaa mediavirran välittämisen palvelimen kautta tilanteissa, joissa suoraa yhteyttä ei voida muodostaa. Ratkaisu tukee sovelluksen tavoitetta toimia erilaisissa verkkoympäristöissä ja NAT-ratkaisujen takana.
 
-Sovelluksen laadunvarmistukseen valittiin Playwright-testauskehys, joka mahdollistaa selainpohjaisten käyttötapausten automatisoidun testaamisen todellista selainta vasten. Saavutettavuusvaatimusten arviointiin valittiin axe DevTools -työkalu, joka mahdollistaa WCAG-kriteeristöön perustuvien saavutettavuuspuutteiden automatisoidun tunnistamisen. Näitä työkaluja hyödynnetään työn myöhemmässä vaiheessa osana sovelluksen laadunvarmistusta ja saavutettavuuden arviointia.
+Sovelluksen palvelinympäristö toteutettiin Docker-konteilla ja niiden hallintaan käytettiin Docker Composea. Kontit mahdollistavat sovelluksen eri palveluiden erottamisen toisistaan ja Docker Compose niiden yhtenäisen käynnistämisen sekä keskinäisen verkottamisen @docker-compose. Käyttöliittymän ja Januksen signalointiliikenteen välittämiseen valittiin NGINX, joka toimii palvelinympäristön käänteisenä välityspalvelimena @nginx-reverse-proxy. NGINX:n avulla liikennettä voidaan välittää palvelinympäristön eri palveluille keskitetyn rajapinnan kautta. Lisäksi NGINX huolehtii tässä toteutuksessa HTTPS- ja WSS-yhteyksien TLS-terminoinnista. WebRTC-mediayhteydet suojataan erikseen DTLS-SRTP:n avulla. Näiden teknologioiden muodostama kokonaisuus tukee sovelluksen vaatimuksia toistettavasti pystytettävästä palvelinympäristöstä ja suojatuista tietoliikenneyhteyksistä.
+
+Sovelluksen laadunvarmistukseen valittiin Playwright-testauskehys, joka mahdollistaa selainpohjaisten käyttötapausten automatisoidun testaamisen todellista selainta vasten @playwright. Saavutettavuusvaatimusten arviointiin valittiin axe DevTools -työkalu, joka mahdollistaa WCAG-kriteeristöön perustuvien saavutettavuuspuutteiden automatisoidun tunnistamisen @axe-devtools. Näitä työkaluja hyödynnettiin sovelluksen laadunvarmistuksessa ja saavutettavuuden arvioinnissa.

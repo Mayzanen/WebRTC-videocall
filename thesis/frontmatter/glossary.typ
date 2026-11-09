@@ -59,7 +59,7 @@
   ),
   p2p: (
     name: "P2P",
-    description: "Peer-to-peer, tietoliikennemalli, jossa osapuolet kommunikoivat suoraan keskenään ilman keskitettyä palvelinta median välittämiseen."
+    description: "Peer-to-peer, tietoliikennemalli, jossa osapuolet muodostavat keskinäiset yhteydet ilman keskitettyä median käsittelystä vastaavaa palvelinta. Media voidaan tarvittaessa välittää TURN-palvelimen kautta."
   ),
   rtp: (
     name: "RTP",

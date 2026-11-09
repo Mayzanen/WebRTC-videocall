@@ -55,11 +55,14 @@ Nykyisessä toteutuksessa ei ole käyttäjien tunnistautumista tai huonekohtaisi
 
 Rajoituksista huolimatta toteutus soveltuu hyvin työn tavoitteena olleeksi toimivaksi prototyypiksi. Se osoittaa, että valituilla teknologioilla voidaan toteuttaa selainpohjainen usean osallistujan videopuhelusovellus, joka toimii eri verkkoyhteyksien välillä ja jossa saavutettavuus voidaan ottaa huomioon osana käyttöliittymän suunnittelua ja testausta.
 
+
 == Jatkokehitysmahdollisuudet <pohdinta-jatkokehitys-kappale>
 
 Toteutettua videopuhelusovellusta voidaan jatkokehittää usealla tavalla. Keskeisin jatkokehityskohde liittyy yhteyden automaattiseen palauttamiseen pidemmän verkkokatkon jälkeen. Nykyisessä toteutuksessa lyhyestä yhteyskatkosta voidaan palautua ilman käyttäjän toimenpiteitä, mutta pidemmän katkoksen jälkeen Janus-istunto ja WebRTC-yhteys eivät muodostu uudelleen automaattisesti. Jatkokehityksessä sovellukseen voitaisiin toteuttaa mekanismi, joka tunnistaa yhteyden lopullisen katkeamisen, muodostaa tarvittaessa uuden Janus-istunnon ja neuvottelee WebRTC-mediayhteydet uudelleen ilman, että käyttäjän tarvitsee liittyä huoneeseen käsin uudelleen.
 
 Toinen jatkokehityskohde on järjestelmän suorituskyvyn ja skaalautuvuuden tarkempi arviointi. Tässä työssä sovelluksen toiminta varmistettiin pienissä usean osallistujan videohuoneissa, mutta varsinaista kuormitustestausta ei tehty. Jatkossa järjestelmää voitaisiin testata kasvavilla osallistujamäärillä ja samalla mitata esimerkiksi Janus-palvelimen prosessori- ja muistikuormaa, verkkoliikenteen määrää sekä yhteyksien laatua. Näin voitaisiin arvioida käytännössä, millaisia osallistujamääriä nykyinen palvelinympäristö tukee ja missä vaiheessa järjestelmän resursseja tai arkkitehtuuria olisi tarpeen kasvattaa.
+
+Teknisten mittareiden lisäksi videoneuvottelujen laatua voidaan arvioida käyttäjän kokeman laadun näkökulmasta. Skowronek ym. tarkastelevat katsauksessaan videoneuvottelujen käyttäjän kokemaan laatuun vaikuttavia tekijöitä sekä erilaisia laadunarviointimenetelmiä @skowronek2022qoe. Jatkokehityksessä teknisiä mittauksia voitaisiin siten täydentää esimerkiksi käyttäjän kokemaa äänen ja kuvan laatua arvioivilla menetelmillä.
 
 Sovelluksen selain- ja laitetukea voitaisiin laajentaa testaamalla toteutusta useammilla käyttöjärjestelmillä, selaimilla ja mobiililaitteilla. Erityisesti mobiililaitteilla olisi tarpeen tarkastella kameran ja mikrofonin käyttöä, käyttöoikeuksien käsittelyä, käyttöliittymän responsiivisuutta sekä verkkoyhteyksien vaihtumista. Laajempi laitetestaus auttaisi tunnistamaan ympäristökohtaisia ongelmia ja parantamaan sovelluksen yleistä yhteensopivuutta.
 

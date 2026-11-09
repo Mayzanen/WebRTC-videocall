@@ -22,118 +22,66 @@ videopuhelujärjestelmien toteutukseen liittyvät käsitteet. Aluksi tarkastella
 WebRTC-teknologiaa sekä sen tarjoamia ohjelmointirajapintoja ja
 tiedonsiirtomekanismeja. Tämän jälkeen käsitellään WebRTC-yhteyden muodostamisessa
 tarvittavaa signalointia sekä WebRTC-pohjaisten videopuhelujärjestelmien
-yleisimpiä arkkitehtuureja ja niiden ominaisuuksia. Lisäksi esitellään työssä
-käytettävä Janus WebRTC Gateway sekä tarkastellaan WebRTC-yhteyden muodostamiseen
-liittyvää NAT-läpäisyä ja siihen liittyviä ICE-, STUN- ja TURN-mekanismeja.
+yleisimpiä arkkitehtuureja ja niiden ominaisuuksia. Lisäksi esitellään työssä käytettävä Janus WebRTC Gateway sekä tarkastellaan WebRTC-yhteyden muodostamiseen liittyvää NAT-läpäisyä ja siihen käytettäviä menetelmiä.
 
 == WebRTC-teknologia <teoria-webrtc-kappale>
 
-WebRTC on avoimiin standardeihin perustuva teknologia, joka mahdollistaa
-reaaliaikaisen ääni-, video- ja tiedonsiirron verkkoselainten ja muiden
-WebRTC:tä tukevien sovellusten välillä. WebRTC:n tavoitteena on tarjota
-standardoidut ohjelmointirajapinnat ja tiedonsiirtoprotokollat, joiden avulla
-kehittäjät voivat toteuttaa reaaliaikaisia viestintäsovelluksia hyödyntäen
-verkkoselainten tarjoamia sisäänrakennettuja toimintoja. Teknologia on
-standardoitu yhteistyössä W3C:n ja IETF:n kanssa. W3C määrittelee selaimille
-tarjottavat ohjelmointirajapinnat, kun taas IETF vastaa tiedonsiirtoon
-liittyvistä protokollista. WebRTC:tä hyödynnetään laajasti erilaisissa
-reaaliaikaisissa viestintäsovelluksissa, kuten videopuheluissa,
-videoneuvotteluissa ja asiakaspalveluratkaisuissa. @webrtc-definition
+WebRTC on avoimiin standardeihin perustuva teknologia, joka mahdollistaa reaaliaikaisen ääni-, video- ja tiedonsiirron verkkoselainten ja muiden WebRTC:tä tukevien sovellusten välillä. WebRTC:n tavoitteena on tarjota standardoidut ohjelmointirajapinnat ja tiedonsiirtoprotokollat, joiden avulla kehittäjät voivat toteuttaa reaaliaikaisia viestintäsovelluksia hyödyntäen verkkoselainten tarjoamia sisäänrakennettuja toimintoja. WebRTC:n standardointi perustuu World Wide Web Consortiumin (W3C) ja Internet Engineering Task Forcen (IETF) yhteistyöhön. W3C määrittelee selaimille tarjottavat ohjelmointirajapinnat, kun taas IETF vastaa tiedonsiirtoon liittyvistä protokollista. WebRTC:tä hyödynnetään laajasti erilaisissa reaaliaikaisissa viestintäsovelluksissa, kuten videopuheluissa, videoneuvotteluissa ja asiakaspalveluratkaisuissa. @webrtc-definition
 
-WebRTC-sovellukset hyödyntävät useita ohjelmointirajapintoja reaaliaikaisen
-viestinnän toteuttamiseen. Ääni- ja videolaitteiden käyttö perustuu Media
-Capture and Streams -standardin määrittelemään MediaDevices-rajapintaan ja
-MediaStream-olioihin. Vertaisyhteyksien muodostamisesta ja hallinnasta vastaa
-WebRTC-spesifikaation määrittelemä RTCPeerConnection-rajapinta, jonka kautta
-ääni-, video- ja datavirtoja voidaan siirtää osapuolten välillä.
-RTCDataChannel mahdollistaa sovellusdatan siirtämisen vertaisyhteyden yli.
-WebRTC ei määrittele signaloinnissa käytettävää protokollaa, vaan signaloinnin
-toteutustapa on sovelluskohtainen. Yhteyden muodostaminen hyödyntää signalointia
-sekä ICE-mekanismia, jota käsitellään tarkemmin luvussa
-@teoria-nat-webrtc-kappale. @mediacapture-streams @webrtc-definition
+WebRTC-sovellukset hyödyntävät useita ohjelmointirajapintoja reaaliaikaisen viestinnän toteuttamiseen. Ääni- ja videolaitteiden käyttö perustuu Media Capture and Streams -standardin määrittelemään MediaDevices-rajapintaan ja MediaStream-olioihin. Vertaisyhteyksien muodostamisesta ja hallinnasta vastaa
+WebRTC-spesifikaation määrittelemä RTCPeerConnection-rajapinta, jonka kautta ääni-, video- ja datavirtoja voidaan siirtää osapuolten välillä. RTCDataChannel mahdollistaa sovellusdatan siirtämisen vertaisyhteyden yli.
+WebRTC ei määrittele signaloinnissa käytettävää protokollaa, vaan signaloinnin toteutustapa on sovelluskohtainen. Yhteyden muodostaminen hyödyntää signalointia sekä Interactive Connectivity Establishment (ICE) -menetelmää, jota käsitellään tarkemmin luvussa @teoria-nat-webrtc-kappale. @mediacapture-streams @webrtc-definition
+
+Reaaliaikaista ääni- ja videoviestintää voidaan toteuttaa myös muilla teknisillä ratkaisuilla. Perinteisissä internetpuhelujärjestelmissä yhteyksien hallintaan voidaan käyttää esimerkiksi Session Initiation Protocol (SIP) -signalointia ja median välittämiseen Real-time Transport Protocol (RTP) -protokollaa. SIP ei kuitenkaan ole suora vaihtoehto WebRTC:lle, sillä SIP määrittelee viestintäistuntojen signalointia, kun taas WebRTC tarjoaa selaimissa käytettävät rajapinnat ja protokollat reaaliaikaiseen mediaviestintään. Teknologioita voidaan myös käyttää yhdessä, esimerkiksi yhdistettäessä selainpohjainen videopuhelusovellus SIP-pohjaiseen viestintäjärjestelmään. @rfc8825
+
+Selainpohjaisessa toteutuksessa myös WebSocket mahdollistaa kaksisuuntaisen tiedonsiirron selaimen ja palvelimen välillä. WebSocket-yhteydellä voidaan välittää myös ääni- ja videodataa, mutta protokolla ei itsessään tarjoa WebRTC:n kaltaisia mediayhteyden muodostamiseen ja hallintaan liittyviä toimintoja. Videopuhelun toteuttaminen pelkän WebSocket-tiedonsiirron varaan edellyttäisi siten erillisiä ratkaisuja esimerkiksi median koodaukseen, siirron hallintaan ja toistamiseen. Tässä työssä WebSocketia hyödynnetään signalointiin, kun taas ääni- ja videovirrat välitetään WebRTC:n avulla. @rfc6455 @rfc8825
+
+Toinen vertailukohta on HTTP-pohjainen videon suoratoisto, kuten HTTP Live Streaming (HLS), jossa mediasisältöä välitetään vastaanottajille erillisinä segmentteinä. Tällaiset ratkaisut soveltuvat erityisesti videosisällön jakeluun suurelle katsojajoukolle, mutta segmentointi ja toistopuskurit voivat kasvattaa viivettä. WebRTC on puolestaan suunniteltu kaksisuuntaiseen reaaliaikaiseen viestintään, jossa pieni viive ja osallistujien välinen vuorovaikutus ovat keskeisiä vaatimuksia. WebRTC:n käyttö tuo kuitenkin myös haasteita, kuten yhteyksien muodostamisen erilaisissa verkkoympäristöissä sekä usean osallistujan mediavirtojen hallinnan. Näiden ratkaiseminen edellyttää sovelluskohtaista signalointia ja tarvittaessa erillisiä palvelinpalveluita. @dao2022streaming @mahmoud2025webrtc
+
+Näiden ominaisuuksien perusteella WebRTC soveltuu tässä työssä toteutettavaan selainpohjaiseen videopuheluun, jossa tarvitaan kaksisuuntaista ja vähäviiveistä ääni- ja videoviestintää ilman erillisen asiakassovelluksen asentamista.
 
 == Signalointi WebRTC-yhteyden muodostamisessa <teoria-signalointi-kappale>
 
-WebRTC-yhteyden muodostaminen edellyttää, että yhteyden osapuolet vaihtavat
-keskenään tietoja ennen varsinaisen mediayhteyden muodostumista. Tätä
-tiedonvaihtoa kutsutaan signaloinniksi. Signaloinnin avulla välitetään
-esimerkiksi yhteyden muodostamiseen tarvittavat istuntokuvaukset sekä
-verkkoyhteyden muodostamisessa käytettävät ICE-ehdokkaat. WebRTC ei määrittele
-signaloinnissa käytettävää protokollaa, vaan sen toteutustapa voidaan valita
-sovelluksen tarpeiden perusteella. @rfc8825
+WebRTC-yhteyden muodostaminen edellyttää, että yhteyden osapuolet vaihtavat keskenään tietoja ennen varsinaisen mediayhteyden muodostumista. Tätä tiedonvaihtoa kutsutaan signaloinniksi. Signaloinnin avulla välitetään esimerkiksi yhteyden muodostamiseen tarvittavat istuntokuvaukset sekä
+verkkoyhteyden muodostamisessa käytettävät ICE-ehdokkaat. WebRTC ei määrittele signaloinnissa käytettävää protokollaa, vaan sen toteutustapa voidaan valita sovelluksen tarpeiden perusteella. @rfc8825
 
-WebRTC käyttää yhteyden parametrien neuvottelussa SDP:tä (Session Description
-Protocol), jolla kuvataan istunnon media- ja yhteysasetukset. Yhteyden muodostaminen perustuu
-Offer/Answer-malliin, jossa toinen osapuoli muodostaa yhteystarjouksen (offer)
-ja toinen vastaa siihen (answer). Istuntokuvaukset sisältävät tietoja
-esimerkiksi käytettävistä mediavirroista, koodekeista ja yhteyden muodostamiseen
-liittyvistä parametreista. Osapuolet asettavat vastaanotetut kuvaukset
-WebRTC-yhteyden etäkuvauksiksi, minkä perusteella yhteyden muodostamista voidaan
-jatkaa. @rfc9429
+WebRTC käyttää yhteyden parametrien neuvottelussa Session Description Protocol (SDP) -formaattia, jolla kuvataan istunnon media- ja yhteysasetukset. Yhteyden muodostaminen perustuu Offer/Answer-malliin, jossa toinen osapuoli muodostaa yhteystarjouksen (offer) ja toinen vastaa siihen (answer). Istuntokuvaukset sisältävät tietoja esimerkiksi käytettävistä mediavirroista, koodekeista ja yhteyden muodostamiseen liittyvistä parametreista. Osapuolet asettavat vastaanotetut kuvaukset WebRTC-yhteyden etäkuvauksiksi, minkä perusteella yhteyden muodostamista voidaan jatkaa. @rfc9429
 
-Istuntokuvausten lisäksi signaloinnissa voidaan välittää ICE-ehdokkaita, jotka
-kuvaavat mahdollisia verkkoreittejä yhteyden muodostamiseksi. ICE-ehdokkaita
-voidaan välittää myös sitä mukaa, kun niitä löydetään. Tätä kutsutaan Trickle
-ICE -menetelmäksi. Menetelmä mahdollistaa yhteyden muodostamisen aloittamisen
-ennen kaikkien mahdollisten ICE-ehdokkaiden keräämistä. ICE-mekanismia ja sen
-yhteyttä NAT-läpäisyyn käsitellään tarkemmin luvussa
-@teoria-nat-webrtc-kappale. @rfc8838
+Istuntokuvausten lisäksi signaloinnissa voidaan välittää ICE-ehdokkaita, jotka kuvaavat mahdollisia verkkoreittejä yhteyden muodostamiseksi. ICE-ehdokkaita voidaan välittää myös sitä mukaa, kun niitä löydetään. Tätä kutsutaan Trickle
+ICE -menetelmäksi. Menetelmä mahdollistaa yhteyden muodostamisen aloittamisen ennen kaikkien mahdollisten ICE-ehdokkaiden keräämistä. ICE-mekanismia ja sen yhteyttä NAT-läpäisyyn käsitellään tarkemmin luvussa @teoria-nat-webrtc-kappale. @rfc8838
 
-Signalointi voidaan toteuttaa esimerkiksi WebSocket-yhteydellä, joka
-mahdollistaa kaksisuuntaisen viestinvälityksen verkkoselaimen ja palvelimen
-välillä. Signalointikanavan tehtävänä on välittää yhteyden muodostamiseen ja
-hallintaan liittyviä viestejä, eikä varsinaista ääni- tai videoliikennettä
-siirretä sen kautta. WebRTC:n mediayhteys muodostetaan erikseen signaloinnin
+Signalointi voidaan toteuttaa esimerkiksi WebSocket-yhteydellä, joka mahdollistaa kaksisuuntaisen viestinvälityksen verkkoselaimen ja palvelimen
+välillä. Signalointikanavan tehtävänä on välittää yhteyden muodostamiseen ja hallintaan liittyviä viestejä, eikä varsinaista ääni- tai videoliikennettä siirretä sen kautta. WebRTC:n mediayhteys muodostetaan erikseen signaloinnin
 avulla vaihdettujen tietojen perusteella. @rfc6455 @rfc8825
 
 == WebRTC-videopuhelujärjestelmien arkkitehtuurit <teoria-arkkitehtuurit>
 
-WebRTC-pohjaiset videopuhelujärjestelmät voidaan toteuttaa useilla erilaisilla
-arkkitehtuureilla. Arkkitehtuurivalinta vaikuttaa muun muassa järjestelmän
-skaalautuvuuteen, palvelinkuormaan, kaistanleveyden käyttöön sekä viiveeseen.
-Yleisimmät toteutusmallit ovat P2P-, MCU- ja SFU-arkkitehtuurit @rfc7667.
-Tässä luvussa esitellään näiden arkkitehtuurien toimintaperiaatteet sekä niiden
-keskeiset ominaisuudet.
+WebRTC-pohjaiset videopuhelujärjestelmät voidaan toteuttaa useilla erilaisilla arkkitehtuureilla. Arkkitehtuurivalinta vaikuttaa muun muassa järjestelmän skaalautuvuuteen, palvelinkuormaan, kaistanleveyden käyttöön sekä viiveeseen.
+Keskeisiä toteutusmalleja ovat vertaisyhteys, keskitetty mediavirtojen yhdistäminen sekä mediavirtojen valikoiva välittäminen @rfc7667. Tässä luvussa esitellään näiden arkkitehtuurien toimintaperiaatteet sekä niiden keskeiset ominaisuudet.
 
 === Vertaisyhteys
 
-P2P-arkkitehtuurissa jokainen osallistuja muodostaa WebRTC-yhteyden muihin osallistujiin ilman keskitettyä median käsittelystä vastaavaa palvelinta. Tavallisesti ääni- ja videodata siirtyvät suoraan päätelaitteiden välillä. NAT- tai palomuuriympäristössä media voidaan kuitenkin välittää TURN-palvelimen kautta, mikäli suoraa yhteysreittiä ei saada muodostettua. Signalointiin tarvitaan yleensä erillinen palvelu, jonka avulla osapuolet vaihtavat yhteyden muodostamiseen tarvittavat tiedot. @rfc8825, @rfc8656
+Peer-to-peer (P2P) -arkkitehtuurissa jokainen osallistuja muodostaa WebRTC-yhteyden muihin osallistujiin ilman keskitettyä median käsittelystä vastaavaa palvelinta. Tavallisesti ääni- ja videodata siirtyvät suoraan päätelaitteiden välillä. NAT- tai palomuuriympäristössä media voidaan kuitenkin välittää erillisen välityspalvelimen kautta, mikäli suoraa yhteysreittiä ei saada muodostettua. Signalointiin tarvitaan yleensä erillinen palvelu, jonka avulla osapuolet vaihtavat yhteyden muodostamiseen tarvittavat tiedot. @rfc8825, @rfc8656
 
-P2P-arkkitehtuuri soveltuu erityisesti kahden osallistujan välisiin videopuheluihin, sillä
-se minimoi palvelinkuorman ja mahdollistaa pienen viiveen @rfc7667.
-Useamman osallistujan videopuheluissa P2P-arkkitehtuurin heikkoutena on
-yhteyksien määrän nopea kasvu. Jokaisen osallistujan on ylläpidettävä
-erillinen WebRTC-yhteys jokaiseen muuhun osallistujaan, mikä kasvattaa sekä
+P2P-arkkitehtuuri soveltuu erityisesti kahden osallistujan välisiin videopuheluihin, sillä se minimoi palvelinkuorman ja mahdollistaa pienen viiveen @rfc7667.
+Useamman osallistujan videopuheluissa P2P-arkkitehtuurin heikkoutena on yhteyksien määrän nopea kasvu. Jokaisen osallistujan on ylläpidettävä erillinen WebRTC-yhteys jokaiseen muuhun osallistujaan, mikä kasvattaa sekä
 päätelaitteen laskentakuormaa että käytettävän kaistanleveyden määrää.
 
 === Multipoint Control Unit
 
-MCU-arkkitehtuurissa kaikki osallistujat lähettävät media-aineistonsa
-keskitetylle palvelimelle. Palvelin vastaanottaa videovirrat, dekoodaa ne,
-yhdistää ne yhdeksi mediavirraksi ja koodaa lopputuloksen uudelleen ennen sen
+Multipoint Control Unit (MCU) -arkkitehtuurissa kaikki osallistujat lähettävät media-aineistonsa keskitetylle palvelimelle. Palvelin vastaanottaa videovirrat, dekoodaa ne, yhdistää ne yhdeksi mediavirraksi ja koodaa lopputuloksen uudelleen ennen sen
 lähettämistä takaisin osallistujille @rfc7667.
 
-MCU-ratkaisun etuna on, että asiakas vastaanottaa vain yhden mediavirran, mikä
-vähentää päätelaitteen kuormitusta. Haittapuolena on palvelimen suuri
-laskentatarve, sillä mediavirran uudelleenkoodaus lisää sekä
-prosessointikuormaa että viivettä.
+MCU-ratkaisun etuna on, että asiakas vastaanottaa vain yhden mediavirran, mikä vähentää päätelaitteen kuormitusta. Haittapuolena on palvelimen suuri laskentatarve, sillä mediavirran uudelleenkoodaus lisää sekä prosessointikuormaa että viivettä.
 
 === Selective Forwarding Unit
 
-SFU-arkkitehtuurissa jokainen osallistuja lähettää videovirtansa palvelimelle,
-joka välittää vastaanotetut mediavirrat edelleen valituille vastaanottajille
-ilman niiden dekoodaamista tai uudelleenkoodaamista @rfc7667.
+Selective Forwarding Unit (SFU) -arkkitehtuurissa jokainen osallistuja lähettää videovirtansa palvelimelle, joka välittää vastaanotetut mediavirrat edelleen valituille vastaanottajille ilman niiden dekoodaamista tai uudelleenkoodaamista @rfc7667.
 
-Koska mediaa ei käsitellä uudelleen, SFU tarjoaa hyvän kompromissin
-palvelinkuorman, viiveen ja skaalautuvuuden välillä. Lisäksi palvelimen
-laskentakuorma on huomattavasti pienempi kuin MCU-arkkitehtuurissa, mikä tekee
-SFU:sta hyvin soveltuvan usean osallistujan WebRTC-pohjaisiin
+Koska mediaa ei käsitellä uudelleen, SFU tarjoaa hyvän kompromissin palvelinkuorman, viiveen ja skaalautuvuuden välillä. Lisäksi palvelimen laskentakuorma on huomattavasti pienempi kuin MCU-arkkitehtuurissa, mikä tekee SFU:sta hyvin soveltuvan usean osallistujan WebRTC-pohjaisiin
 videoneuvottelujärjestelmiin @grozev2015.
 
-Tässä työssä valittiin SFU-arkkitehtuuri, koska se mahdollistaa usean
-osallistujan videopuhelut ilman median uudelleenkoodausta ja säilyttää samalla
-pienen viiveen. Työssä käytettävä Janus Gateway toteuttaa tämän toimintamallin,
-minkä vuoksi se soveltuu hyvin työn toteutusalustaksi. Janus Gatewayn rakennetta
+Tässä työssä valittiin SFU-arkkitehtuuri, koska se mahdollistaa usean osallistujan videopuhelut ilman median uudelleenkoodausta ja säilyttää samalla pienen viiveen. Työssä käytettävä Janus Gateway toteuttaa tämän toimintamallin, minkä vuoksi se soveltuu hyvin työn toteutusalustaksi. Janus Gatewayn rakennetta
 ja toimintaa käsitellään tarkemmin luvussa @teoria-janus-kappale. @taulukko-videopuheluarkkitehtuurit vertailee P2P-, MCU- ja SFU-arkkitehtuurien keskeisiä ominaisuuksia lähteiden @rfc7667 ja @grozev2015 perusteella.
 
 #figure(
@@ -189,121 +137,56 @@ ja toimintaa käsitellään tarkemmin luvussa @teoria-janus-kappale. @taulukko-v
   caption: [P2P-, MCU- ja SFU-arkkitehtuurien yleispiirteinen vertailu.]
 ) <taulukko-videopuheluarkkitehtuurit>
 
+
 == Janus WebRTC Gateway <teoria-janus-kappale>
 
-Janus WebRTC Gateway on yleiskäyttöinen WebRTC-palvelin, jonka tarkoituksena on
-mahdollistaa WebRTC-mediayhteyksien muodostaminen selainten ja palvelinpuolen
-sovelluslogiikan välille. Januksen core vastaa WebRTC-yhteyksien hallinnasta,
-selainten kanssa käytävästä JSON-pohjaisesta viestinnästä sekä reaaliaikaisen
-median välittämisestä. Janus ei itsessään toteuta tiettyä
-sovellustoiminnallisuutta, vaan sovelluskohtaiset ominaisuudet toteutetaan
-palvelinpuolen plugineilla @janus-documentation.
+Janus WebRTC Gateway on yleiskäyttöinen WebRTC-palvelin, jonka tarkoituksena on mahdollistaa WebRTC-mediayhteyksien muodostaminen selainten ja palvelinpuolen sovelluslogiikan välille. Januksen core vastaa WebRTC-yhteyksien hallinnasta, selainten kanssa käytävästä JavaScript Object Notation (JSON) -muotoisesta viestinnästä sekä reaaliaikaisen median välittämisestä. Janus ei itsessään toteuta tiettyä sovellustoiminnallisuutta, vaan sovelluskohtaiset ominaisuudet toteutetaan palvelinpuolen plugineilla @janus-documentation.
 
-Januksen arkkitehtuuri perustuu core-komponentin ja pluginien väliseen
-työnjakoon. Core hallitsee muun muassa WebRTC-yhteyksiä ja välittää viestit sekä
-median asiakkaiden ja niihin liitettyjen pluginien välillä. Pluginit puolestaan
-toteuttavat sovelluskohtaisen toiminnallisuuden. Januksen dokumentaatiossa
-mainitaan esimerkkeinä muun muassa konferenssisillat, median tallennus ja
-SIP-yhdyskäytävä. Plugin-rajapinnan avulla myös uusia plugineja voidaan toteuttaa
-Januksen yhteyteen @janus-core @janus-plugin-api.
+Januksen arkkitehtuuri perustuu core-komponentin ja pluginien väliseen työnjakoon @amirante2014janus. Core hallitsee muun muassa WebRTC-yhteyksiä ja välittää viestit sekä median asiakkaiden ja niihin liitettyjen pluginien välillä. Pluginit puolestaan toteuttavat sovelluskohtaisen toiminnallisuuden. Januksen dokumentaatiossa mainitaan esimerkkeinä muun muassa konferenssisillat, median tallennus ja SIP-yhdyskäytävä. Plugin-rajapinnan avulla myös uusia plugineja voidaan toteuttaa Januksen yhteyteen @janus-core @janus-plugin-api.
 
-Janus tarjoaa useita tapoja kommunikoida sovelluksen ja palvelimen välillä.
-Dokumentaatiossa tuettuina rajapintoina mainitaan muun muassa HTTP- ja
-WebSocket-yhteydet sekä muita kuljetusmekanismeja. Sovellus voi luoda Janukseen
-session ja liittää siihen plugin-handleja, joiden kautta pluginille voidaan
-lähettää sovelluskohtaisia viestejä ja joiden yhteydessä voidaan neuvotella
-WebRTC-yhteyksiä @janus-api.
+Janus tarjoaa useita tapoja kommunikoida sovelluksen ja palvelimen välillä. Dokumentaatiossa tuettuina rajapintoina mainitaan muun muassa HTTP- ja WebSocket-yhteydet sekä muita kuljetusmekanismeja. Sovellus voi luoda Janukseen session ja liittää siihen plugin-handleja, joiden kautta pluginille voidaan lähettää sovelluskohtaisia viestejä ja joiden yhteydessä voidaan neuvotella WebRTC-yhteyksiä @janus-api.
 
-Tässä työssä Janusta hyödynnetään SFU-arkkitehtuurin toteuttamiseen
-VideoRoom-pluginin avulla. Januksen dokumentaatio määrittelee VideoRoom-pluginin
-videoneuvotteluihin tarkoitetuksi SFU:ksi, joka toimii ääni- ja videoreitittimenä.
-Plugin perustuu julkaisija-tilaaja-malliin, jossa osallistuja voi julkaista oman
-ääni- tai videovirtansa huoneeseen ja muut osallistujat voivat tilata julkaistuja
-mediavirtoja @janus-videoroom.
+Tässä työssä Janusta hyödynnetään SFU-arkkitehtuurin toteuttamiseen VideoRoom-pluginin avulla. Januksen dokumentaatio määrittelee VideoRoom-pluginin videoneuvotteluihin tarkoitetuksi SFU:ksi, joka toimii ääni- ja videoreitittimenä. Plugin perustuu julkaisija-tilaaja-malliin, jossa osallistuja voi julkaista oman ääni- tai videovirtansa huoneeseen ja muut osallistujat voivat tilata julkaistuja mediavirtoja @janus-videoroom.
 
-VideoRoom-pluginissa osallistujan julkaisema media muodostaa muiden osallistujien
-tilattavissa olevan streamin. Tilaaja muodostaa WebRTC-yhteyden, jonka kautta
-Janus voi aloittaa tilattujen mediavirtojen välittämisen vastaanottajalle.
-Pluginin dokumentaation mukaan Janus ei sekoita tai uudelleenkoodaa näitä
-mediavirtoja, vaan välittää ne vastaanottajille, minkä vuoksi VideoRoom toimii
-SFU-arkkitehtuurin mukaisesti @janus-videoroom.
+VideoRoom-pluginissa osallistujan julkaisema media muodostaa muiden osallistujien tilattavissa olevan streamin. Tilaaja muodostaa WebRTC-yhteyden, jonka kautta Janus voi aloittaa tilattujen mediavirtojen välittämisen vastaanottajalle. Pluginin dokumentaation mukaan Janus ei sekoita tai uudelleenkoodaa näitä mediavirtoja, vaan välittää ne vastaanottajille, minkä vuoksi VideoRoom toimii SFU-arkkitehtuurin mukaisesti @janus-videoroom.
 
-Työssä toteutettava videopuhelu hyödyntää tätä VideoRoom-pluginin toimintamallia.
-React-pohjainen käyttöliittymä toimii Januksen asiakkaana ja hallitsee
-videopuhelun käyttöliittymän sekä osallistujien julkaisemien ja tilattujen
-mediavirtojen käsittelyn. Janus puolestaan vastaa WebRTC-yhteyksien ja
-mediavirtojen välityksestä VideoRoom-pluginin kautta. Tämän työn toteutuksessa
-Janus muodostaa siten järjestelmän mediasiirtokerroksen, kun taas sovelluksen muu
-logiikka toteutetaan Januksen ulkopuolella.
+Työssä toteutettava videopuhelu hyödyntää tätä VideoRoom-pluginin toimintamallia. React-pohjainen käyttöliittymä toimii Januksen asiakkaana ja hallitsee videopuhelun käyttöliittymän sekä osallistujien julkaisemien ja tilattujen mediavirtojen käsittelyn. Janus puolestaan vastaa WebRTC-yhteyksien ja mediavirtojen välityksestä VideoRoom-pluginin kautta. Tämän työn toteutuksessa Janus muodostaa siten järjestelmän mediasiirtokerroksen, kun taas sovelluksen muu logiikka toteutetaan Januksen ulkopuolella.
 
 == NAT-läpäisy WebRTC:ssä <teoria-nat-webrtc-kappale>
 
-Verkkolaitteet sijaitsevat usein yksityisessä verkossa, jossa niiden käyttämät
-IP-osoitteet eivät ole suoraan saavutettavissa Internetistä. NAT mahdollistaa
-useiden yksityisessä verkossa olevien laitteiden Internet-yhteyksien jakamisen
-yhden tai useamman julkisen IP-osoitteen kautta. NAT vaikeuttaa kuitenkin
-vertaisyhteyksien muodostamista, koska toinen osapuoli ei välttämättä pysty
-suoraan tavoittamaan toisen osapuolen yksityisessä verkossa sijaitsevaa
-päätelaitetta. @rfc2663
+Verkkolaitteet sijaitsevat usein yksityisessä verkossa, jossa niiden käyttämät Internet Protocol (IP) -osoitteet eivät ole suoraan saavutettavissa Internetistä. NAT mahdollistaa useiden yksityisessä verkossa olevien laitteiden Internet-yhteyksien jakamisen yhden tai useamman julkisen IP-osoitteen kautta. NAT vaikeuttaa kuitenkin vertaisyhteyksien muodostamista, koska toinen osapuoli ei välttämättä pysty suoraan tavoittamaan toisen osapuolen yksityisessä verkossa sijaitsevaa päätelaitetta. @rfc2663
 
-WebRTC käyttää NAT-läpäisyyn ICE-mekanismia. ICE:n tarkoituksena on selvittää
-päätelaitteiden käytettävissä olevat yhteysosoitteet ja löytää niiden välille
-toimiva yhteysreitti. Yhteydenmuodostuksessa voidaan hyödyntää suoraa yhteyttä
-sekä tarvittaessa STUN- ja TURN-palveluita @rfc8445 @rfc8835.
+WebRTC käyttää NAT-läpäisyyn ICE-mekanismia. ICE:n tarkoituksena on selvittää päätelaitteiden käytettävissä olevat yhteysosoitteet ja löytää niiden välille
+toimiva yhteysreitti. Yhteydenmuodostuksessa voidaan hyödyntää suoraa yhteyttä sekä tarvittaessa osoitteen selvittämiseen ja liikenteen välittämiseen tarkoitettuja palveluita @rfc8445.
 
-Tässä luvussa käsitellään NAT-läpäisyn kannalta keskeisiä ICE-, STUN- ja
-TURN-mekanismeja. Näiden mekanismien toimintaa tarkastellaan tässä luvussa
-yleisellä tasolla, ja niiden roolia työn toteutuksessa käsitellään tarkemmin
+Seuraavissa alaluvuissa käsitellään NAT-läpäisyn kannalta keskeisiä yhteydenmuodostusmenetelmiä ja niitä tukevia protokollia. Näiden mekanismien toimintaa tarkastellaan tässä luvussa yleisellä tasolla, ja niiden roolia työn toteutuksessa käsitellään tarkemmin
 myöhemmissä luvuissa.
 
 === Interactive Connectivity Establishment
 
-ICE perustuu siihen, että päätelaitteet keräävät useita mahdollisia
-yhteysosoitteita eli ehdokkaita (ICE candidates). Ehdokkaat voivat olla
-päätelaitteen omia verkko-osoitteita, NAT-laitteen kautta näkyviä julkisia
-osoitteita tai TURN-palvelimen tarjoamia välitettyjä osoitteita. Päätelaitteet
-vaihtavat ehdokkaat signaloinnin avulla ja suorittavat niiden muodostamille
-ehdokaspareille yhteystarkistuksia. Tarkistusten perusteella valitaan toimiva
-yhteysreitti @rfc8445.
+ICE perustuu siihen, että päätelaitteet keräävät useita mahdollisia yhteysosoitteita eli ehdokkaita (ICE candidates). Ehdokkaat voivat olla päätelaitteen omia verkko-osoitteita, NAT-laitteen kautta näkyviä julkisia
+osoitteita tai välityspalvelimen tarjoamia osoitteita. Päätelaitteet vaihtavat ehdokkaat signaloinnin avulla ja suorittavat niiden muodostamille
+ehdokaspareille yhteystarkistuksia. Tarkistusten perusteella valitaan toimiva yhteysreitti @rfc8445.
 
-ICE ei itsessään määrittele signalointia, vaan olettaa, että osapuolet pystyvät
-vaihtamaan yhteyden muodostamiseen tarvittavat tiedot jonkin muun mekanismin
-avulla. Signalointia voidaan käyttää esimerkiksi ICE-ehdokkaiden välittämiseen
-osapuolten välillä @rfc8445.
+ICE ei itsessään määrittele signalointia, vaan olettaa, että osapuolet pystyvät vaihtamaan yhteyden muodostamiseen tarvittavat tiedot jonkin muun mekanismin avulla. Signalointia voidaan käyttää esimerkiksi ICE-ehdokkaiden välittämiseen osapuolten välillä @rfc8445.
 
 === Session Traversal Utilities for NAT
 
-STUN on protokolla, jonka avulla päätelaite voi selvittää NAT-laitteen sille
-määrittämän julkisen IP-osoitteen ja portin. Tätä tietoa voidaan käyttää ICE:n
-yhteydessä niin sanotun server-reflexive-ehdokkaan muodostamiseen. STUN-palvelin
-ei kuitenkaan välitä varsinaista mediaa osapuolten välillä, vaan sitä käytetään
-erityisesti päätelaitteen server-reflexive-yhteysosoitteen selvittämiseen
-@rfc8489.
+Session Traversal Utilities for NAT (STUN) on protokolla, jonka avulla päätelaite voi selvittää NAT-laitteen sille määrittämän julkisen IP-osoitteen ja portin. Tätä tietoa voidaan käyttää ICE:n yhteydessä niin sanotun server-reflexive-ehdokkaan muodostamiseen. STUN-palvelin ei kuitenkaan välitä varsinaista mediaa osapuolten välillä, vaan sitä käytetään erityisesti päätelaitteen server-reflexive-yhteysosoitteen selvittämiseen @rfc8489.
 
-STUN ei yksinään ratkaise NAT-läpäisyä kaikissa verkkotilanteissa. Jos
-päätelaitteiden välille ei saada muodostettua toimivaa suoraa yhteyttä,
-ICE voi hyödyntää TURN-palvelinta @rfc8489 @rfc8445.
+STUN ei yksinään ratkaise NAT-läpäisyä kaikissa verkkotilanteissa @rfc8489. Jos päätelaitteiden välille ei saada muodostettua toimivaa suoraa yhteyttä, ICE voi hyödyntää erillistä välityspalvelinta @rfc8445.
 
 === Traversal Using Relays around NAT
 
-TURN tarjoaa välityspalvelun tilanteisiin, joissa päätelaitteiden välistä suoraa
-yhteyttä ei voida muodostaa. Päätelaite varaa TURN-palvelimelta osoitteen, jonka
-kautta liikenne voidaan välittää toiselle osapuolelle. TURN tarjoaa siten ICE:n
-yhteydessä välitetyn yhteysreitin tilanteisiin, joissa suora yhteys ei ole
-käyttökelpoinen @rfc8656.
+Traversal Using Relays around NAT (TURN) tarjoaa välityspalvelun tilanteisiin, joissa päätelaitteiden välistä suoraa yhteyttä ei voida muodostaa. Päätelaite varaa TURN-palvelimelta osoitteen, jonka
+kautta liikenne voidaan välittää toiselle osapuolelle. TURN tarjoaa siten ICE:n yhteydessä välitetyn yhteysreitin tilanteisiin, joissa suora yhteys ei ole käyttökelpoinen @rfc8656.
 
-TURN-yhteyden etuna on sen toimivuus myös sellaisissa verkkotilanteissa,
-joissa NAT- tai palomuuriasetukset estävät suoran yhteyden. Haittapuolena on,
-että media kulkee tällöin ylimääräisen palvelimen kautta, mikä lisää
-palvelimen kaistanleveyden tarvetta ja voi kasvattaa yhteyden viivettä
-@rfc8656.
+TURN-yhteyden etuna on sen toimivuus myös sellaisissa verkkotilanteissa, joissa NAT- tai palomuuriasetukset estävät suoran yhteyden. Haittapuolena on, että media kulkee tällöin ylimääräisen palvelimen kautta, mikä lisää
+palvelimen kaistanleveyden tarvetta ja voi kasvattaa yhteyden viivettä @rfc8656.
 
-WebRTC:n yhteydenmuodostus voidaan siten kuvata prosessina, jossa ICE pyrkii
-löytämään toimivan yhteysreitin käytettävissä olevien ehdokkaiden joukosta.
-STUN mahdollistaa NATin takaa näkyvän julkisen osoitteen selvittämisen, kun taas
-TURN tarjoaa välitetyn yhteysreitin tilanteissa, joissa suora yhteys ei
-onnistu. Näiden mekanismien avulla WebRTC-yhteys voidaan muodostaa erilaisista
-verkkorakenteista ja NAT-asetuksista huolimatta @rfc8445.
+WebRTC:n yhteydenmuodostus voidaan siten kuvata prosessina, jossa ICE pyrkii löytämään toimivan yhteysreitin käytettävissä olevien ehdokkaiden joukosta. STUN mahdollistaa NATin takaa näkyvän julkisen osoitteen selvittämisen, kun taas TURN tarjoaa välitetyn yhteysreitin tilanteissa, joissa suora yhteys ei onnistu. Näiden mekanismien avulla WebRTC-yhteys voidaan muodostaa erilaisista verkkorakenteista ja NAT-asetuksista huolimatta @rfc8445.
+
+@kuva-nat-lapaisy havainnollistaa STUN- ja TURN-palveluiden roolia WebRTC-yhteyden NAT-läpäisyssä.
 
 #figure(
   alt: "Kaavio esittää kaksi WebRTC-päätelaitetta, jotka ovat erillisten NAT-laitteiden takana. NAT-laitteiden välillä voidaan muodostaa suora kaksisuuntainen yhteys. Molemmat päätelaitteet käyttävät STUN-palvelinta julkisen osoitteen selvittämiseen. Jos suora yhteys ei onnistu, liikenne voidaan välittää kaksisuuntaisesti TURN-palvelimen kautta; välitetty yhteys on kuvattu katkoviivalla.",
@@ -450,4 +333,3 @@ verkkorakenteista ja NAT-asetuksista huolimatta @rfc8445.
     STUN- ja TURN-palveluiden rooli WebRTC-yhteyden NAT-läpäisyssä.
   ],
 ) <kuva-nat-lapaisy>
-  

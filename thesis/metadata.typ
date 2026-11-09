@@ -18,14 +18,14 @@
 
 #let examiners = (
   tauthesis.examiner(
-		title : "Professor",
+		title : "University Lecturer",
 		firstname : "Timo",
 		lastname : "Poranen",
 	),
 	tauthesis.examiner(
-		title : "Docent",
-		firstname : "Jane",
-		lastname : "Doe",
+		title : "Lecturer",
+		firstname : "Jyke",
+		lastname : "Savia",
 	),
 )
 
@@ -47,7 +47,7 @@
  * for possible options.
 ***/
 
-#let citationStyle = "ieee"
+#let citationStyle = "ieee-fi.csl"
 
 /**
  * Choose which bibliography file you wish to use.
@@ -184,7 +184,7 @@
 // make it easier for reviewers to give comments related to
 // specific content lines.
 
-#let showParagraphLineNumbers = true
+#let showParagraphLineNumbers = false
 
 // Choose whether to include certain frontmatter sections.
 

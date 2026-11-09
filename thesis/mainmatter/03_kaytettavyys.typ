@@ -32,7 +32,7 @@ Videopuhelusovelluksessa saavutettavuus on erityisen tärkeää, koska sovelluks
 
 == WCAG-ohjeistus <saavutettavuus-wcag-kappale>
 
-Web Content Accessibility Guidelines (WCAG) on World Wide Web Consortiumin (W3C) laatima verkkosisällön saavutettavuutta koskeva ohjeistus. WCAG sisältää suosituksia, joiden avulla verkkosisällöstä ja verkkosovelluksista voidaan tehdä saavutettavampia erilaisille käyttäjille ja erilaisilla päätelaitteilla. Ohjeistus perustuu neljään periaatteeseen: verkkosisällön tulee olla havaittavaa, hallittavaa, ymmärrettävää ja toimintavarmaa. Näiden periaatteiden alle sijoittuu tarkempia ohjeita ja testattavia onnistumiskriteerejä, joille on määritelty vaatimustasot A, AA ja AAA. @wcag21
+WCAG on W3C:n laatima verkkosisällön saavutettavuutta koskeva ohjeistus. WCAG sisältää suosituksia, joiden avulla verkkosisällöstä ja verkkosovelluksista voidaan tehdä saavutettavampia erilaisille käyttäjille ja erilaisilla päätelaitteilla. Ohjeistus perustuu neljään periaatteeseen: verkkosisällön tulee olla havaittavaa, hallittavaa, ymmärrettävää ja toimintavarmaa. Näiden periaatteiden alle sijoittuu tarkempia ohjeita ja testattavia onnistumiskriteerejä, joille on määritelty vaatimustasot A, AA ja AAA. @wcag21
 
 WCAG-ohjeistuksesta on julkaistu useita versioita. WCAG 2.0 julkaistiin vuonna 2008, WCAG 2.1 vuonna 2018 ja WCAG 2.2 vuonna 2023. Uudemmat versiot ovat taaksepäin yhteensopivia aiempien versioiden kanssa, ja ne laajentavat ohjeistusta lisäämällä uusia onnistumiskriteerejä. WCAG 2.2 ei siten korvaa WCAG 2.1 -ohjeistusta, vaan molemmat ovat edelleen W3C:n suosituksia. @wcag-overview
 
@@ -40,9 +40,12 @@ Tässä työssä tarkastelun kohteena on WCAG 2.1. Versio laajensi WCAG 2.0 -ohj
 
 WCAG 2.1:n onnistumiskriteerit on jaettu kolmeen vaatimustasoon: A, AA ja AAA. Taso A sisältää saavutettavuuden kannalta perustavanlaatuisia vaatimuksia, kun taas tasot AA ja AAA sisältävät niitä täydentäviä vaatimuksia. Tässä työssä saavutettavuutta tarkastellaan erityisesti WCAG 2.1:n A- ja AA-tasojen vaatimusten näkökulmasta, sillä ne muodostavat keskeisen perustan verkkosovellusten saavutettavuuden arvioinnille.
 
+
 == Saavutettavuuden huomioiminen videopuhelusovelluksissa <saavutettavuus-videopuhelut-kappale>
 
 Videopuhelusovelluksen saavutettavuudessa on huomioitava käyttöliittymän lisäksi reaaliaikaiseen ääni- ja videoviestintään liittyvät erityispiirteet. Käyttäjän tulee pystyä havaitsemaan sovelluksen välittämä tieto sekä käyttämään puhelun keskeisiä toimintoja riippumatta siitä, millä tavalla hän käyttää käyttöliittymää. Tämä korostaa erityisesti käyttöliittymän havaittavuutta, hallittavuutta ja ymmärrettävyyttä.
+
+Videoneuvottelusovellusten saavutettavuushaasteita on havaittu myös käyttäjätutkimuksissa. Hersh ym. vertailivat Zoomin, Microsoft Teamsin, Google Meetin ja Skypen saavutettavuutta ja käytettävyyttä 81 toimintarajoitteisen henkilön vastausten perusteella. Tutkimuksessa yhtäkään tarkastelluista sovelluksista ei pidetty täysin saavutettavana ja käytettävänä. Tutkijat suosittelivat muun muassa yhteensopivuutta avustavien teknologioiden kanssa sekä näppäimistöpikavalintoja kaikkiin toimintoihin @hersh2024accessibility.
 
 Käyttöliittymän hallittavuuden kannalta keskeistä on, että puhelun toimintoja voidaan käyttää näppäimistöllä (2.1.1 Keyboard) ja että käyttöliittymän kohdistuksen sijainti on käyttäjälle havaittavissa (2.4.7 Focus Visible). Puhelun aikana käyttäjän tulee esimerkiksi pystyä hallitsemaan mikrofonia ja kameraa sekä lopettamaan puhelu ilman riippuvuutta yksittäisestä osoitinlaitteesta. Käyttöliittymäelementtien nimen ja tarkoituksen tulee lisäksi olla ohjelmallisesti määritettävissä, jotta ne ovat avustavan teknologian tulkittavissa (4.1.2 Name, Role, Value). @wcag21
 
@@ -50,4 +53,4 @@ Havaittavuuteen liittyvät muun muassa värin käyttö ja käyttöliittymäeleme
 
 Videopuhelun aikana tapahtuvista tilamuutoksista tulee välittää käyttäjälle riittävä tieto. Esimerkiksi mikrofonin mykistyminen, kameran käynnistyminen tai yhteyden muodostuminen voivat tapahtua ilman, että käyttäjä siirtyy uuteen käyttöliittymän osaan. Tällaiset muutokset tulee välittää tavalla, jonka myös avustavaa teknologiaa käyttävä käyttäjä voi havaita. WCAG 2.1 sisältää tätä varten tilaviestien välittämistä koskevan onnistumiskriteerin 4.1.3 Status Messages. @wcag21
 
-Tässä työssä teoriaosassa esitellään videopuhelusovelluksen kannalta keskeisiä WCAG 2.1:n A- ja AA-tasojen onnistumiskriteerejä. Varsinainen arviointi rajataan luvussa @suunnittelu-maarittely-kappale määriteltyihin saavutettavuusvaatimuksiin A1–A6. Näin esimerkiksi kohdistuksen havaittavuutta, ei-tekstimuotoisten elementtien kontrastia, sisällön uudelleenjärjestymistä ja tilaviestien välittämistä käsitellään teoreettisina näkökulmina, mutta niitä ei arvioida tässä työssä erillisinä testattavina vaatimuksina.
+Tässä teoriaosassa esitellään videopuhelusovelluksen kannalta keskeisiä WCAG 2.1:n A- ja AA-tasojen onnistumiskriteerejä. Varsinainen arviointi rajataan luvussa @suunnittelu-maarittely-kappale määriteltyihin saavutettavuusvaatimuksiin A1–A6. Näin esimerkiksi kohdistuksen havaittavuutta, ei-tekstimuotoisten elementtien kontrastia, sisällön uudelleenjärjestymistä ja tilaviestien välittämistä käsitellään teoreettisina näkökulmina, mutta niitä ei arvioida tässä työssä erillisinä testattavina vaatimuksina.
